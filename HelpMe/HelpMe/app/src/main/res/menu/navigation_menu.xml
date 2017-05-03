@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/MiCuenta"
+        android:icon="@mipmap/users"
+        android:onClick=""
+        android:title="Mi Cuenta">
+    </item>
+
+    <item android:id="@+id/AyudarAlOtro"
+        android:icon="@mipmap/like"
+        android:onClick=""
+        android:title="Ayudar al Otro">
+    </item>
+
+    <item android:id="@+id/denunciarViolenciaGenero"
+        android:icon="@mipmap/stop"
+        android:onClick=""
+        android:title="Violencia de Género">
+    </item>
+
+    <item android:id="@+id/Configuracion"
+        android:icon="@mipmap/settings"
+        android:onClick=""
+        android:title="Configuracion">
+    </item>
+
+
+</menu>
