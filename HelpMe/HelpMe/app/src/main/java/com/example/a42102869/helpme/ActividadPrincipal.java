@@ -25,20 +25,13 @@ public class ActividadPrincipal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actividad_principal);
 
-        Log.d("ila","11");
         nDrawerLayout=(DrawerLayout)findViewById(R.id.drawerLayout);
-        Log.d("ila","12");
         mToggle = new ActionBarDrawerToggle(this,nDrawerLayout,R.string.Open,R.string.Close);
-        Log.d("ila","13");
 
-        Log.d("ila","14");
         nDrawerLayout.addDrawerListener(mToggle);
-        Log.d("ila","15");
         mToggle.syncState();
-        Log.d("ila","16");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Log.d("ila","17");
     }
 
     @Override
@@ -52,7 +45,7 @@ public class ActividadPrincipal extends AppCompatActivity {
 
     public void llamarPolicia(View vista){
         Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //va Action_CALL pero no anda, dice que faltan permisos
-        intentoLlamada.setData(Uri.parse("tel:1149479396"));
+        intentoLlamada.setData(Uri.parse("tel:911"));
         startActivity(intentoLlamada);
     }
 
