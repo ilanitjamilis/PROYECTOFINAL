@@ -5,13 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/actividad_principal"
     tools:context="proyectofinal.helpme.ActividadPrincipal">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_margin="10dp">
+        android:layout_marginLeft="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,22 +20,22 @@
             android:orientation="horizontal">
 
             <ImageButton
+                android:id="@+id/imgbtnPolicia"
                 android:layout_width="170dp"
                 android:layout_height="200dp"
-                android:padding="20dp"
-                android:id="@+id/imgbtnPolicia"
+                android:layout_marginTop="3dp"
                 android:background="@null"
                 android:src="@drawable/policia"
                 android:onClick="llamarPolicia"/>
 
             <ImageButton
+                android:id="@+id/imgbtnAmbulancia"
                 android:layout_width="170dp"
                 android:layout_height="200dp"
-                android:padding="20dp"
+                android:layout_marginTop="3dp"
                 android:background="@null"
-                android:id="@+id/imgbtnAmbulancia"
-                android:src="@drawable/ambulancia"
-                android:onClick="llamarAmbulancia"/>
+                android:onClick="llamarAmbulancia"
+                android:src="@drawable/ambulancia" />
 
         </LinearLayout>
 
@@ -44,30 +45,30 @@
             android:orientation="horizontal">
 
             <ImageButton
+                android:id="@+id/imgbtnBomberos"
                 android:layout_width="170dp"
                 android:layout_height="200dp"
-                android:padding="20dp"
                 android:background="@null"
-                android:id="@+id/imgbtnBomberos"
                 android:src="@drawable/bomberos"
                 android:onClick="llamarBomberos"/>
 
             <ImageButton
+                android:id="@+id/imgbtnMensajeEmergencia"
                 android:layout_width="170dp"
                 android:layout_height="200dp"
-                android:padding="20dp"
                 android:background="@null"
-                android:id="@+id/imgbtnMensajeEmergencia"
                 android:src="@drawable/help"
                 android:onClick="enviarMensajeEmergencia"/>
 
         </LinearLayout>
 
         <ImageButton
-            android:layout_width="match_parent"
-            android:layout_height="85dp"
-            android:background="@null"
             android:id="@+id/imgbtnUbicacion"
+            android:layout_width="330dp"
+            android:layout_height="86dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="4dp"
+            android:background="@null"
             android:src="@drawable/ubicacion"
             android:onClick="irMapas"/>
 

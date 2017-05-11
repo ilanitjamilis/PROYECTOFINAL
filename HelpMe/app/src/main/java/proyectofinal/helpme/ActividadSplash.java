@@ -23,6 +23,6 @@ public class ActividadSplash extends AppCompatActivity {
                 Intent i = new Intent(ActividadSplash.this, ActividadPrincipal.class);
                 startActivity(i);
             }
-        }, 3000);
+        }, 1000);
     }
 }
