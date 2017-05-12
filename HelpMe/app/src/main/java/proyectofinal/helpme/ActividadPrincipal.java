@@ -1,18 +1,51 @@
 package proyectofinal.helpme;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 public class ActividadPrincipal extends AppCompatActivity {
+
+    public boolean isFirstStart;
+    Context mcontext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actividad_principal);
+
+        /*Intent irWizard = new Intent(ActividadPrincipal.this, MyIntro.class);
+        startActivity(irWizard);*/
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //  Intro App Initialize SharedPreferences
+                SharedPreferences getSharedPreferences = PreferenceManager
+                        .getDefaultSharedPreferences(getBaseContext());
+
+                //  Create a new boolean and preference and set it to true
+                isFirstStart = getSharedPreferences.getBoolean("firstStart", true);
+
+                //  Check either activity or app is open very first time or not and do action
+                if (isFirstStart) {
+
+                    //  Launch application introduction screen
+                    Intent i = new Intent(ActividadPrincipal.this, MyIntro.class);
+                    startActivity(i);
+                    SharedPreferences.Editor e = getSharedPreferences.edit();
+                    e.putBoolean("firstStart", false);
+                    e.apply();
+                }
+            }
+        });
+        t.start();
     }
 
     public void llamarPolicia(View vista){

@@ -7,9 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * Created by Ilanit Jamilis on 10/5/2017.
- */
 
 public class Menu1 extends Fragment {
 

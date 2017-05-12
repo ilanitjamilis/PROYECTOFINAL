@@ -5,19 +5,35 @@
         <item
             android:id="@+id/nav_menu1"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Menu 1" />
+            android:title="Inicio" />
         <item
             android:id="@+id/nav_menu2"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Menu 2" />
+            android:title="Mis Datos" />
         <item
             android:id="@+id/nav_menu3"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Menu 3" />
+            android:title="Ayuda al Otro" />
         <item
             android:id="@+id/nav_menu4"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Menu 4" />
+            android:title="Denunciar" />
+
+        <item android:title="Ajustes">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:icon="@drawable/ic_menu_manage"
+                        android:title="Configuración"
+                        android:id="@+id/nav_menu5"/>
+                    <item
+                        android:icon="@drawable/ic_menu_manage"
+                        android:title="Cerrar Sesión"
+                        android:id="@+id/nav_menu6"/>
+                </group>
+            </menu>
+        </item>
     </group>
+
 
 </menu>
