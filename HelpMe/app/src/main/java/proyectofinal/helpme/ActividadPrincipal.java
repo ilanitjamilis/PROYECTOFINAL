@@ -1,8 +1,14 @@
 package proyectofinal.helpme;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
+import android.view.Menu;
 import android.view.View;
 import android.content.Intent;
 import android.net.Uri;
@@ -18,7 +24,18 @@ public class ActividadPrincipal extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         setContentView(R.layout.actividad_principal);
+
+
+        //Toolbar miToolbar = (Toolbar)findViewById(R.id.toolbar);
+        //miToolbar.setLogo(R.drawable.logo);
+
+        //android.app.ActionBar actionBar = getActionBar();
 
         /*Intent irWizard = new Intent(ActividadPrincipal.this, MyIntro.class);
         startActivity(irWizard);*/
@@ -27,8 +44,7 @@ public class ActividadPrincipal extends AppCompatActivity {
             @Override
             public void run() {
                 //  Intro App Initialize SharedPreferences
-                SharedPreferences getSharedPreferences = PreferenceManager
-                        .getDefaultSharedPreferences(getBaseContext());
+                SharedPreferences getSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
                 //  Create a new boolean and preference and set it to true
                 isFirstStart = getSharedPreferences.getBoolean("firstStart", true);
@@ -46,11 +62,29 @@ public class ActividadPrincipal extends AppCompatActivity {
             }
         });
         t.start();
+
+        String miCodigoPais = getCountryCode().toUpperCase();
+        utilidades.miCodigoPais = miCodigoPais;
+        getSupportActionBar().setSubtitle("Ubicación actual: "+miCodigoPais);
+
+        Toast.makeText(this,miCodigoPais,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.logo, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public String  getCountryCode(){
+        TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        String countryCode = tm.getNetworkCountryIso();
+        return countryCode;
     }
 
     public void llamarPolicia(View vista){
         Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
-        intentoLlamada.setData(Uri.parse("tel:911"));
+        intentoLlamada.setData(Uri.parse("tel:101"));
         startActivity(intentoLlamada);
     }
 
@@ -68,8 +102,7 @@ public class ActividadPrincipal extends AppCompatActivity {
 
     public void enviarMensajeEmergencia (View vista){
         String mensaje = "Funcionalidad en construcción";
-        Toast miMensajeAlerta = Toast.makeText(this,mensaje, Toast.LENGTH_SHORT);
-        miMensajeAlerta.show();
+        Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
     }
 
     public void irMapas (View vista){
