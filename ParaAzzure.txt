@@ -1,0 +1,23 @@
+Azzure: 
+examinar
+my sql en aplicacion
+administrar
+crear tablas/otras cosas
+
+
+Para conectarse a la base de datos: permiso en el manifest?
+
+Falta subir el codigo y sincronizarlo: 
+Origenes 
+Opciones de implementacion
+Github
+Repositorio donde esta la api?
+
+
+Json: archivos de texto / objetos (SON DATOS EN FORMATO DE TEXTO)
+Array con muchos objetos (array de objetos)
+Tiene propiedad y nombre cada objeto
+
+El jason ponerlo en un jasonarray y de ahi sacar jasonobjects
+
+Jsno Viewer <-- para ver los jason mas ordenados

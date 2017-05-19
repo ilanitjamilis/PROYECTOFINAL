@@ -1,87 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/actividad_principal"
     tools:context="proyectofinal.helpme.ActividadPrincipal">
 
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginLeft="10dp">
+        android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imgbtnPolicia"
+                    android:layout_width="170dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@null"
+                    android:onClick="llamarPolicia"
+                    android:src="@drawable/policia" />
+
+                <ImageButton
+                    android:id="@+id/imgbtnAmbulancia"
+                    android:layout_width="170dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@null"
+                    android:onClick="llamarAmbulancia"
+                    android:src="@drawable/ambulancia" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imgbtnBomberos"
+                    android:layout_width="170dp"
+                    android:layout_height="200dp"
+                    android:background="@null"
+                    android:onClick="llamarBomberos"
+                    android:src="@drawable/bomberos" />
+
+                <ImageButton
+                    android:id="@+id/imgbtnMensajeEmergencia"
+                    android:layout_width="170dp"
+                    android:layout_height="200dp"
+                    android:background="@null"
+                    android:onClick="enviarMensajeEmergencia"
+                    android:src="@drawable/help" />
+
+            </LinearLayout>
 
             <ImageButton
-                android:id="@+id/imgbtnPolicia"
-                android:layout_width="170dp"
-                android:layout_height="200dp"
-                android:layout_marginTop="3dp"
+                android:id="@+id/imgbtnUbicacion"
+                android:layout_width="330dp"
+                android:layout_height="86dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="6dp"
                 android:background="@null"
-                android:src="@drawable/policia"
-                android:onClick="llamarPolicia"/>
-
-            <ImageButton
-                android:id="@+id/imgbtnAmbulancia"
-                android:layout_width="170dp"
-                android:layout_height="200dp"
-                android:layout_marginTop="3dp"
-                android:background="@null"
-                android:onClick="llamarAmbulancia"
-                android:src="@drawable/ambulancia" />
+                android:onClick="irMapas"
+                android:src="@drawable/ubicacion" />
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/imgbtnBomberos"
-                android:layout_width="170dp"
-                android:layout_height="200dp"
-                android:background="@null"
-                android:src="@drawable/bomberos"
-                android:onClick="llamarBomberos"/>
-
-            <ImageButton
-                android:id="@+id/imgbtnMensajeEmergencia"
-                android:layout_width="170dp"
-                android:layout_height="200dp"
-                android:background="@null"
-                android:src="@drawable/help"
-                android:onClick="enviarMensajeEmergencia"/>
-
-        </LinearLayout>
-
-        <ImageButton
-            android:id="@+id/imgbtnUbicacion"
-            android:layout_width="330dp"
-            android:layout_height="86dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginLeft="4dp"
-            android:background="@null"
-            android:src="@drawable/ubicacion"
-            android:onClick="irMapas"/>
 
     </LinearLayout>
 
-
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_actividad_navigation_drawer"
-        app:menu="@menu/actividad_navigation_drawer_drawer" />
-
-</android.support.v4.widget.DrawerLayout>
+</android.support.constraint.ConstraintLayout>

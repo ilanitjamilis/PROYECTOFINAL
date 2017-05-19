@@ -1,11 +1,10 @@
 <resources>
     <string name="app_name">HelpMe</string>
-    <string name="title_activity_actividad_navigation_drawer">ActividadNavigationDrawer</string>
+
+    <string name="action_settings">Ajustes</string>
 
     <string name="navigation_drawer_open">Abrir navigation drawer</string>
     <string name="navigation_drawer_close">Cerrar navigation drawer</string>
-
-    <string name="action_settings">Ajustes</string>
 
     <string name="app_intro_skip">Saltear</string>
 </resources>
