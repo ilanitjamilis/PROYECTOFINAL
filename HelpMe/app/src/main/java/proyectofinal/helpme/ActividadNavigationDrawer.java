@@ -80,6 +80,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_menu1);
     }
 
     @Override
