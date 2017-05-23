@@ -1,8 +1,11 @@
 package proyectofinal.helpme;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -25,6 +28,8 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
     public boolean isFirstStart;
     Context mcontext;
+
+    boolean miBaseDatosAbierta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +73,24 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         });
         t.start();
 
-        String miCodigoPais = getCountryCode().toUpperCase();
-        utilidades.miCodigoPais = miCodigoPais;
-        getSupportActionBar().setSubtitle("Ubicación actual: "+miCodigoPais);
+
+        /*if(miBaseDatosAbierta && isFirstStart){
+            // Agregar registros
+
+            ContentValues nuevoRegistro = new ContentValues();
+
+            nuevoRegistro.put("nombrePais", "ARG");
+            nuevoRegistro.put("telPolicia", 911);
+            nuevoRegistro.put("telAmbulancia", 107);
+            nuevoRegistro.put("telBomberos", 100);
+            utilidades.baseDatos.insert("paisestelefonos", null, nuevoRegistro);
+
+            utilidades.baseDatos.close();
+        }*/
+
+
+        //AveriguarPaisActual();
+        getSupportActionBar().setSubtitle("Ubicación actual: "+utilidades.paisActual.codigoP);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -148,21 +168,33 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     }
 
     public void llamarPolicia(View vista){
-        Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
-        intentoLlamada.setData(Uri.parse("tel:101"));
-        startActivity(intentoLlamada);
+        /*Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
+        String numPolicia = utilidades.paisActual.numPoliciaP.toString();
+        intentoLlamada.setData(Uri.parse("tel:"+numPolicia));
+        startActivity(intentoLlamada);*/
+
+        String mensaje = "Funcionalidad en construcción";
+        Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
     }
 
     public void llamarAmbulancia(View vista){
-        Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
-        intentoLlamada.setData(Uri.parse("tel:107"));
-        startActivity(intentoLlamada);
+        /*Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
+        String numAmbulancia = utilidades.paisActual.numAmbulanciaP.toString();
+        intentoLlamada.setData(Uri.parse("tel:"+numAmbulancia));
+        startActivity(intentoLlamada);*/
+
+        String mensaje = "Funcionalidad en construcción";
+        Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
     }
 
     public void llamarBomberos(View vista){
-        Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
-        intentoLlamada.setData(Uri.parse("tel:100"));
-        startActivity(intentoLlamada);
+        /*Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
+        String numBomberos = utilidades.paisActual.numBomberosP.toString();
+        intentoLlamada.setData(Uri.parse("tel:"+numBomberos));
+        startActivity(intentoLlamada);*/
+
+        String mensaje = "Funcionalidad en construcción";
+        Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
     }
 
     public void enviarMensajeEmergencia (View vista){
@@ -173,6 +205,40 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     public void irMapas (View vista){
         Intent intentoMapas = new Intent(android.content.Intent.ACTION_VIEW);
         startActivity(intentoMapas);
+    }
+
+
+    public void AveriguarPaisActual(){
+        String miCodigoPais = getCountryCode().toUpperCase();
+
+        miBaseDatosAbierta = utilidades.baseDeDatosAbierta(this);
+        if(miBaseDatosAbierta) {
+            Cursor registros;
+            registros = utilidades.baseDatos.rawQuery("select nombrePais, telPolicia, telAmbulancia, telBomberos", null);
+            if (registros.moveToFirst() == true) {
+                do {
+                    String codigoPais = registros.getString(0);
+                    Integer numTelefonoPolicia = registros.getInt(1);
+                    Integer numTelefonoAmbulancia = registros.getInt(2);
+                    Integer numTelefonoBomberos = registros.getInt(3);
+
+
+                    Pais unPais = new Pais();
+                    unPais.codigoP = codigoPais;
+                    unPais.numPoliciaP = numTelefonoPolicia;
+                    unPais.numAmbulanciaP = numTelefonoAmbulancia;
+                    unPais.numBomberosP= numTelefonoBomberos;
+
+                    if(unPais.codigoP == miCodigoPais){
+                        utilidades.paisActual = unPais;
+                    }
+
+                } while (registros.moveToNext() == true);
+                utilidades.baseDatos.close();
+            }
+        }
+        getSupportActionBar().setSubtitle("Ubicación actual: "+utilidades.paisActual.codigoP);
+
     }
 
 }

@@ -9,9 +9,11 @@
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
 
 
         <LinearLayout
@@ -32,7 +34,7 @@
                     android:layout_marginTop="3dp"
                     android:background="@null"
                     android:onClick="llamarPolicia"
-                    android:src="@drawable/policia" />
+                    android:src="@drawable/policia2" />
 
                 <ImageButton
                     android:id="@+id/imgbtnAmbulancia"
@@ -70,9 +72,9 @@
 
             <ImageButton
                 android:id="@+id/imgbtnUbicacion"
-                android:layout_width="330dp"
+                android:layout_width="360dp"
                 android:layout_height="86dp"
-                android:layout_marginLeft="4dp"
+                android:layout_marginLeft="-10dp"
                 android:layout_marginTop="6dp"
                 android:background="@null"
                 android:onClick="irMapas"

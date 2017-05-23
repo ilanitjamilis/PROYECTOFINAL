@@ -17,42 +17,12 @@ public class ActividadPrincipal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actividad_principal);
 
-        String miCodigoPais = getCountryCode().toUpperCase();
-        utilidades.miCodigoPais = miCodigoPais;
-        getSupportActionBar().setSubtitle("Ubicación actual: "+miCodigoPais);
+        getSupportActionBar().setSubtitle("Ubicación actual: "+utilidades.paisActual.codigoP);
     }
 
     public String  getCountryCode(){
         TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         String countryCode = tm.getNetworkCountryIso();
         return countryCode;
-    }
-
-    public void llamarPolicia(View vista){
-        Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
-        intentoLlamada.setData(Uri.parse("tel:101"));
-        startActivity(intentoLlamada);
-    }
-
-    public void llamarAmbulancia(View vista){
-        Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
-        intentoLlamada.setData(Uri.parse("tel:107"));
-        startActivity(intentoLlamada);
-    }
-
-    public void llamarBomberos(View vista){
-        Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
-        intentoLlamada.setData(Uri.parse("tel:100"));
-        startActivity(intentoLlamada);
-    }
-
-    public void enviarMensajeEmergencia (View vista){
-        String mensaje = "Funcionalidad en construcción";
-        Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
-    }
-
-    public void irMapas (View vista){
-        Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-        startActivity(intent);
     }
 }
