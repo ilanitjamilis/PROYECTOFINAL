@@ -11,6 +11,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -30,6 +33,9 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     Context mcontext;
 
     boolean miBaseDatosAbierta;
+
+    FragmentManager AdministradorDeFragments=getSupportFragmentManager();
+    FragmentTransaction TransaccionDeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +79,12 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         });
         t.start();
 
+        Fragment miFragmentIngreso = new ActividadPrincipal();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso);
+        TransaccionDeFragment.commit();
+
+
 
         /*if(miBaseDatosAbierta && isFirstStart){
             // Agregar registros
@@ -89,8 +101,16 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         }*/
 
 
+
+
+        String codPais = getCountryCode().toUpperCase();
+        if(codPais==null){
+            codPais = "NOT FOUND";
+        }
+
         //AveriguarPaisActual();
-        getSupportActionBar().setSubtitle("Ubicación actual: "+utilidades.paisActual.codigoP);
+
+        getSupportActionBar().setSubtitle("Ubicación actual: "+codPais);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -142,8 +162,13 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_menu1) {
-            Intent i = new Intent(ActividadNavigationDrawer.this, ActividadPrincipal.class);
-            startActivity(i);
+            Fragment frgMostrar;
+
+            frgMostrar = new ActividadPrincipal();
+            TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+            TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
+            TransaccionDeFragment.commit();
+
         } else if (id == R.id.nav_menu2) {
 
         } else if (id == R.id.nav_menu3) {
@@ -161,7 +186,41 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         return true;
     }
 
-    public String  getCountryCode(){
+
+    public void AveriguarPaisActual(){
+        String miCodigoPais = getCountryCode().toUpperCase();
+
+        miBaseDatosAbierta = utilidades.baseDeDatosAbierta(this);
+        if(miBaseDatosAbierta) {
+            Cursor registros;
+            registros = utilidades.baseDatos.rawQuery("select nombrePais, telPolicia, telAmbulancia, telBomberos", null);
+            if (registros.moveToFirst() == true) {
+                do {
+                    String codigoPais = registros.getString(0);
+                    Integer numTelefonoPolicia = registros.getInt(1);
+                    Integer numTelefonoAmbulancia = registros.getInt(2);
+                    Integer numTelefonoBomberos = registros.getInt(3);
+
+
+                    Pais unPais = new Pais();
+                    unPais.codigoP = codigoPais;
+                    unPais.numPoliciaP = numTelefonoPolicia;
+                    unPais.numAmbulanciaP = numTelefonoAmbulancia;
+                    unPais.numBomberosP= numTelefonoBomberos;
+
+                    if(unPais.codigoP == miCodigoPais){
+                        utilidades.paisActual = unPais;
+                    }
+
+                } while (registros.moveToNext() == true);
+                utilidades.baseDatos.close();
+            }
+        }
+    }
+
+
+
+    public String getCountryCode(){
         TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         String countryCode = tm.getNetworkCountryIso();
         return countryCode;
@@ -205,40 +264,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     public void irMapas (View vista){
         Intent intentoMapas = new Intent(android.content.Intent.ACTION_VIEW);
         startActivity(intentoMapas);
-    }
-
-
-    public void AveriguarPaisActual(){
-        String miCodigoPais = getCountryCode().toUpperCase();
-
-        miBaseDatosAbierta = utilidades.baseDeDatosAbierta(this);
-        if(miBaseDatosAbierta) {
-            Cursor registros;
-            registros = utilidades.baseDatos.rawQuery("select nombrePais, telPolicia, telAmbulancia, telBomberos", null);
-            if (registros.moveToFirst() == true) {
-                do {
-                    String codigoPais = registros.getString(0);
-                    Integer numTelefonoPolicia = registros.getInt(1);
-                    Integer numTelefonoAmbulancia = registros.getInt(2);
-                    Integer numTelefonoBomberos = registros.getInt(3);
-
-
-                    Pais unPais = new Pais();
-                    unPais.codigoP = codigoPais;
-                    unPais.numPoliciaP = numTelefonoPolicia;
-                    unPais.numAmbulanciaP = numTelefonoAmbulancia;
-                    unPais.numBomberosP= numTelefonoBomberos;
-
-                    if(unPais.codigoP == miCodigoPais){
-                        utilidades.paisActual = unPais;
-                    }
-
-                } while (registros.moveToNext() == true);
-                utilidades.baseDatos.close();
-            }
-        }
-        getSupportActionBar().setSubtitle("Ubicación actual: "+utilidades.paisActual.codigoP);
-
     }
 
 }
