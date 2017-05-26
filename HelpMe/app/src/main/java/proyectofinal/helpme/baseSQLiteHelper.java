@@ -13,12 +13,21 @@ public class baseSQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate (SQLiteDatabase baseDeDatos){
         String sqlCrearTablaTelefonos;
-        sqlCrearTablaTelefonos = "create table paisestelefonos (nombrePais text, telPolicia int, telAmbulancia int, telBomberos int)";
+        sqlCrearTablaTelefonos = "create table paisestelefonos (nombrePais text, telPolicia integer, telAmbulancia integer, telBomberos integer)";
         baseDeDatos.execSQL(sqlCrearTablaTelefonos);
     }
 
     @Override
     public void onUpgrade (SQLiteDatabase baseDeDatos, int versionAnterior, int versionNueva){
+        /*String sqlAEjecutar;
+        sqlAEjecutar = "drop table telefonos;";
+        baseDeDatos.execSQL(sqlAEjecutar);
+        sqlAEjecutar = "drop table paises;";
+        baseDeDatos.execSQL(sqlAEjecutar);
+        sqlAEjecutar = "drop table paisestelefonos;";
+        baseDeDatos.execSQL(sqlAEjecutar);
 
+        sqlAEjecutar = "create table paisestelefonos (nombrePais text, telPolicia int, telAmbulancia int, telBomberos int)";
+        baseDeDatos.execSQL(sqlAEjecutar);*/
     }
 }

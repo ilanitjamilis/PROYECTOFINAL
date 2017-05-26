@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -88,33 +89,34 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
 
 
-        /*if(AveriguarSiHayRegistros() == false){
+        if(AveriguarSiHayRegistros() == false){
             // Agregar registros
 
             ContentValues nuevoRegistro;
 
+            //Hay un registro con el código de país ARG. Por eso no anda con AR.
             nuevoRegistro = new ContentValues();
-            nuevoRegistro.put("nombrePais", "ARG");
+            nuevoRegistro.put("nombrePais", "AR");
             nuevoRegistro.put("telPolicia", 911);
             nuevoRegistro.put("telAmbulancia", 107);
             nuevoRegistro.put("telBomberos", 100);
             utilidades.baseDatos.insert("paisestelefonos", null, nuevoRegistro);
 
             utilidades.baseDatos.close();
-        }*/
-
+        }
 
         String codPais = getCountryCode().toUpperCase();
         if(codPais.compareTo("")!=0){
-            //AveriguarPaisActual(codPais);
+            AveriguarPaisActual(codPais);
+            //Toast.makeText(this,utilidades.paisActual.numPoliciaP.toString(), Toast.LENGTH_SHORT).show();
         }
         else {
             codPais = "NOT FOUND";
         }
-        utilidades.paisActual = new Pais();
-        utilidades.paisActual.codigoP = codPais;
+        //utilidades.paisActual = new Pais();
+        //utilidades.paisActual.codigoP = codPais;
 
-        getSupportActionBar().setSubtitle("Ubicación actual: " + utilidades.paisActual.codigoP);
+        getSupportActionBar().setSubtitle("Ubicación Actual: " + utilidades.paisActual.codigoP);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -166,6 +168,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_menu1) {
+
             Fragment frgMostrar;
 
             frgMostrar = new ActividadPrincipal();
@@ -175,14 +178,28 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
         } else if (id == R.id.nav_menu2) {
 
+            String mensaje = "Funcionalidad en construcción";
+            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
+
         } else if (id == R.id.nav_menu3) {
+
+            String mensaje = "Funcionalidad en construcción";
+            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_menu4) {
 
+            String mensaje = "Funcionalidad en construcción";
+            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
+
         } else if (id == R.id.nav_menu5) {
+
+            String mensaje = "Funcionalidad en construcción";
+            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_menu6) {
 
+            String mensaje = "Funcionalidad en construcción";
+            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -195,12 +212,12 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         miBaseDatosAbierta = utilidades.baseDeDatosAbierta(this);
         if(miBaseDatosAbierta) {
             Cursor registros;
-            registros = utilidades.baseDatos.rawQuery("select nombrePais, telPolicia, telAmbulancia, telBomberos", null);
+            registros = utilidades.baseDatos.rawQuery("select nombrePais, telPolicia, telAmbulancia, telBomberos from paisestelefonos", null);
             if (registros.moveToFirst() == true) {
                 resultado = true;
             }
-            utilidades.baseDatos.close();
         }
+        //utilidades.baseDatos.close();
         return resultado;
     }
 
@@ -209,9 +226,10 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         miBaseDatosAbierta = utilidades.baseDeDatosAbierta(this);
         if(miBaseDatosAbierta) {
             Cursor registros;
-            registros = utilidades.baseDatos.rawQuery("select nombrePais, telPolicia, telAmbulancia, telBomberos", null);
+            registros = utilidades.baseDatos.rawQuery("select nombrePais, telPolicia, telAmbulancia, telBomberos from paisestelefonos", null);
             if (registros.moveToFirst() == true) {
                 do {
+                    Log.d("ila", "hay registros");
                     String codigoPais = registros.getString(0);
                     Integer numTelefonoPolicia = registros.getInt(1);
                     Integer numTelefonoAmbulancia = registros.getInt(2);
@@ -223,14 +241,15 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                     unPais.numAmbulanciaP = numTelefonoAmbulancia;
                     unPais.numBomberosP= numTelefonoBomberos;
 
-                    if(unPais.codigoP == miCodPais){
+                    if(unPais.codigoP.compareTo(miCodPais)==0){
+                        Log.d("ila", "mi registro existe");
                         utilidades.paisActual = unPais;
                     }
 
                 } while (registros.moveToNext() == true);
-                utilidades.baseDatos.close();
             }
         }
+        utilidades.baseDatos.close();
     }
 
 
@@ -243,13 +262,13 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
     public void llamarPolicia(View vista){
         if(utilidades.paisActual.codigoP.compareTo("NOT FOUND")!= 0) {
-            /*Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
+            Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
             String numPolicia = utilidades.paisActual.numPoliciaP.toString();
             intentoLlamada.setData(Uri.parse("tel:" + numPolicia));
-            startActivity(intentoLlamada);*/
+            startActivity(intentoLlamada);
 
-            String mensaje = "Funcionalidad en construcción";
-            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
+            /*String mensaje = "Funcionalidad en construcción";
+            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();*/
         }
         else{
             String mensaje = "País no detectado";
@@ -259,13 +278,13 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
     public void llamarAmbulancia(View vista){
         if(utilidades.paisActual.codigoP.compareTo("NOT FOUND")!= 0) {
-            /*Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
+            Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
             String numAmbulancia = utilidades.paisActual.numAmbulanciaP.toString();
             intentoLlamada.setData(Uri.parse("tel:" + numAmbulancia));
-            startActivity(intentoLlamada);*/
+            startActivity(intentoLlamada);
 
-            String mensaje = "Funcionalidad en construcción";
-            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
+            /*String mensaje = "Funcionalidad en construcción";
+            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();*/
         }
         else{
             String mensaje = "País no detectado";
@@ -275,13 +294,13 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
     public void llamarBomberos(View vista){
         if(utilidades.paisActual.codigoP.compareTo("NOT FOUND")!= 0) {
-            /*Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
+            Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
             String numBomberos = utilidades.paisActual.numBomberosP.toString();
             intentoLlamada.setData(Uri.parse("tel:" + numBomberos));
-            startActivity(intentoLlamada);*/
+            startActivity(intentoLlamada);
 
-            String mensaje = "Funcionalidad en construcción";
-            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
+            /*String mensaje = "Funcionalidad en construcción";
+            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();*/
         }
         else{
             String mensaje = "País no detectado";

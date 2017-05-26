@@ -15,7 +15,16 @@ public class utilidades {
 
         boolean responder;
 
-        accesoBase = new baseSQLiteHelper (vista, "miBase", null, 1);
+        //MiBase
+        //MiBaseDeDatos
+        //BaseDeDatos
+        //Base
+        //BaseDatos
+        //BaseDatosHelpMe
+
+        //Probe hasta la versión 6
+
+        accesoBase = new baseSQLiteHelper (vista, "BaseDatosHelpMe", null, 1);
         baseDatos = accesoBase.getWritableDatabase();
 
         if(baseDatos != null){
