@@ -20,14 +20,13 @@
         <activity
             android:name=".ActividadNavigationDrawer"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActividadPrincipal"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ActividadSplash"
             android:configChanges="orientation"
@@ -40,9 +39,14 @@
         </activity>
         <activity
             android:name=".MyIntro"
-            android:theme="@style/FullscreenTheme"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/FullscreenTheme" />
+        <activity android:name=".ActividadMisDatos" />
+        <activity android:name=".ActividadAyudaAlOtro" />
+        <activity android:name=".ActividadDenunciar" />
+        <activity android:name=".ActividadConfiguracion" />
+        <activity android:name=".ActividadCerrarSesion"></activity>
     </application>
 
 </manifest>

@@ -262,27 +262,52 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             //Falta África
             //Números: https://en.wikipedia.org/wiki/List_of_emergency_telephone_numbers
             //Códigos ISO: http://kirste.userpage.fu-berlin.de/diverse/doc/ISO_3166.html
-
         }
+
+
+        String ultimoCodigoDetectado = getResources().getString(R.string.ultimoCodigoPaisDetectado);
+        Log.d("ila","último código detectado: "+ ultimoCodigoDetectado);
 
         String codPais = getCountryCode().toUpperCase();
         if(codPais != null){
             boolean codigoEncontrado = AveriguarPaisActual(codPais);
-            if(codigoEncontrado!=true){
-                codPais = "NOT FOUND";
+            if(codigoEncontrado){
+                if(codPais.compareTo(ultimoCodigoDetectado)!=0) {
 
+                    SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString(getString(R.string.ultimoCodigoPaisDetectado), codPais);
+
+                    Log.d("ila","codPais: "+codPais);
+
+                    editor.commit();
+
+                    String ultimoCodigoDetectadoModificado = getResources().getString(R.string.ultimoCodigoPaisDetectado);
+
+                    Log.d("ila","mi último código detectado ahora es: "+ultimoCodigoDetectadoModificado);
+                }
+            }
+            else{
+                if(ultimoCodigoDetectado.compareTo("CÓDIGO")==0) {
+                    codPais = "NOT FOUND";
+                    utilidades.paisActual = new Pais();
+                    utilidades.paisActual.codigoP = codPais;
+                }
+            }
+            getSupportActionBar().setSubtitle("Ubicación Actual: " + utilidades.paisActual.codigoP);
+        }
+        else{
+            if(ultimoCodigoDetectado.compareTo("CÓDIGO")!=0){
+                AveriguarPaisActual(ultimoCodigoDetectado);
+                getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
+            }
+            else{
+                codPais = "NOT FOUND";
                 utilidades.paisActual = new Pais();
                 utilidades.paisActual.codigoP = codPais;
+                getSupportActionBar().setSubtitle("Ubicación Actual: " + utilidades.paisActual.codigoP);
             }
         }
-        else {
-            codPais = "NOT FOUND";
-
-            utilidades.paisActual = new Pais();
-            utilidades.paisActual.codigoP = codPais;
-        }
-
-        getSupportActionBar().setSubtitle("Ubicación Actual: " + utilidades.paisActual.codigoP);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -321,6 +346,13 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            Fragment frgMostrar;
+            frgMostrar = new ActividadConfiguracion();
+            TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+            TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
+            TransaccionDeFragment.commit();
+
             return true;
         }
 
@@ -336,7 +368,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         if (id == R.id.nav_menu1) {
 
             Fragment frgMostrar;
-
             frgMostrar = new ActividadPrincipal();
             TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
             TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
@@ -344,28 +375,43 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
         } else if (id == R.id.nav_menu2) {
 
-            String mensaje = "Funcionalidad en construcción";
-            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
+            Fragment frgMostrar;
+            frgMostrar = new ActividadMisDatos();
+            TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+            TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
+            TransaccionDeFragment.commit();
 
         } else if (id == R.id.nav_menu3) {
 
-            String mensaje = "Funcionalidad en construcción";
-            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
+            Fragment frgMostrar;
+            frgMostrar = new ActividadAyudaAlOtro();
+            TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+            TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
+            TransaccionDeFragment.commit();
 
         } else if (id == R.id.nav_menu4) {
 
-            String mensaje = "Funcionalidad en construcción";
-            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
+            Fragment frgMostrar;
+            frgMostrar = new ActividadDenunciar();
+            TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+            TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
+            TransaccionDeFragment.commit();
 
         } else if (id == R.id.nav_menu5) {
 
-            String mensaje = "Funcionalidad en construcción";
-            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
+            Fragment frgMostrar;
+            frgMostrar = new ActividadConfiguracion();
+            TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+            TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
+            TransaccionDeFragment.commit();
 
         } else if (id == R.id.nav_menu6) {
 
-            String mensaje = "Funcionalidad en construcción";
-            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
+            Fragment frgMostrar;
+            frgMostrar = new ActividadCerrarSesion();
+            TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+            TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
+            TransaccionDeFragment.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -396,7 +442,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             registros = utilidades.baseDatos.rawQuery("select nombrePais, telPolicia, telAmbulancia, telBomberos from paisestelefonos", null);
             if (registros.moveToFirst() == true) {
                 do {
-                    Log.d("ila", "hay registros");
                     String codigoPais = registros.getString(0);
                     Integer numTelefonoPolicia = registros.getInt(1);
                     Integer numTelefonoAmbulancia = registros.getInt(2);
@@ -409,7 +454,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                     unPais.numBomberosP= numTelefonoBomberos;
 
                     if(unPais.codigoP.compareTo(miCodPais)==0){
-                        Log.d("ila", "mi registro existe");
                         paisEncontrado = true;
                         utilidades.paisActual = unPais;
                     }
@@ -420,6 +464,23 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         utilidades.baseDatos.close();
 
         return paisEncontrado;
+    }
+
+    public void AgregarRegistro(String codPais, int numPolicia, int numAmbulancia, int numBomberos){
+        ContentValues nuevoRegistro = new ContentValues();
+        nuevoRegistro.put("nombrePais", codPais);
+        nuevoRegistro.put("telPolicia", numPolicia);
+        nuevoRegistro.put("telAmbulancia", numAmbulancia);
+        nuevoRegistro.put("telBomberos", numBomberos);
+        utilidades.baseDatos.insert("paisestelefonos", null, nuevoRegistro);
+    }
+
+    public void BorrarRegistrosBasePaisesTelefonos(){
+        boolean miBaseDeDatosAbierta = utilidades.baseDeDatosAbierta(this);
+        if(miBaseDeDatosAbierta){
+            utilidades.baseDatos.delete("paisestelefonos","",null);
+        }
+        utilidades.baseDatos.close();
     }
 
 
@@ -444,7 +505,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();*/
         }
         else{
-            String mensaje = "País no detectado";
+            String mensaje = "ERROR";
             Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
         }
     }
@@ -460,7 +521,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();*/
         }
         else{
-            String mensaje = "País no detectado";
+            String mensaje = "ERROR";
             Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
         }
     }
@@ -476,7 +537,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();*/
         }
         else{
-            String mensaje = "País no detectado";
+            String mensaje = "ERROR";
             Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
         }
     }
@@ -489,23 +550,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     public void irMapas (View vista){
         Intent intentoMapas = new Intent(android.content.Intent.ACTION_VIEW);
         startActivity(intentoMapas);
-    }
-
-    public void AgregarRegistro(String codPais, int numPolicia, int numAmbulancia, int numBomberos){
-        ContentValues nuevoRegistro = new ContentValues();
-        nuevoRegistro.put("nombrePais", codPais);
-        nuevoRegistro.put("telPolicia", numPolicia);
-        nuevoRegistro.put("telAmbulancia", numAmbulancia);
-        nuevoRegistro.put("telBomberos", numBomberos);
-        utilidades.baseDatos.insert("paisestelefonos", null, nuevoRegistro);
-    }
-
-    public void BorrarRegistrosBasePaisesTelefonos(){
-        boolean miBaseDeDatosAbierta = utilidades.baseDeDatosAbierta(this);
-        if(miBaseDeDatosAbierta){
-            utilidades.baseDatos.delete("paisestelefonos","",null);
-        }
-        utilidades.baseDatos.close();
     }
 
 }

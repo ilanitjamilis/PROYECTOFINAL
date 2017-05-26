@@ -7,4 +7,7 @@
     <string name="navigation_drawer_close">Cerrar navigation drawer</string>
 
     <string name="app_intro_skip">Saltear</string>
+
+    <string name="ultimoCodigoPaisDetectado">CÓDIGO</string>
+
 </resources>
