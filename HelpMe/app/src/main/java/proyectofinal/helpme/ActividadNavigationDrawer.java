@@ -262,10 +262,16 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             //Falta África
             //Números: https://en.wikipedia.org/wiki/List_of_emergency_telephone_numbers
             //Códigos ISO: http://kirste.userpage.fu-berlin.de/diverse/doc/ISO_3166.html
+
+
+            SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("CÓDIGO", "NONE");
         }
 
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        String ultimoCodigoDetectado = sharedPref.getString("CÓDIGO", "NONE");
 
-        String ultimoCodigoDetectado = getResources().getString(R.string.ultimoCodigoPaisDetectado);
         Log.d("ila","último código detectado: "+ ultimoCodigoDetectado);
 
         String codPais = getCountryCode().toUpperCase();
@@ -274,21 +280,21 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             if(codigoEncontrado){
                 if(codPais.compareTo(ultimoCodigoDetectado)!=0) {
 
-                    SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+                    sharedPref = this.getPreferences(Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString(getString(R.string.ultimoCodigoPaisDetectado), codPais);
+                    editor.putString("CÓDIGO", codPais);
 
                     Log.d("ila","codPais: "+codPais);
 
                     editor.commit();
 
-                    String ultimoCodigoDetectadoModificado = getResources().getString(R.string.ultimoCodigoPaisDetectado);
+                    ultimoCodigoDetectado = sharedPref.getString("CÓDIGO", "NONE");
 
-                    Log.d("ila","mi último código detectado ahora es: "+ultimoCodigoDetectadoModificado);
+                    Log.d("ila","mi último código detectado ahora es: "+ultimoCodigoDetectado);
                 }
             }
             else{
-                if(ultimoCodigoDetectado.compareTo("CÓDIGO")==0) {
+                if(ultimoCodigoDetectado.compareTo("NONE")==0) {
                     codPais = "NOT FOUND";
                     utilidades.paisActual = new Pais();
                     utilidades.paisActual.codigoP = codPais;
