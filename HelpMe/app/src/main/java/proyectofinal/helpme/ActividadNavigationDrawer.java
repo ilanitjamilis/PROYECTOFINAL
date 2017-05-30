@@ -40,6 +40,10 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     FragmentManager AdministradorDeFragments=getSupportFragmentManager();
     FragmentTransaction TransaccionDeFragment;
 
+    SharedPreferences sharedPref;
+    String ultimoCodigoDetectado;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -264,13 +268,13 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             //Códigos ISO: http://kirste.userpage.fu-berlin.de/diverse/doc/ISO_3166.html
 
 
-            SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+            sharedPref = this.getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("CÓDIGO", "NONE");
         }
 
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        String ultimoCodigoDetectado = sharedPref.getString("CÓDIGO", "NONE");
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        ultimoCodigoDetectado = sharedPref.getString("CÓDIGO", "NONE");
 
         Log.d("ila","último código detectado: "+ ultimoCodigoDetectado);
 
@@ -299,11 +303,15 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                     utilidades.paisActual = new Pais();
                     utilidades.paisActual.codigoP = codPais;
                 }
+                else{
+                    AveriguarPaisActual(ultimoCodigoDetectado);
+                    getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
+                }
             }
             getSupportActionBar().setSubtitle("Ubicación Actual: " + utilidades.paisActual.codigoP);
         }
         else{
-            if(ultimoCodigoDetectado.compareTo("CÓDIGO")!=0){
+            if(ultimoCodigoDetectado.compareTo("NONE")!=0){
                 AveriguarPaisActual(ultimoCodigoDetectado);
                 getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
             }
