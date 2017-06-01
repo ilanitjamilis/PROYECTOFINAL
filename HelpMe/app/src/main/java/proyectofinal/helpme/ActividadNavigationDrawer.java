@@ -560,20 +560,18 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             else {
                 boolean codigoEncontrado = AveriguarPaisActual(codPais);
                 if(codigoEncontrado){
-                    if(codPais.compareTo(ultimoCodigoDetectado)!=0) {
 
-                        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putString("CÓDIGO", codPais);
-                        editor.commit();
+                    sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("CÓDIGO", codPais);
+                    editor.commit();
 
-                        editor.putString("ultUbicacionTiempo", TiempoAhora());
-                        editor.commit();
+                    editor.putString("ultUbicacionTiempo", TiempoAhora());
+                    editor.commit();
 
-                        ultimoCodigoDetectado = sharedPref.getString("CÓDIGO", "NONE");
+                    ultimoCodigoDetectado = sharedPref.getString("CÓDIGO", "NONE");
 
-                        Log.d("ila","mi último código detectado ahora es: "+ultimoCodigoDetectado);
-                    }
+                    Log.d("ila","mi último código detectado ahora es: "+ultimoCodigoDetectado);
                 }
                 else{
                     if(ultimoCodigoDetectado.compareTo("NONE")==0) {
