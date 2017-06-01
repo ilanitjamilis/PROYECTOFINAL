@@ -94,7 +94,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
 
         if(AveriguarSiHayRegistros() == false){
-
             // Agregar registros
 
             AgregarRegistro("AR", 101, 107, 100);
@@ -273,72 +272,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             editor.putString("CÓDIGO", "NONE");
         }
 
-        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        ultimoCodigoDetectado = sharedPref.getString("CÓDIGO", "NONE");
-
-        Log.d("ila","último código detectado: "+ ultimoCodigoDetectado);
-
-        String codPais = getCountryCode().toUpperCase();
-        Log.d("ila","mi codPais: "+codPais);
-        if(codPais != null){
-            Log.d("ila","entro acá1");
-            if(codPais=="NOTFOUND"){
-                if(ultimoCodigoDetectado.compareTo("NONE")==0) {
-                    codPais = "NOT FOUND";
-                    utilidades.paisActual = new Pais();
-                    utilidades.paisActual.codigoP = codPais;
-                    getSupportActionBar().setSubtitle("Ubicación Actual: " + utilidades.paisActual.codigoP);
-                }
-                else{
-                    AveriguarPaisActual(ultimoCodigoDetectado);
-                    getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
-                }
-            }
-            else {
-                boolean codigoEncontrado = AveriguarPaisActual(codPais);
-                if(codigoEncontrado){
-                    if(codPais.compareTo(ultimoCodigoDetectado)!=0) {
-
-                        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putString("CÓDIGO", codPais);
-
-                        Log.d("ila","codPais: "+codPais);
-
-                        editor.commit();
-
-                        ultimoCodigoDetectado = sharedPref.getString("CÓDIGO", "NONE");
-
-                        Log.d("ila","mi último código detectado ahora es: "+ultimoCodigoDetectado);
-                    }
-                }
-                else{
-                    if(ultimoCodigoDetectado.compareTo("NONE")==0) {
-                        codPais = "NOT FOUND";
-                        utilidades.paisActual = new Pais();
-                        utilidades.paisActual.codigoP = codPais;
-                    }
-                    else{
-                        AveriguarPaisActual(ultimoCodigoDetectado);
-                        getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
-                    }
-                }
-                getSupportActionBar().setSubtitle("Ubicación Actual: " + utilidades.paisActual.codigoP);
-            }
-        }
-        else{
-            if(ultimoCodigoDetectado.compareTo("NONE")!=0){
-                AveriguarPaisActual(ultimoCodigoDetectado);
-                getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
-                Log.d("ila","entro acá");
-            }
-            else{
-                codPais = "NOT FOUND";
-                utilidades.paisActual = new Pais();
-                utilidades.paisActual.codigoP = codPais;
-                getSupportActionBar().setSubtitle("Ubicación Actual: " + utilidades.paisActual.codigoP);
-            }
-        }
+        TomarUbicacionActual();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -383,6 +317,10 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
             TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
             TransaccionDeFragment.commit();
+
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
+            navigationView.setCheckedItem(R.id.nav_menu5);
 
             return true;
         }
@@ -587,6 +525,75 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     public void irMapas (View vista){
         Intent intentoMapas = new Intent(android.content.Intent.ACTION_VIEW);
         startActivity(intentoMapas);
+    }
+
+    public void TomarUbicacionActual(){
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        ultimoCodigoDetectado = sharedPref.getString("CÓDIGO", "NONE");
+
+        Log.d("ila","último código detectado: "+ ultimoCodigoDetectado);
+
+        String codPais = getCountryCode().toUpperCase();
+        Log.d("ila","mi codPais: "+codPais);
+        if(codPais != null){
+            Log.d("ila","entro acá1");
+            if(codPais=="NOTFOUND"){
+                if(ultimoCodigoDetectado.compareTo("NONE")==0) {
+                    codPais = "NOT FOUND";
+                    utilidades.paisActual = new Pais();
+                    utilidades.paisActual.codigoP = codPais;
+                    getSupportActionBar().setSubtitle("Ubicación Actual: " + utilidades.paisActual.codigoP);
+                }
+                else{
+                    AveriguarPaisActual(ultimoCodigoDetectado);
+                    getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
+                }
+            }
+            else {
+                boolean codigoEncontrado = AveriguarPaisActual(codPais);
+                if(codigoEncontrado){
+                    if(codPais.compareTo(ultimoCodigoDetectado)!=0) {
+
+                        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("CÓDIGO", codPais);
+
+                        Log.d("ila","codPais: "+codPais);
+
+                        editor.commit();
+
+                        ultimoCodigoDetectado = sharedPref.getString("CÓDIGO", "NONE");
+
+                        Log.d("ila","mi último código detectado ahora es: "+ultimoCodigoDetectado);
+                    }
+                }
+                else{
+                    if(ultimoCodigoDetectado.compareTo("NONE")==0) {
+                        codPais = "NOT FOUND";
+                        utilidades.paisActual = new Pais();
+                        utilidades.paisActual.codigoP = codPais;
+                    }
+                    else{
+                        AveriguarPaisActual(ultimoCodigoDetectado);
+                        getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
+                    }
+                }
+                getSupportActionBar().setSubtitle("Ubicación Actual: " + utilidades.paisActual.codigoP);
+            }
+        }
+        else{
+            if(ultimoCodigoDetectado.compareTo("NONE")!=0){
+                AveriguarPaisActual(ultimoCodigoDetectado);
+                getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
+                Log.d("ila","entro acá");
+            }
+            else{
+                codPais = "NOT FOUND";
+                utilidades.paisActual = new Pais();
+                utilidades.paisActual.codigoP = codPais;
+                getSupportActionBar().setSubtitle("Ubicación Actual: " + utilidades.paisActual.codigoP);
+            }
+        }
     }
 
 }

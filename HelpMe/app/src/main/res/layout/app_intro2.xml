@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_weight="10"
-    android:background="#03a373"
+    android:background="#E54545"
     android:orientation="vertical">
 
     <TextView
@@ -16,7 +15,7 @@
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="29dp"
-        android:text="Funcionalidades"
+        android:text="Funcionalidades Excelentes"
         android:textColor="#ffffff"
         android:textSize="27sp"
         android:textStyle="bold" />
@@ -34,7 +33,7 @@
             android:layout_gravity="center"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:src="@drawable/policia" />
+            android:src="@drawable/bomberos" />
     </LinearLayout>
 
     <TextView
@@ -45,7 +44,7 @@
         android:gravity="center"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
-        android:text="50+ grandiosas funcionalidades y 100% gratis."
+        android:text="Llame a Bomberos, Ambulancia y Policia en una sola aplicación"
         android:textColor="#ffffff"
         android:textSize="16sp" />
 

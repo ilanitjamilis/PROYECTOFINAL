@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_weight="10"
-    android:background="#b704c4"
+    android:background="#F59F38"
     android:orientation="vertical">
 
     <TextView
@@ -16,7 +15,7 @@
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="29dp"
-        android:text="Todo en una sola App"
+        android:text="Mensaje de Emergencia"
         android:textColor="#ffffff"
         android:textSize="27sp"
         android:textStyle="bold" />
@@ -34,7 +33,7 @@
             android:layout_gravity="center"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:src="@drawable/ambulancia" />
+            android:src="@drawable/help" />
     </LinearLayout>
 
     <TextView
@@ -45,7 +44,7 @@
         android:gravity="center"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
-        android:text="Más de 50 funcionalidades en una sola aplicación."
+        android:text="Envia un mensaje de emergencia a tus contactos con tu horario y ubicación"
         android:textColor="#ffffff"
         android:textSize="16sp" />
 
