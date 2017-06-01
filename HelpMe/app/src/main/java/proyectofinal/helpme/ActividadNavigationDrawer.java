@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.telephony.TelephonyManager;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -28,6 +29,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.security.CodeSigner;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ActividadNavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,6 +46,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
     SharedPreferences sharedPref;
     String ultimoCodigoDetectado;
+    String ultimoTiempoDetectado;
 
 
     @Override
@@ -312,15 +317,8 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
-            Fragment frgMostrar;
-            frgMostrar = new ActividadConfiguracion();
-            TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
-            TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
-            TransaccionDeFragment.commit();
-
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            navigationView.setNavigationItemSelectedListener(this);
-            navigationView.setCheckedItem(R.id.nav_menu5);
+            TomarUbicacionActual();
+            Toast.makeText(this,"Ubicación actualizada", Toast.LENGTH_SHORT).show();
 
             return true;
         }
@@ -341,6 +339,8 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
             TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
             TransaccionDeFragment.commit();
+
+            TomarUbicacionActual();
 
         } else if (id == R.id.nav_menu2) {
 
@@ -530,8 +530,10 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     public void TomarUbicacionActual(){
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         ultimoCodigoDetectado = sharedPref.getString("CÓDIGO", "NONE");
+        ultimoTiempoDetectado = sharedPref.getString("ultUbicacionTiempo", "NONE");
 
         Log.d("ila","último código detectado: "+ ultimoCodigoDetectado);
+        Log.d("ila","último tiempo detectado: "+ ultimoTiempoDetectado);
 
         String codPais = getCountryCode().toUpperCase();
         Log.d("ila","mi codPais: "+codPais);
@@ -547,6 +549,12 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                 else{
                     AveriguarPaisActual(ultimoCodigoDetectado);
                     getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
+
+                    sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+
+                    String ultTiempoDetectado = sharedPref.getString("ultUbicacionTiempo", "NONE");
+
+                    Toast.makeText(this,"Última detección: "+ultTiempoDetectado, Toast.LENGTH_SHORT).show();
                 }
             }
             else {
@@ -557,9 +565,9 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putString("CÓDIGO", codPais);
+                        editor.commit();
 
-                        Log.d("ila","codPais: "+codPais);
-
+                        editor.putString("ultUbicacionTiempo", TiempoAhora());
                         editor.commit();
 
                         ultimoCodigoDetectado = sharedPref.getString("CÓDIGO", "NONE");
@@ -576,6 +584,12 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                     else{
                         AveriguarPaisActual(ultimoCodigoDetectado);
                         getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
+
+                        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+
+                        String ultTiempoDetectado = sharedPref.getString("ultUbicacionTiempo", "NONE");
+
+                        Toast.makeText(this,"Última detección: "+ultTiempoDetectado, Toast.LENGTH_SHORT).show();
                     }
                 }
                 getSupportActionBar().setSubtitle("Ubicación Actual: " + utilidades.paisActual.codigoP);
@@ -585,7 +599,12 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             if(ultimoCodigoDetectado.compareTo("NONE")!=0){
                 AveriguarPaisActual(ultimoCodigoDetectado);
                 getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
-                Log.d("ila","entro acá");
+
+                sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+
+                String ultTiempoDetectado = sharedPref.getString("ultUbicacionTiempo", "NONE");
+
+                Toast.makeText(this,"Última detección: "+ultTiempoDetectado, Toast.LENGTH_SHORT).show();
             }
             else{
                 codPais = "NOT FOUND";
@@ -594,6 +613,20 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                 getSupportActionBar().setSubtitle("Ubicación Actual: " + utilidades.paisActual.codigoP);
             }
         }
+    }
+
+    public String TiempoAhora(){
+
+        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+
+        /*Time now = new Time();
+        now.setToNow();
+        String miTiempoYa = now.toString();*/
+
+        /*SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String currentDateandTime = sdf.format(new Date());*/
+
+        return currentDateTimeString;
     }
 
 }
