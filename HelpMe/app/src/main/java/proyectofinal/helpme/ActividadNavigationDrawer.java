@@ -48,6 +48,9 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     String ultimoCodigoDetectado;
     String ultimoTiempoDetectado;
 
+    Boolean hayUbicacion;
+    Boolean estaActualizando = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -317,8 +320,17 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
+            estaActualizando = true;
+
+            hayUbicacion = true;
+
             TomarUbicacionActual();
-            Toast.makeText(this,"Ubicación actualizada", Toast.LENGTH_SHORT).show();
+
+            if(hayUbicacion) {
+                Toast.makeText(this, "Ubicación actualizada", Toast.LENGTH_SHORT).show();
+            }
+
+            estaActualizando = false;
 
             return true;
         }
@@ -550,11 +562,15 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                     AveriguarPaisActual(ultimoCodigoDetectado);
                     getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
 
-                    sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+                    hayUbicacion = false;
 
-                    String ultTiempoDetectado = sharedPref.getString("ultUbicacionTiempo", "NONE");
+                    if(estaActualizando) {
+                        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
 
-                    Toast.makeText(this,"Última detección: "+ultTiempoDetectado, Toast.LENGTH_SHORT).show();
+                        String ultTiempoDetectado = sharedPref.getString("ultUbicacionTiempo", "NONE");
+
+                        Toast.makeText(this, "Última detección: " + ultTiempoDetectado, Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
             else {
@@ -588,6 +604,8 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                         String ultTiempoDetectado = sharedPref.getString("ultUbicacionTiempo", "NONE");
 
                         Toast.makeText(this,"Última detección: "+ultTiempoDetectado, Toast.LENGTH_SHORT).show();
+
+                        hayUbicacion = false;
                     }
                 }
                 getSupportActionBar().setSubtitle("Ubicación Actual: " + utilidades.paisActual.codigoP);
@@ -598,11 +616,15 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                 AveriguarPaisActual(ultimoCodigoDetectado);
                 getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
 
-                sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+                if(estaActualizando) {
+                    sharedPref = this.getPreferences(Context.MODE_PRIVATE);
 
-                String ultTiempoDetectado = sharedPref.getString("ultUbicacionTiempo", "NONE");
+                    String ultTiempoDetectado = sharedPref.getString("ultUbicacionTiempo", "NONE");
 
-                Toast.makeText(this,"Última detección: "+ultTiempoDetectado, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Última detección: " + ultTiempoDetectado, Toast.LENGTH_SHORT).show();
+
+                    hayUbicacion = false;
+                }
             }
             else{
                 codPais = "NOT FOUND";
