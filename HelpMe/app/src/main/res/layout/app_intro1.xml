@@ -46,9 +46,9 @@
         android:gravity="center"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
-        android:text="Una aplicación pensada para ayudarte siempre."
+        android:text="Una aplicación pensada para ayudarte siempre"
         android:textColor="#ffffff"
-        android:textSize="16sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:layout_width="fill_parent"
