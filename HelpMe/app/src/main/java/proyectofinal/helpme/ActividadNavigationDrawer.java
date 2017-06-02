@@ -94,6 +94,11 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         });
         t.start();
 
+        if(isFirstStart){
+            //Pantalla de datos (contraseña + nombre + apellido obligatorio) -->  ACEPTAR
+            //Alert Dialog con "Completar Mis Datos" --> Mas Tarde / Ahora
+        }
+
         Fragment miFragmentIngreso = new ActividadPrincipal();
         TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
         TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso);
