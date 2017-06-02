@@ -569,7 +569,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
                         String ultTiempoDetectado = sharedPref.getString("ultUbicacionTiempo", "NONE");
 
-                        Toast.makeText(this, "Última detección: " + ultTiempoDetectado, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Última detección: " + ultTiempoDetectado, Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -603,7 +603,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
                         String ultTiempoDetectado = sharedPref.getString("ultUbicacionTiempo", "NONE");
 
-                        Toast.makeText(this,"Última detección: "+ultTiempoDetectado, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this,"Última detección: "+ultTiempoDetectado, Toast.LENGTH_LONG).show();
 
                         hayUbicacion = false;
                     }
@@ -621,7 +621,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
                     String ultTiempoDetectado = sharedPref.getString("ultUbicacionTiempo", "NONE");
 
-                    Toast.makeText(this, "Última detección: " + ultTiempoDetectado, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Última detección: " + ultTiempoDetectado, Toast.LENGTH_LONG).show();
 
                     hayUbicacion = false;
                 }
