@@ -25,6 +25,8 @@ public class ActividadMisDatos extends Fragment implements View.OnClickListener 
     public void onClick(View vista) {
         ActividadNavigationDrawer ActividadNavigationDrawer;
         ActividadNavigationDrawer = (ActividadNavigationDrawer) getActivity();
+
+        ActividadNavigationDrawer.tomarDatosUsuario(vista); //Tiene que estar en el onCreate [no hay vista en el onCreate]
     }
 
 }

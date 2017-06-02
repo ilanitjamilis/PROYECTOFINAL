@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="proyectofinal.helpme.ActividadRegistro">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="12dp"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:background="@drawable/fondo_redondeado"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="#FFFFFF"
+            android:textSize="25dp"
+            android:paddingTop="6dp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:text="Ingrese PIN"/>
+
+        <EditText
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:textSize="35dp"
+            android:text="pin 4 digitos"
+            android:textAlignment="center"
+            android:inputType="number"
+            android:id="@+id/pinRegistracion"/>
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_width="320dp"
+            android:layout_height="45dp"
+            android:background="@drawable/fondo_redondeado"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="#FFFFFF"
+            android:textSize="25dp"
+            android:paddingTop="6dp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:text="Ingrese su nombre"/>
+
+        <EditText
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:textSize="35dp"
+            android:text="nombre"
+            android:textAlignment="center"
+            android:id="@+id/nombreRegistracion"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="320dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/fondo_redondeado"
+            android:backgroundTint="@color/colorPrimary"
+            android:paddingTop="6dp"
+            android:textStyle="bold"
+            android:text="Ingrese su apellido"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="25dp" />
+
+        <EditText
+            android:id="@+id/apellidoRegistracion"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:text="apellido"
+            android:textAlignment="center"
+            android:textSize="35dp" />
+
+        <Button
+            android:text="ACEPTAR"
+            android:textStyle="bold"
+            android:layout_marginLeft="42dp"
+            android:layout_marginTop="14dp"
+            android:layout_width="280dp"
+            android:layout_height="60dp"
+            android:textSize="35dp"
+            android:textAlignment="center"
+            android:background="@drawable/fondo_redondeado"
+            android:onClick="registrarUsuario"/>
+
+    </LinearLayout>
+
+</LinearLayout>

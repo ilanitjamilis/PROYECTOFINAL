@@ -71,33 +71,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         /*Intent irWizard = new Intent(ActividadPrincipal.this, MyIntro.class);
         startActivity(irWizard);*/
 
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //  Intro App Initialize SharedPreferences
-                SharedPreferences getSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-
-                //  Create a new boolean and preference and set it to true
-                isFirstStart = getSharedPreferences.getBoolean("firstStart", true);
-
-                //  Check either activity or app is open very first time or not and do action
-                if (isFirstStart) {
-
-                    //  Launch application introduction screen
-                    Intent i = new Intent(ActividadNavigationDrawer.this, MyIntro.class);
-                    startActivity(i);
-                    SharedPreferences.Editor e = getSharedPreferences.edit();
-                    e.putBoolean("firstStart", false);
-                    e.apply();
-                }
-            }
-        });
-        t.start();
-
-        if(isFirstStart){
-            //Pantalla de datos (contraseña + nombre + apellido obligatorio) -->  ACEPTAR
-            //Alert Dialog con "Completar Mis Datos" --> Mas Tarde / Ahora
-        }
 
         Fragment miFragmentIngreso = new ActividadPrincipal();
         TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
@@ -296,6 +269,36 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_menu1);
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //  Intro App Initialize SharedPreferences
+                SharedPreferences getSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+                //  Create a new boolean and preference and set it to true
+                isFirstStart = getSharedPreferences.getBoolean("firstStart", true);
+
+                //  Check either activity or app is open very first time or not and do action
+                if (isFirstStart) {
+
+                    //  Launch application introduction screen
+                    Intent i = new Intent(ActividadNavigationDrawer.this, MyIntro.class);
+                    startActivity(i);
+
+                    //Pantalla de datos (contraseña + nombre + apellido obligatorio) -->  ACEPTAR
+                    //Intent irRegistro = new Intent (ActividadNavigationDrawer.this, ActividadRegistro.class);
+                    //startActivity(irRegistro);
+                    //Alert Dialog con "Completar Mis Datos" --> Mas Tarde / Ahora
+
+                    SharedPreferences.Editor e = getSharedPreferences.edit();
+                    e.putBoolean("firstStart", false);
+                    e.apply();
+                }
+            }
+        });
+        t.start();
+
     }
 
     @Override
@@ -652,6 +655,15 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         String currentDateandTime = sdf.format(new Date());*/
 
         return currentDateTimeString;
+    }
+
+    public void tomarDatosUsuario(View vista){
+
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+
+        String nombreUsuario = sharedPref.getString("nombreUsuario", "NONE");
+        String apellidoUsuario = sharedPref.getString("apellidoUsuario", "NONE");
+
     }
 
 }

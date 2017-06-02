@@ -46,7 +46,9 @@
         <activity android:name=".ActividadAyudaAlOtro" />
         <activity android:name=".ActividadDenunciar" />
         <activity android:name=".ActividadConfiguracion" />
-        <activity android:name=".ActividadCerrarSesion"></activity>
+        <activity android:name=".ActividadCerrarSesion" />
+        <activity android:name=".ActividadRegistro" />
+        <activity android:name=".ActividadEditarRegistro"></activity>
     </application>
 
 </manifest>

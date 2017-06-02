@@ -32,8 +32,6 @@ public class MyIntro extends AppIntro {
 
         //Add animation to the intro slider
         setDepthAnimation();
-
-
     }
 
     @Override
