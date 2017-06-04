@@ -4,7 +4,7 @@
     android:id="@+id/ScrollView01"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#D4FFCC">
+    android:background="#FFEDC2">
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -52,6 +52,7 @@
                 android:background="@drawable/fondo_redondeado"
                 android:backgroundTint="#80FF73"
                 android:onClick="ingresoNombre"
+                android:textAllCaps="false"
                 android:text="Continuar"
                 android:textAlignment="center"
                 android:textSize="35dp"
