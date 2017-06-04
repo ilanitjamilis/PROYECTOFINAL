@@ -27,6 +27,7 @@ public class ActividadMisDatos extends Fragment implements View.OnClickListener 
         ActividadNavigationDrawer = (ActividadNavigationDrawer) getActivity();
 
         ActividadNavigationDrawer.tomarDatosUsuario(vista); //Tiene que estar en el onCreate [no hay vista en el onCreate]
+        //Como se edita el contenido de un textView con fragments??
     }
 
 }

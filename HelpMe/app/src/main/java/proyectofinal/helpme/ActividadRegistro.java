@@ -14,83 +14,31 @@ import android.widget.Toast;
 public class ActividadRegistro extends AppCompatActivity {
 
     SharedPreferences sharedPref;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actividad_registro);
     }
 
-    public void registrarUsuario(View vista){
+    public void ingresoNombre(View vista){
+        EditText nombreIngresado = (EditText)findViewById(R.id.nombreRegistracion);
+        String nombre = nombreIngresado.getText().toString().trim();
 
-        Boolean error = false;
-        String errores = "";
-
-        EditText pin = (EditText)findViewById(R.id.pinRegistracion);
-        String pinR = pin.getText().toString().trim();
-        Integer pinRegistracion = Integer.valueOf(pinR);
-
-        EditText nombre = (EditText)findViewById(R.id.nombreRegistracion);
-        String nombreRegistracion = nombre.getText().toString().trim();
-
-        EditText apellido = (EditText)findViewById(R.id.apellidoRegistracion);
-        String apellidoRegistracion = apellido.getText().toString().trim();
-
-        if(pinR.compareTo("")==0 ){
-            error = true;
-            errores+="Ingrese un pin";
-        }
-        if(pinR.length()!=4){
-            error = true;
-            errores+="Pin inválido";
-        }
-        if(nombreRegistracion.compareTo("")==0){
-            error = true;
-            errores+="Ingrese su nombre";
-        }
-        if(apellidoRegistracion.compareTo("")==0){
-            error = true;
-            errores+="Ingrese su apellido";
-        }
-        if(error){
-            Toast.makeText(this, errores, Toast.LENGTH_LONG).show();
-        }
-        else{
+        if(nombre!=""){
             sharedPref = this.getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("PIN", pinRegistracion);
+            editor.putString("nombreUsuario", nombre);
             editor.commit();
 
-            editor.putString("nombreUsuario", nombreRegistracion);
-            editor.commit();
-
-            editor.putString("apellidoUsuario", apellidoRegistracion);
-            editor.commit();
-
-
-            AlertDialog.Builder adb = new AlertDialog.Builder(this);
-
-            adb.setTitle("¡REGISTRO EXITOSO! // COMPLETAR MIS DATOS");
-
-            adb.setIcon(android.R.drawable.ic_dialog_alert);
-
-            adb.setPositiveButton("AHORA", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-
-                    Intent irRegistro = new Intent (ActividadRegistro.this, ActividadEditarRegistro.class);
-                    startActivity(irRegistro);
-
-                } });
-
-
-            adb.setNegativeButton("MÁS TARDE", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-
-                    finish();
-                } });
-            adb.show();
+            Intent irIngresarApellido = new Intent (ActividadRegistro.this, ActividadRegistroDos.class);
+            //Agregar el bundle con el nombre
+            startActivity(irIngresarApellido);
+            //Ir ingresarApellido
+            //Llevar en bundle mi nombre
         }
-
-
+        else{
+            //Toast
+            Toast.makeText(this, "Ingrese su nombre", Toast.LENGTH_LONG).show();
+        }
     }
 }

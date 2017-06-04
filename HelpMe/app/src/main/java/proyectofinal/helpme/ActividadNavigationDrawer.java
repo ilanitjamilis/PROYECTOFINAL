@@ -287,10 +287,11 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                     startActivity(i);
 
                     //Pantalla de datos (contraseña + nombre + apellido obligatorio) -->  ACEPTAR
-                    //Intent irRegistro = new Intent (ActividadNavigationDrawer.this, ActividadRegistro.class);
-                    //startActivity(irRegistro);
+                    Intent irEmpezarRegistro = new Intent (ActividadNavigationDrawer.this, ActividadRegistro.class);
+                    startActivity(irEmpezarRegistro);
                     //Alert Dialog con "Completar Mis Datos" --> Mas Tarde / Ahora
 
+                    //Nunca llega aca...
                     SharedPreferences.Editor e = getSharedPreferences.edit();
                     e.putBoolean("firstStart", false);
                     e.apply();

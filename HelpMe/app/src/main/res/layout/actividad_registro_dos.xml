@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#D4FFCC">
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="proyectofinal.helpme.ActividadRegistro">
+
+        <TextView
+            android:layout_below="@+id/pinRegistracion"
+            android:id="@+id/textView2"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="120dp"
+            android:background="@drawable/fondo_redondeado"
+            android:backgroundTint="#7F3B4C"
+            android:paddingTop="6dp"
+            android:text="Ingrese su apellido"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_below="@id/textView2"
+            android:id="@+id/apellidoRegistracion"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/fondo_redondeado"
+            android:backgroundTint="#E5E28F"
+            android:text="------------------------"
+            android:textAlignment="center"
+            android:textSize="35dp" />
+
+        <Button
+            android:layout_below="@id/apellidoRegistracion"
+            android:layout_width="280dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="42dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/fondo_redondeado"
+            android:backgroundTint="#80FF73"
+            android:onClick="ingresoApellido"
+            android:text="Continuar"
+            android:textAlignment="center"
+            android:textSize="35dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+</ScrollView>

@@ -48,7 +48,9 @@
         <activity android:name=".ActividadConfiguracion" />
         <activity android:name=".ActividadCerrarSesion" />
         <activity android:name=".ActividadRegistro" />
-        <activity android:name=".ActividadEditarRegistro"></activity>
+        <activity android:name=".ActividadEditarRegistro" />
+        <activity android:name=".ActividadRegistroDos" />
+        <activity android:name=".ActividadRegistroTres"></activity>
     </application>
 
 </manifest>
