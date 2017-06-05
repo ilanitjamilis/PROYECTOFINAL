@@ -658,13 +658,22 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         return currentDateTimeString;
     }
 
-    public void tomarDatosUsuario(View vista){
+    public String tomarDatosUsuarioNombre(){
 
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
 
         String nombreUsuario = sharedPref.getString("nombreUsuario", "NONE");
+
+        return nombreUsuario;
+    }
+
+    public String tomarDatosUsuarioApellido(){
+
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+
         String apellidoUsuario = sharedPref.getString("apellidoUsuario", "NONE");
 
+        return apellidoUsuario;
     }
 
 }
