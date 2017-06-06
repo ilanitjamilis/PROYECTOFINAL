@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ScrollView01"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#FFEDC2">
+    android:layout_height="fill_parent">
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -45,7 +44,7 @@
             android:id="@+id/btnEditarMisDatos"
             android:layout_width="315dp"
             android:layout_height="60dp"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="12dp"
             android:layout_marginTop="35dp"
             android:background="@drawable/fondo_redondeado"
             android:backgroundTint="#77168C"

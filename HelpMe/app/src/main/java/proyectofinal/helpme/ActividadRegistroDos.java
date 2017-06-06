@@ -22,19 +22,15 @@ public class ActividadRegistroDos extends AppCompatActivity {
         EditText apellidoIngresado = (EditText)findViewById(R.id.apellidoRegistracion);
         String apellido = apellidoIngresado.getText().toString().trim();
 
-        if(apellido!=""){
+        if(apellido.compareTo("")!=0){
             sharedPref = this.getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
 
-            //Sacado del bundle
             editor.putString("apellidoUsuario", apellido);
             editor.commit();
 
             Intent irIngresarPin = new Intent (ActividadRegistroDos.this, ActividadRegistroTres.class);
-            //Agregar el bundle con el nombre y el apellido
             startActivity(irIngresarPin);
-            //Ir ingresarPin
-            //Llevar en bundle mi nombre y apellido
         }
         else{
             //Toast

@@ -33,13 +33,13 @@
         <EditText
             android:layout_below="@id/textView2"
             android:id="@+id/apellidoRegistracion"
+            android:hint="-----------------------"
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/fondo_redondeado"
             android:backgroundTint="#E5E28F"
-            android:text="------------------------"
             android:textAlignment="center"
             android:textSize="35dp" />
 

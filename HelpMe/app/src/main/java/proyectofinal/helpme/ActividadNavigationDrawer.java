@@ -41,7 +41,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
     boolean miBaseDatosAbierta;
 
-    FragmentManager AdministradorDeFragments=getSupportFragmentManager();
+    FragmentManager AdministradorDeFragments = getSupportFragmentManager();
     FragmentTransaction TransaccionDeFragment;
 
     SharedPreferences sharedPref;
@@ -273,16 +273,10 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                //  Intro App Initialize SharedPreferences
                 SharedPreferences getSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-
-                //  Create a new boolean and preference and set it to true
                 isFirstStart = getSharedPreferences.getBoolean("firstStart", true);
 
-                //  Check either activity or app is open very first time or not and do action
                 if (isFirstStart) {
-
-                    //  Launch application introduction screen
                     Intent i = new Intent(ActividadNavigationDrawer.this, MyIntro.class);
                     startActivity(i);
 
@@ -295,12 +289,13 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                     SharedPreferences.Editor e = getSharedPreferences.edit();
                     e.putBoolean("firstStart", false);
                     e.apply();
+
                 }
             }
         });
         t.start();
-
     }
+
 
     @Override
     public void onBackPressed() {
@@ -575,9 +570,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
                     if(estaActualizando) {
                         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-
                         String ultTiempoDetectado = sharedPref.getString("ultUbicacionTiempo", "NONE");
-
                         Toast.makeText(this, "Última detección: " + ultTiempoDetectado, Toast.LENGTH_LONG).show();
                     }
                 }
@@ -645,34 +638,21 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     }
 
     public String TiempoAhora(){
-
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
-
-        /*Time now = new Time();
-        now.setToNow();
-        String miTiempoYa = now.toString();*/
-
-        /*SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-        String currentDateandTime = sdf.format(new Date());*/
-
         return currentDateTimeString;
     }
 
     public String tomarDatosUsuarioNombre(){
-
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-
-        String nombreUsuario = sharedPref.getString("nombreUsuario", "NONE");
-
+        String nombreUsuario = sharedPref.getString("nombreUsuario", "NOT FOUND");
+        Log.d("ila", "nombre usuario guardado: "+nombreUsuario);
+        //NO SE GUARDA BIEN O NO SE RECIBE BIEN
         return nombreUsuario;
     }
 
     public String tomarDatosUsuarioApellido(){
-
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-
-        String apellidoUsuario = sharedPref.getString("apellidoUsuario", "NONE");
-
+        String apellidoUsuario = sharedPref.getString("apellidoUsuario", "NOT FOUND");
         return apellidoUsuario;
     }
 

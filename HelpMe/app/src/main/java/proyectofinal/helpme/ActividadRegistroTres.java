@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +20,9 @@ public class ActividadRegistroTres extends AppCompatActivity {
     SharedPreferences sharedPref;
     Integer pinRegistracion;
 
+    FragmentManager AdministradorDeFragments = getSupportFragmentManager();
+    FragmentTransaction TransaccionDeFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +30,6 @@ public class ActividadRegistroTres extends AppCompatActivity {
     }
 
     public void registrarUsuario(View vista){
-
         String error = "";
 
         EditText pin = (EditText)findViewById(R.id.pinRegistracion);
@@ -37,14 +43,15 @@ public class ActividadRegistroTres extends AppCompatActivity {
             error="Ingrese un pin";
         }
         if(pinR.length()!=4){
-            error="Pin inválido";
+            error="Pin inválido, deben ser 4 números";
         }
         if(error.compareTo("")!=0){
-            Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, error, Toast.LENGTH_LONG).show();
         }
         else{
             sharedPref = this.getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
+
             editor.putInt("PIN", pinRegistracion);
             editor.commit();
 
@@ -60,16 +67,14 @@ public class ActividadRegistroTres extends AppCompatActivity {
 
             adb.setPositiveButton("AHORA", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-
-                    Intent irEditarDatos = new Intent (ActividadRegistroTres.this, ActividadEditarRegistro.class);
-                    startActivity(irEditarDatos);
-
+                    //Poner el fragment de editar Mis Datos
+                    Intent irActividadPrincipal = new Intent (ActividadRegistroTres.this, ActividadNavigationDrawer.class);
+                    startActivity(irActividadPrincipal);
                 } });
 
 
             adb.setNegativeButton("MÁS TARDE", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-
                     Intent irActividadPrincipal = new Intent (ActividadRegistroTres.this, ActividadNavigationDrawer.class);
                     startActivity(irActividadPrincipal);
                 } });

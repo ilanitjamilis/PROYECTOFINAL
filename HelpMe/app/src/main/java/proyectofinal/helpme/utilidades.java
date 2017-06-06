@@ -1,6 +1,7 @@
 package proyectofinal.helpme;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 
 
@@ -36,5 +37,4 @@ public class utilidades {
 
         return responder;
     }
-
 }
