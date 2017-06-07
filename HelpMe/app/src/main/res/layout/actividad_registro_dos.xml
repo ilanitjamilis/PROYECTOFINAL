@@ -4,7 +4,7 @@
     android:id="@+id/ScrollView01"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#FFEDC2">
+    android:background="#FFF0DB">
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -22,7 +22,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="120dp"
             android:background="@drawable/fondo_redondeado"
-            android:backgroundTint="#7F3B4C"
+            android:backgroundTint="#4C4DFF"
             android:paddingTop="6dp"
             android:text="Ingrese su apellido"
             android:textAlignment="center"

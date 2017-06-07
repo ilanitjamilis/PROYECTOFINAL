@@ -37,6 +37,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public boolean isFirstStart;
+    public boolean isFirstStart2;
     Context mcontext;
 
     boolean miBaseDatosAbierta;
@@ -280,20 +281,26 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                     Intent i = new Intent(ActividadNavigationDrawer.this, MyIntro.class);
                     startActivity(i);
 
-                    //Pantalla de datos (contraseña + nombre + apellido obligatorio) -->  ACEPTAR
-                    Intent irEmpezarRegistro = new Intent (ActividadNavigationDrawer.this, ActividadRegistro.class);
-                    startActivity(irEmpezarRegistro);
-                    //Alert Dialog con "Completar Mis Datos" --> Mas Tarde / Ahora
-
-                    //Nunca llega aca...
                     SharedPreferences.Editor e = getSharedPreferences.edit();
                     e.putBoolean("firstStart", false);
                     e.apply();
-
                 }
             }
         });
         t.start();
+        SharedPreferences getSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        isFirstStart2 = getSharedPreferences.getBoolean("firstStart2", true);
+        if(isFirstStart2){
+            //Pantalla de datos (contraseña + nombre + apellido obligatorio) -->  ACEPTAR
+            Intent irEmpezarRegistro = new Intent (ActividadNavigationDrawer.this, ActividadRegistro.class);
+            startActivity(irEmpezarRegistro);
+            //Alert Dialog con "Completar Mis Datos" --> Mas Tarde / Ahora
+
+            //Nunca llega aca...
+            SharedPreferences.Editor e = getSharedPreferences.edit();
+            e.putBoolean("firstStart2", false);
+            e.apply();
+        }
     }
 
 

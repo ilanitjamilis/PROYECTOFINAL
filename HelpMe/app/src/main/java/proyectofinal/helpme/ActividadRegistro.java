@@ -29,7 +29,6 @@ public class ActividadRegistro extends AppCompatActivity {
         if(nombre.compareTo("")!=0){
             sharedPref = this.getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-
             editor.putString("nombreUsuario", nombre);
             editor.commit();
 

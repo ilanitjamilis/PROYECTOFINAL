@@ -3,6 +3,7 @@ package proyectofinal.helpme;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.view.View;
 
 
 public class utilidades {

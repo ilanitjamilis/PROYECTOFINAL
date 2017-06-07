@@ -1,8 +1,11 @@
 package proyectofinal.helpme;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class ActividadMisDatos extends Fragment implements View.OnClickListener {
+
+    SharedPreferences sharedPref;
 
     public ActividadMisDatos() {
         // Required empty public constructor
@@ -20,8 +25,8 @@ public class ActividadMisDatos extends Fragment implements View.OnClickListener 
         // Inflate the layout for this fragment
 
         ActividadNavigationDrawer ActividadNavigationDrawer = (ActividadNavigationDrawer) getActivity();
-        String nombre = ActividadNavigationDrawer.tomarDatosUsuarioNombre();
-        String apellido = ActividadNavigationDrawer.tomarDatosUsuarioApellido();
+        String nombre = ActividadNavigationDrawer.tomarDatosUsuarioNombre(); //Recibe NOT FOUND
+        String apellido = ActividadNavigationDrawer.tomarDatosUsuarioApellido(); //Recibe NOT FOUND
 
         View vistaADevolver = inflater.inflate(R.layout.actividad_mis_datos, container, false);
 

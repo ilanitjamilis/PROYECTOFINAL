@@ -51,11 +51,10 @@ public class ActividadRegistroTres extends AppCompatActivity {
         else{
             sharedPref = this.getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-
             editor.putInt("PIN", pinRegistracion);
             editor.commit();
 
-            editor.putBoolean("firstStart", false);
+            editor.putBoolean("firstStart2", false);
             editor.apply();
 
 
