@@ -689,15 +689,78 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     }
 
     public String tomarDatosUsuarioNombre(){
-        String nombreUsuario = utilidades.sharedPref.getString("nombreUsuario", "NOT FOUND");
-        Log.d("ila", "nombre usuario guardado: "+nombreUsuario);
-        //NO SE GUARDA BIEN O NO SE RECIBE BIEN
+        String nombreUsuario = utilidades.sharedPref.getString("nombreUsuario", "-");
         return nombreUsuario;
     }
 
     public String tomarDatosUsuarioApellido(){
-        String apellidoUsuario = utilidades.sharedPref.getString("apellidoUsuario", "NOT FOUND");
+        String apellidoUsuario = utilidades.sharedPref.getString("apellidoUsuario", "-");
         return apellidoUsuario;
+    }
+
+    public String tomarDatosUsuarioFechaNacimiento(){
+        String fechaNacimientoUsuario = utilidades.sharedPref.getString("fechaNacimientoUsuario", "-");
+        return fechaNacimientoUsuario;
+    }
+
+    public String tomarDatosUsuarioEdad(){
+        String edadUsuario = utilidades.sharedPref.getString("edadUsuario", "-");
+        return edadUsuario;
+    }
+
+    public String tomarDatosUsuarioEstatura(){
+        String estaturaUsuario = utilidades.sharedPref.getString("estaturaUsuario", "-");
+        return estaturaUsuario;
+    }
+
+    public String tomarDatosUsuarioPeso(){
+        String pesoUsuario = utilidades.sharedPref.getString("pesoUsuario", "-");
+        return pesoUsuario;
+    }
+
+    public String tomarDatosUsuarioGenero(){
+        String generoUsuario = utilidades.sharedPref.getString("generoUsuario", "-");
+        return generoUsuario;
+    }
+
+    public String tomarDatosUsuarioGrupoSanguineo(){
+        String grupoSanguineoUsuario = utilidades.sharedPref.getString("grupoSanguineoUsuario", "-");
+        return grupoSanguineoUsuario;
+    }
+
+    public String tomarDatosUsuarioObraSocial(){
+        String obraSocialUsuario = utilidades.sharedPref.getString("obraSocialUsuario", "-");
+        return obraSocialUsuario;
+    }
+
+    public String tomarDatosUsuarioNumeroEmergenciaObraSocial(){
+        String numeroEmergenciaObraSocialUsuario = utilidades.sharedPref.getString("numeroEmergenciaObraSocialUsuario", "-");
+        return numeroEmergenciaObraSocialUsuario;
+    }
+
+    public String tomarDatosUsuarioAlergias(){
+        String alergiasUsuario = utilidades.sharedPref.getString("alergiasUsuario", "-");
+        return alergiasUsuario;
+    }
+
+    public String tomarDatosUsuarioMedicamentosProhibidos(){
+        String medicamentosProhibidosUsuario = utilidades.sharedPref.getString("medicamentosProhibidosUsuario", "-");
+        return medicamentosProhibidosUsuario;
+    }
+
+    public String tomarDatosUsuarioEnfermedadesCronicas(){
+        String enfermedadesCronicasUsuario = utilidades.sharedPref.getString("enfermedadesCronicasUsuario", "-");
+        return enfermedadesCronicasUsuario;
+    }
+
+    public String tomarDatosUsuarioContactoEmergencia1(){
+        String contactoEmergencia1UsuarioUsuario = utilidades.sharedPref.getString("contactoEmergencia1Usuario", "-");
+        return contactoEmergencia1UsuarioUsuario;
+    }
+
+    public String tomarDatosUsuarioContactoEmergencia2(){
+        String contactoEmergencia2UsuarioUsuario = utilidades.sharedPref.getString("contactoEmergencia2Usuario", "-");
+        return contactoEmergencia2UsuarioUsuario;
     }
 
     public void irEditarDatos(){

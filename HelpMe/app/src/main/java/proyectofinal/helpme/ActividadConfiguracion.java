@@ -42,7 +42,6 @@ public class ActividadConfiguracion extends Fragment implements View.OnClickList
                 ActividadNavigationDrawer.irPinParaEditarDatos();
                 break;
         }
-
     }
 
 }
