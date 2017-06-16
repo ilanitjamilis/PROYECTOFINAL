@@ -50,7 +50,8 @@
         <activity android:name=".ActividadRegistro" />
         <activity android:name=".ActividadEditarRegistro" />
         <activity android:name=".ActividadRegistroDos" />
-        <activity android:name=".ActividadRegistroTres"></activity>
+        <activity android:name=".ActividadRegistroTres" />
+        <activity android:name=".ActividadPinParaRegistro"></activity>
     </application>
 
 </manifest>

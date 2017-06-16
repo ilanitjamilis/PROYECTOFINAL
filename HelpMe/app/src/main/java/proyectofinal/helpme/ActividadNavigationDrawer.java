@@ -701,11 +701,26 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     }
 
     public void irEditarDatos(){
-        Log.d("ila","entra a editar datos");
-        Fragment miFragmentIngreso2 = new ActividadEditarRegistro();
+        Fragment miFragmentIngreso = new ActividadEditarRegistro();
         TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
-        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso2);
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso);
         TransaccionDeFragment.commit();
+    }
+
+    public void irPinParaEditarDatos(){
+        Fragment miFragmentIngreso = new ActividadPinParaRegistro();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso);
+        TransaccionDeFragment.commit();
+    }
+
+    public Integer PinUsuario(){
+        Integer pinUsuario = utilidades.sharedPref.getInt("pinUsuario",0);
+        return pinUsuario;
+    }
+
+    public void MostrarMensaje(String mensaje){
+        Toast.makeText(this,mensaje,Toast.LENGTH_SHORT).show();
     }
 
 }

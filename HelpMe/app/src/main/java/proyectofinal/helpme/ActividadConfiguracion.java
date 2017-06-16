@@ -39,7 +39,7 @@ public class ActividadConfiguracion extends Fragment implements View.OnClickList
         switch(vista.getId()) {
             case R.id.btnEditarMisDatos:
                 Log.d("ila","entro al case editar mis datos");
-                ActividadNavigationDrawer.irEditarDatos();
+                ActividadNavigationDrawer.irPinParaEditarDatos();
                 break;
         }
 
