@@ -8,6 +8,8 @@ import android.view.View;
 
 public class utilidades {
 
+    public static SharedPreferences sharedPref;
+
     public static baseSQLiteHelper accesoBase;
     public static SQLiteDatabase baseDatos;
 

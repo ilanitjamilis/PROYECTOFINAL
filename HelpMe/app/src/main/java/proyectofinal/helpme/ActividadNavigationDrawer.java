@@ -45,7 +45,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     FragmentManager AdministradorDeFragments = getSupportFragmentManager();
     FragmentTransaction TransaccionDeFragment;
 
-    SharedPreferences sharedPref;
     String ultimoCodigoDetectado;
     String ultimoTiempoDetectado;
 
@@ -56,6 +55,60 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        utilidades.sharedPref = getSharedPreferences("mispreferencias", MODE_PRIVATE);
+
+        try {
+            Log.d("ila", "entra al try");
+
+            Bundle datosRecibidos = this.getIntent().getExtras();
+            String fragmentIr = datosRecibidos.getString("ir");
+
+            Log.d("ila","fragment ir: "+fragmentIr);
+
+            String deDondeVengo = datosRecibidos.getString("anterior");
+
+            if(deDondeVengo.compareTo("registro")==0) {
+                Log.d("ila", "viene de registro");
+
+                String nombreRegistro = datosRecibidos.getString("nombre");
+                String apellidoRegistro = datosRecibidos.getString("apellido");
+                Integer pinRegistro = datosRecibidos.getInt("pin");
+
+                Log.d("ila", "recibe bien el bundle");
+
+                SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+                editor.putString("nombreUsuario", nombreRegistro);
+                editor.apply();
+                editor.putString("apellidoUsuario", apellidoRegistro);
+                editor.apply();
+                editor.putInt("pinUsuario", pinRegistro);
+                editor.apply();
+            }
+
+            if(fragmentIr.compareTo("editarDatos")==0){
+                Fragment miFragmentIngreso2 = new ActividadEditarRegistro();
+                TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+                TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso2);
+                TransaccionDeFragment.commit();
+            }
+            else{
+                Log.d("ila", "no editar datos");
+                Fragment miFragmentIngreso = new ActividadPrincipal();
+                TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+                TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso);
+                TransaccionDeFragment.commit();
+            }
+
+            Log.d("ila", "termina el try");
+
+        } catch (NullPointerException e ) {
+            Log.d("ila", "entra al catch");
+            Fragment miFragmentIngreso = new ActividadPrincipal();
+            TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+            TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso);
+            TransaccionDeFragment.commit();
+        }
 
         /*getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.ic_logo);
@@ -71,12 +124,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
         /*Intent irWizard = new Intent(ActividadPrincipal.this, MyIntro.class);
         startActivity(irWizard);*/
-
-
-        Fragment miFragmentIngreso = new ActividadPrincipal();
-        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
-        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso);
-        TransaccionDeFragment.commit();
 
 
 
@@ -254,8 +301,8 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             //Códigos ISO: http://kirste.userpage.fu-berlin.de/diverse/doc/ISO_3166.html
 
 
-            sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
+            utilidades.sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = utilidades.sharedPref.edit();
             editor.putString("CÓDIGO", "NONE");
         }
 
@@ -551,9 +598,8 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     }
 
     public void TomarUbicacionActual(){
-        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        ultimoCodigoDetectado = sharedPref.getString("CÓDIGO", "NONE");
-        ultimoTiempoDetectado = sharedPref.getString("ultUbicacionTiempo", "NONE");
+        ultimoCodigoDetectado = utilidades.sharedPref.getString("CÓDIGO", "NONE");
+        ultimoTiempoDetectado = utilidades.sharedPref.getString("ultUbicacionTiempo", "NONE");
 
         Log.d("ila","último código detectado: "+ ultimoCodigoDetectado);
         Log.d("ila","último tiempo detectado: "+ ultimoTiempoDetectado);
@@ -576,8 +622,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                     hayUbicacion = false;
 
                     if(estaActualizando) {
-                        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-                        String ultTiempoDetectado = sharedPref.getString("ultUbicacionTiempo", "NONE");
+                        String ultTiempoDetectado = utilidades.sharedPref.getString("ultUbicacionTiempo", "NONE");
                         Toast.makeText(this, "Última detección: " + ultTiempoDetectado, Toast.LENGTH_LONG).show();
                     }
                 }
@@ -585,16 +630,14 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             else {
                 boolean codigoEncontrado = AveriguarPaisActual(codPais);
                 if(codigoEncontrado){
-
-                    sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPref.edit();
+                    SharedPreferences.Editor editor = utilidades.sharedPref.edit();
                     editor.putString("CÓDIGO", codPais);
                     editor.commit();
 
                     editor.putString("ultUbicacionTiempo", TiempoAhora());
                     editor.commit();
 
-                    ultimoCodigoDetectado = sharedPref.getString("CÓDIGO", "NONE");
+                    ultimoCodigoDetectado = utilidades.sharedPref.getString("CÓDIGO", "NONE");
 
                     Log.d("ila","mi último código detectado ahora es: "+ultimoCodigoDetectado);
                 }
@@ -608,9 +651,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                         AveriguarPaisActual(ultimoCodigoDetectado);
                         getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
 
-                        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-
-                        String ultTiempoDetectado = sharedPref.getString("ultUbicacionTiempo", "NONE");
+                        String ultTiempoDetectado = utilidades.sharedPref.getString("ultUbicacionTiempo", "NONE");
 
                         Toast.makeText(this,"Última detección: "+ultTiempoDetectado, Toast.LENGTH_LONG).show();
 
@@ -626,9 +667,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                 getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
 
                 if(estaActualizando) {
-                    sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-
-                    String ultTiempoDetectado = sharedPref.getString("ultUbicacionTiempo", "NONE");
+                    String ultTiempoDetectado = utilidades.sharedPref.getString("ultUbicacionTiempo", "NONE");
 
                     Toast.makeText(this, "Última detección: " + ultTiempoDetectado, Toast.LENGTH_LONG).show();
 
@@ -650,17 +689,23 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     }
 
     public String tomarDatosUsuarioNombre(){
-        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        String nombreUsuario = sharedPref.getString("nombreUsuario", "NOT FOUND");
+        String nombreUsuario = utilidades.sharedPref.getString("nombreUsuario", "NOT FOUND");
         Log.d("ila", "nombre usuario guardado: "+nombreUsuario);
         //NO SE GUARDA BIEN O NO SE RECIBE BIEN
         return nombreUsuario;
     }
 
     public String tomarDatosUsuarioApellido(){
-        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        String apellidoUsuario = sharedPref.getString("apellidoUsuario", "NOT FOUND");
+        String apellidoUsuario = utilidades.sharedPref.getString("apellidoUsuario", "NOT FOUND");
         return apellidoUsuario;
+    }
+
+    public void irEditarDatos(){
+        Log.d("ila","entra a editar datos");
+        Fragment miFragmentIngreso2 = new ActividadEditarRegistro();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso2);
+        TransaccionDeFragment.commit();
     }
 
 }

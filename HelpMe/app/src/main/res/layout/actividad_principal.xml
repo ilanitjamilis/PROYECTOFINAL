@@ -37,7 +37,6 @@
                         android:layout_height="200dp"
                         android:layout_marginTop="3dp"
                         android:background="@null"
-                        android:onClick="llamarPolicia"
                         android:src="@drawable/policia2" />
 
                     <ImageButton
@@ -46,7 +45,6 @@
                         android:layout_height="200dp"
                         android:layout_marginTop="3dp"
                         android:background="@null"
-                        android:onClick="llamarAmbulancia"
                         android:src="@drawable/ambulancia" />
 
                 </LinearLayout>
@@ -61,7 +59,6 @@
                         android:layout_width="170dp"
                         android:layout_height="200dp"
                         android:background="@null"
-                        android:onClick="llamarBomberos"
                         android:src="@drawable/bomberos" />
 
                     <ImageButton
@@ -69,7 +66,6 @@
                         android:layout_width="170dp"
                         android:layout_height="200dp"
                         android:background="@null"
-                        android:onClick="enviarMensajeEmergencia"
                         android:src="@drawable/help" />
 
                 </LinearLayout>

@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 public class ActividadRegistroDos extends AppCompatActivity {
 
-    SharedPreferences sharedPref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,16 +18,18 @@ public class ActividadRegistroDos extends AppCompatActivity {
     }
 
     public void ingresoApellido(View vista){
+        Bundle datosRecibidos = this.getIntent().getExtras();
+        String nombre = datosRecibidos.getString("nombre");
+
         EditText apellidoIngresado = (EditText)findViewById(R.id.apellidoRegistracion);
         String apellido = apellidoIngresado.getText().toString().trim();
 
         if(apellido.compareTo("")!=0){
-            sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString("apellidoUsuario", apellido);
-            editor.commit();
-
             Intent irIngresarPin = new Intent (ActividadRegistroDos.this, ActividadRegistroTres.class);
+            Bundle misDatos = new Bundle();
+            misDatos.putString("nombre",nombre);
+            misDatos.putString("apellido",apellido);
+            irIngresarPin.putExtras(misDatos);
             startActivity(irIngresarPin);
         }
         else{

@@ -20,6 +20,10 @@ public class ActividadSplash extends AppCompatActivity {
             public void run() {
                 finish();
                 Intent i = new Intent(ActividadSplash.this, ActividadNavigationDrawer.class);
+                Bundle misDatos = new Bundle();
+                misDatos.putString("ir","principal");
+                misDatos.putString("anterior","splash");
+                i.putExtras(misDatos);
                 startActivity(i);
             }
         }, 1000);

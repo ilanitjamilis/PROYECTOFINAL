@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 public class ActividadRegistroTres extends AppCompatActivity {
 
-    SharedPreferences sharedPref;
     Integer pinRegistracion;
 
     FragmentManager AdministradorDeFragments = getSupportFragmentManager();
@@ -30,9 +29,13 @@ public class ActividadRegistroTres extends AppCompatActivity {
     }
 
     public void registrarUsuario(View vista){
+        Bundle datosRecibidos = this.getIntent().getExtras();
+        final String nombre = datosRecibidos.getString("nombre");
+        final String apellido = datosRecibidos.getString("apellido");
+
         String error = "";
 
-        EditText pin = (EditText)findViewById(R.id.pinRegistracion);
+        final EditText pin = (EditText)findViewById(R.id.pinRegistracion);
         String pinR = pin.getText().toString().trim();
         pinRegistracion = Integer.valueOf(pinR);
 
@@ -49,10 +52,8 @@ public class ActividadRegistroTres extends AppCompatActivity {
             Toast.makeText(this, error, Toast.LENGTH_LONG).show();
         }
         else{
-            sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("PIN", pinRegistracion);
-            editor.commit();
+            utilidades.sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = utilidades.sharedPref.edit();
 
             editor.putBoolean("firstStart2", false);
             editor.apply();
@@ -68,6 +69,14 @@ public class ActividadRegistroTres extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     //Poner el fragment de editar Mis Datos
                     Intent irActividadPrincipal = new Intent (ActividadRegistroTres.this, ActividadNavigationDrawer.class);
+                    Bundle misDatos = new Bundle();
+                    misDatos.putString("ir","editarDatos");
+                    misDatos.putString("anterior","registro");
+                    misDatos.putString("nombre",nombre);
+                    misDatos.putString("apellido",apellido);
+                    misDatos.putInt("pin",pinRegistracion);
+                    misDatos.putString("anterior","registro");
+                    irActividadPrincipal.putExtras(misDatos);
                     startActivity(irActividadPrincipal);
                 } });
 
@@ -75,6 +84,14 @@ public class ActividadRegistroTres extends AppCompatActivity {
             adb.setNegativeButton("MÁS TARDE", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     Intent irActividadPrincipal = new Intent (ActividadRegistroTres.this, ActividadNavigationDrawer.class);
+                    Bundle misDatos = new Bundle();
+                    misDatos.putString("ir","principal");
+                    misDatos.putString("anterior","registro");
+                    misDatos.putString("nombre",nombre);
+                    misDatos.putString("apellido",apellido);
+                    misDatos.putInt("pin",pinRegistracion);
+                    misDatos.putString("anterior","registro");
+                    irActividadPrincipal.putExtras(misDatos);
                     startActivity(irActividadPrincipal);
                 } });
             adb.show();

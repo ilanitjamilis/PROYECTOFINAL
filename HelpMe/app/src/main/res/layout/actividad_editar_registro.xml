@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ScrollView01"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
@@ -12,6 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="proyectofinal.helpme.ActividadEditarRegistro">
+
+        <TextView
+            android:layout_width="344dp"
+            android:layout_height="495dp"
+            android:text="Editar Mis Datos"
+            android:textAlignment="center"
+            android:textSize="50dp"
+            android:paddingTop="200dp"
+            tools:layout_editor_absoluteY="8dp"
+            tools:layout_editor_absoluteX="8dp" />
 
     </LinearLayout>
 

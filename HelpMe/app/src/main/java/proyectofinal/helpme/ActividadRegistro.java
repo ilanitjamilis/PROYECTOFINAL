@@ -14,8 +14,6 @@ import android.widget.Toast;
 
 public class ActividadRegistro extends AppCompatActivity {
 
-    SharedPreferences sharedPref;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,16 +25,10 @@ public class ActividadRegistro extends AppCompatActivity {
         String nombre = nombreIngresado.getText().toString().trim();
 
         if(nombre.compareTo("")!=0){
-            sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString("nombreUsuario", nombre);
-            editor.commit();
-
-            String nombreUsuarioGuardado = sharedPref.getString("nombreUsuario", "NONE");
-            Log.d("ila", "nombre usuario guardado: "+nombreUsuarioGuardado);
-            //NO SE GUARDA BIEN O NO SE RECIBE BIEN
-
             Intent irIngresarApellido = new Intent (ActividadRegistro.this, ActividadRegistroDos.class);
+            Bundle misDatos = new Bundle();
+            misDatos.putString("nombre",nombre);
+            irIngresarApellido.putExtras(misDatos);
             startActivity(irIngresarApellido);
         }
         else{
