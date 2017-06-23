@@ -47,13 +47,12 @@
             android:layout_marginLeft="12dp"
             android:layout_marginTop="35dp"
             android:background="@drawable/fondo_redondeado"
-            android:backgroundTint="#77168C"
-            android:textColor="#FFFFFF"
+            android:backgroundTint="#AFC2FF"
+            android:textColor="#000"
             android:text="Editar Mis Datos"
             android:textAllCaps="false"
             android:textAlignment="center"
-            android:textSize="30dp"
-            android:textStyle="bold" />
+            android:textSize="30dp" />
 
     </RelativeLayout>
 

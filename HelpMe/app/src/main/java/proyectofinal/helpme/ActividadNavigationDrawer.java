@@ -1,9 +1,11 @@
 package proyectofinal.helpme;
 
+import android.Manifest;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -11,9 +13,12 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.text.format.Time;
 import android.util.Log;
@@ -590,6 +595,22 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     public void enviarMensajeEmergencia (View vista){
         String mensaje = "Funcionalidad en construcción";
         Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
+
+        /*String contactoEmergencia1 = tomarDatosUsuarioContactoEmergencia1();
+        enviarSMS(contactoEmergencia1, "Prueba");*/
+    }
+
+    public void enviarSMS(String phoneNo, String msg) {
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNo, null, msg, null, null);
+            Toast.makeText(getApplicationContext(), "Mensaje enviado",
+                    Toast.LENGTH_LONG).show();
+        } catch (Exception ex) {
+            Toast.makeText(getApplicationContext(),ex.getMessage().toString(),
+                    Toast.LENGTH_LONG).show();
+            ex.printStackTrace();
+        }
     }
 
     public void irMapas (View vista){
@@ -770,6 +791,13 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         TransaccionDeFragment.commit();
     }
 
+    public void irMisDatos(){
+        Fragment miFragmentIngreso = new ActividadMisDatos();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso);
+        TransaccionDeFragment.commit();
+    }
+
     public void irPinParaEditarDatos(){
         Fragment miFragmentIngreso = new ActividadPinParaRegistro();
         TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
@@ -781,6 +809,109 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         Integer pinUsuario = utilidades.sharedPref.getInt("pinUsuario",0);
         return pinUsuario;
     }
+
+    public void setearNombreUsuario(String nombre){
+        SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+        editor.putString("nombreUsuario", nombre);
+        editor.apply();
+    }
+
+    public void setearApellidoUsuario(String apellido){
+        SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+        editor.putString("apellidoUsuario", apellido);
+        editor.apply();
+    }
+
+    public void setearFechaNacimientoUsuario(String fechaNacimiento){
+        SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+        editor.putString("fechaNacimientoUsuario", fechaNacimiento);
+        editor.apply();
+    }
+
+    public void setearEdadUsuario(String edad){
+        SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+        editor.putString("edadUsuario", edad);
+        editor.apply();
+    }
+
+    public void setearEstaturaUsuario(String estatura){
+        SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+        editor.putString("estaturaUsuario", estatura);
+        editor.apply();
+    }
+
+    public void setearPesoUsuario(String peso){
+        SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+        editor.putString("pesoUsuario", peso);
+        editor.apply();
+    }
+
+    public void setearGeneroUsuario(String genero){
+        SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+        editor.putString("generoUsuario", genero);
+        editor.apply();
+    }
+
+    public void setearGrupoSanguineoUsuario(String grupoSanguineo){
+        SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+        editor.putString("grupoSanguineoUsuario", grupoSanguineo);
+        editor.apply();
+    }
+
+    public void setearObraSocialUsuario(String obraSocial){
+        SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+        editor.putString("obraSocialUsuario", obraSocial);
+        editor.apply();
+    }
+
+    public void setearNumeroEmergenciaObraSocialUsuario(String numeroEmergencia){
+        SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+        editor.putString("numeroEmergenciaObraSocialUsuario", numeroEmergencia);
+        editor.apply();
+    }
+
+    public void setearAlergiasUsuario(String alergias){
+        SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+        editor.putString("alergiasUsuario", alergias);
+        editor.apply();
+    }
+
+    public void setearMedicamentosProhibidosUsuario(String medicProhib){
+        SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+        editor.putString("medicamentosProhibidosUsuario", medicProhib);
+        editor.apply();
+    }
+
+    public void setearEnfermedadesCronicasUsuario(String enfermedades){
+        SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+        editor.putString("enfermedadesCronicasUsuario", enfermedades);
+        editor.apply();
+    }
+
+    public void setearContactoEmergencia1Usuario(String contactoEmergencia1){
+        SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+        editor.putString("contactoEmergencia1Usuario", contactoEmergencia1);
+        editor.apply();
+    }
+
+    public void setearContactoEmergencia2Usuario(String contactoEmergencia2){
+        SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+        editor.putString("contactoEmergencia2Usuario", contactoEmergencia2);
+        editor.apply();
+    }
+
+    public void llamarContactoEmergencia(String contacto){
+        if(contacto.compareTo("")!= 0) {
+            Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
+            intentoLlamada.setData(Uri.parse("tel:" + contacto));
+            startActivity(intentoLlamada);
+        }
+        else{
+            String mensaje = "Contacto no existente";
+            Toast.makeText(this,mensaje, Toast.LENGTH_LONG).show();
+        }
+    }
+
 
     public void MostrarMensaje(String mensaje){
         Toast.makeText(this,mensaje,Toast.LENGTH_SHORT).show();

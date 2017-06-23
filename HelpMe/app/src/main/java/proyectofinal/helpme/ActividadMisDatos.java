@@ -18,6 +18,22 @@ public class ActividadMisDatos extends Fragment implements View.OnClickListener 
 
     ActividadNavigationDrawer ActividadNavigationDrawer;
 
+    String nombre;
+    String apellido;
+    String fechaNacimiento;
+    String edad;
+    String estatura;
+    String peso;
+    String genero;
+    String grupoSanguineo;
+    String obraSocial;
+    String numeroEmergenciaObraSocial;
+    String alergias;
+    String medicamentosProhibidos;
+    String enfermedadesCronicas;
+    String contactoEmergencia1;
+    String contactoEmergencia2;
+
     public ActividadMisDatos() {
         // Required empty public constructor
     }
@@ -28,26 +44,30 @@ public class ActividadMisDatos extends Fragment implements View.OnClickListener 
 
         ActividadNavigationDrawer = (ActividadNavigationDrawer) getActivity();
 
-        String nombre = ActividadNavigationDrawer.tomarDatosUsuarioNombre();
-        String apellido = ActividadNavigationDrawer.tomarDatosUsuarioApellido();
-        String fechaNacimiento = ActividadNavigationDrawer.tomarDatosUsuarioFechaNacimiento();
-        String edad = ActividadNavigationDrawer.tomarDatosUsuarioEdad();
-        String estatura = ActividadNavigationDrawer.tomarDatosUsuarioEstatura();
-        String peso = ActividadNavigationDrawer.tomarDatosUsuarioPeso();
-        String genero = ActividadNavigationDrawer.tomarDatosUsuarioGenero();
-        String grupoSanguineo = ActividadNavigationDrawer.tomarDatosUsuarioGrupoSanguineo();
-        String obraSocial = ActividadNavigationDrawer.tomarDatosUsuarioObraSocial();
-        String numeroEmergenciaObraSocial = ActividadNavigationDrawer.tomarDatosUsuarioNumeroEmergenciaObraSocial();
-        String alergias = ActividadNavigationDrawer.tomarDatosUsuarioAlergias();
-        String medicamentosProhibidos = ActividadNavigationDrawer.tomarDatosUsuarioMedicamentosProhibidos();
-        String enfermedadesCronicas = ActividadNavigationDrawer.tomarDatosUsuarioEnfermedadesCronicas();
-        String contactoEmergencia1 = ActividadNavigationDrawer.tomarDatosUsuarioContactoEmergencia1();
-        String contactoEmergencia2 = ActividadNavigationDrawer.tomarDatosUsuarioContactoEmergencia2();
+        nombre = ActividadNavigationDrawer.tomarDatosUsuarioNombre();
+        apellido = ActividadNavigationDrawer.tomarDatosUsuarioApellido();
+        fechaNacimiento = ActividadNavigationDrawer.tomarDatosUsuarioFechaNacimiento();
+        edad = ActividadNavigationDrawer.tomarDatosUsuarioEdad();
+        estatura = ActividadNavigationDrawer.tomarDatosUsuarioEstatura();
+        peso = ActividadNavigationDrawer.tomarDatosUsuarioPeso();
+        genero = ActividadNavigationDrawer.tomarDatosUsuarioGenero();
+        grupoSanguineo = ActividadNavigationDrawer.tomarDatosUsuarioGrupoSanguineo();
+        obraSocial = ActividadNavigationDrawer.tomarDatosUsuarioObraSocial();
+        numeroEmergenciaObraSocial = ActividadNavigationDrawer.tomarDatosUsuarioNumeroEmergenciaObraSocial();
+        alergias = ActividadNavigationDrawer.tomarDatosUsuarioAlergias();
+        medicamentosProhibidos = ActividadNavigationDrawer.tomarDatosUsuarioMedicamentosProhibidos();
+        enfermedadesCronicas = ActividadNavigationDrawer.tomarDatosUsuarioEnfermedadesCronicas();
+        contactoEmergencia1 = ActividadNavigationDrawer.tomarDatosUsuarioContactoEmergencia1();
+        contactoEmergencia2 = ActividadNavigationDrawer.tomarDatosUsuarioContactoEmergencia2();
 
         View vistaADevolver = inflater.inflate(R.layout.actividad_mis_datos, container, false);
 
         Button btnEditarMisDatos = (Button)vistaADevolver.findViewById(R.id.btnEditarMisDatos);
         btnEditarMisDatos.setOnClickListener(this);
+        ImageButton btnllamarContacto1 = (ImageButton)vistaADevolver.findViewById(R.id.btnLlamarContacto1);
+        btnllamarContacto1.setOnClickListener(this);
+        ImageButton btnllamarContacto2 = (ImageButton) vistaADevolver.findViewById(R.id.btnLlamarContacto2);
+        btnllamarContacto2.setOnClickListener(this);
 
         TextView TextViewNombre = (TextView)vistaADevolver.findViewById(R.id.nombreMisDatos);
         TextViewNombre.setText(nombre);
@@ -76,7 +96,7 @@ public class ActividadMisDatos extends Fragment implements View.OnClickListener 
         TextView TextViewEstatura = (TextView)vistaADevolver.findViewById(R.id.estaturaMisDatos);
         if(estatura.compareTo("-")!=0) {
             TextViewEstatura.setText(estatura + " cm");
-            TextViewFechaNacimiento.setTextColor(Color.BLUE);
+            TextViewEstatura.setTextColor(Color.BLUE);
         }
         else{
             TextViewEstatura.setText(estatura);
@@ -138,11 +158,17 @@ public class ActividadMisDatos extends Fragment implements View.OnClickListener 
         if(contactoEmergencia1.compareTo("-")!=0){
             TextViewContactoEmergencia1.setTextColor(Color.BLUE);
         }
+        else{
+            btnllamarContacto1.setVisibility(View.GONE);
+        }
 
         TextView TextViewContactoEmergencia2 = (TextView)vistaADevolver.findViewById(R.id.contactoemergenci21MisDatos);
         TextViewContactoEmergencia2.setText(contactoEmergencia2);
         if(contactoEmergencia2.compareTo("-")!=0){
             TextViewContactoEmergencia2.setTextColor(Color.BLUE);
+        }
+        else{
+            btnllamarContacto2.setVisibility(View.GONE);
         }
 
         return vistaADevolver;
@@ -160,6 +186,12 @@ public class ActividadMisDatos extends Fragment implements View.OnClickListener 
             case R.id.btnEditarMisDatos:
                 Log.d("ila","entro al case editar mis datos");
                 ActividadNavigationDrawer.irPinParaEditarDatos();
+                break;
+            case R.id.btnLlamarContacto1:
+                ActividadNavigationDrawer.llamarContactoEmergencia(contactoEmergencia1);
+                break;
+            case R.id.btnLlamarContacto2:
+                ActividadNavigationDrawer.llamarContactoEmergencia(contactoEmergencia2);
                 break;
         }
     }

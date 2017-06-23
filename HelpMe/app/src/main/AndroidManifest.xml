@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:allowBackup="true"
@@ -24,10 +25,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ActividadPrincipal"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ActividadSplash"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
@@ -42,16 +39,6 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme" />
-        <activity android:name=".ActividadMisDatos" />
-        <activity android:name=".ActividadAyudaAlOtro" />
-        <activity android:name=".ActividadDenunciar" />
-        <activity android:name=".ActividadConfiguracion" />
-        <activity android:name=".ActividadCerrarSesion" />
-        <activity android:name=".ActividadRegistro" />
-        <activity android:name=".ActividadEditarRegistro" />
-        <activity android:name=".ActividadRegistroDos" />
-        <activity android:name=".ActividadRegistroTres" />
-        <activity android:name=".ActividadPinParaRegistro"></activity>
     </application>
 
 </manifest>

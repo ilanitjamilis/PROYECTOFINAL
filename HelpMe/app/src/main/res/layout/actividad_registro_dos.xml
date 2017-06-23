@@ -4,7 +4,7 @@
     android:id="@+id/ScrollView01"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#FFF0DB">
+    android:background="#F2F4FF">
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,33 +15,28 @@
         tools:context="proyectofinal.helpme.ActividadRegistro">
 
         <TextView
-            android:layout_below="@+id/pinRegistracion"
             android:id="@+id/textView2"
             android:layout_width="300dp"
             android:layout_height="45dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="120dp"
-            android:background="@drawable/fondo_redondeado"
-            android:backgroundTint="#4C4DFF"
             android:paddingTop="6dp"
             android:text="Ingrese su apellido"
             android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+            android:textColor="#000000"
+            android:textSize="30dp" />
 
         <EditText
-            android:layout_below="@id/textView2"
+            android:layout_below="@+id/textView2"
             android:id="@+id/apellidoRegistracion"
-            android:hint="-----------------------"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
+            android:hint="Apellido"
             android:layout_height="60dp"
-            android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/fondo_redondeado"
-            android:backgroundTint="#E5E28F"
             android:textAlignment="center"
-            android:textSize="35dp" />
+            android:textSize="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true" />
 
         <Button
             android:layout_below="@id/apellidoRegistracion"
@@ -49,14 +44,13 @@
             android:layout_height="60dp"
             android:layout_marginLeft="42dp"
             android:layout_marginTop="35dp"
-            android:background="@drawable/fondo_redondeado"
-            android:backgroundTint="#80FF73"
             android:onClick="ingresoApellido"
+            android:backgroundTint="#2873AF"
             android:textAllCaps="false"
             android:text="Continuar"
             android:textAlignment="center"
-            android:textSize="35dp"
-            android:textStyle="bold" />
+            android:textSize="30dp" />
+
 
     </RelativeLayout>
 

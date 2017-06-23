@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:text="Nombre: "
                     android:textAlignment="center"
-                    android:textSize="30dp" />
+                    android:textSize="25dp" />
 
                 <TextView
                     android:id="@+id/nombreMisDatos"
@@ -65,7 +65,7 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="10dp"
                     android:text="nombre"
-                    android:textSize="30dp"/>
+                    android:textSize="25dp"/>
 
             </LinearLayout>
 
@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:text="Apellido: "
                     android:textAlignment="center"
-                    android:textSize="30dp" />
+                    android:textSize="25dp" />
 
                 <TextView
                     android:id="@+id/apellidoMisDatos"
@@ -90,7 +90,7 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="10dp"
                     android:text="apellido"
-                    android:textSize="30dp"/>
+                    android:textSize="25dp"/>
 
             </LinearLayout>
 
@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:text="Nacimiento: "
                     android:textAlignment="center"
-                    android:textSize="30dp" />
+                    android:textSize="25dp" />
 
                 <TextView
                     android:id="@+id/fechaNacimientoMisDatos"
@@ -115,7 +115,7 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="10dp"
                     android:text="00/00/0000"
-                    android:textSize="30dp"/>
+                    android:textSize="25dp"/>
 
             </LinearLayout>
 
@@ -132,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:text="Edad: "
                     android:textAlignment="center"
-                    android:textSize="30dp" />
+                    android:textSize="25dp" />
 
                 <TextView
                     android:id="@+id/edadMisDatos"
@@ -140,7 +140,7 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="10dp"
                     android:text="00"
-                    android:textSize="30dp"/>
+                    android:textSize="25dp"/>
 
             </LinearLayout>
 
@@ -157,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:text="Estatura: "
                     android:textAlignment="center"
-                    android:textSize="30dp" />
+                    android:textSize="25dp" />
 
                 <TextView
                     android:id="@+id/estaturaMisDatos"
@@ -165,7 +165,7 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="10dp"
                     android:text="00 cm"
-                    android:textSize="30dp"/>
+                    android:textSize="25dp"/>
 
             </LinearLayout>
 
@@ -182,7 +182,7 @@
                     android:layout_height="wrap_content"
                     android:text="Peso: "
                     android:textAlignment="center"
-                    android:textSize="30dp" />
+                    android:textSize="25dp" />
 
                 <TextView
                     android:id="@+id/pesoMisDatos"
@@ -190,7 +190,7 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="10dp"
                     android:text="00 kg"
-                    android:textSize="30dp"/>
+                    android:textSize="25dp"/>
 
             </LinearLayout>
 
@@ -207,7 +207,7 @@
                     android:layout_height="wrap_content"
                     android:text="Género: "
                     android:textAlignment="center"
-                    android:textSize="30dp" />
+                    android:textSize="25dp" />
 
                 <TextView
                     android:id="@+id/generoMisDatos"
@@ -215,7 +215,7 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="10dp"
                     android:text="Femenino"
-                    android:textSize="30dp"/>
+                    android:textSize="25dp"/>
 
             </LinearLayout>
 
@@ -232,7 +232,7 @@
                     android:layout_height="wrap_content"
                     android:text="Grupo sanguíneo: "
                     android:textAlignment="center"
-                    android:textSize="30dp" />
+                    android:textSize="25dp" />
 
                 <TextView
                     android:id="@+id/grupoSanguineoMisDatos"
@@ -240,7 +240,7 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="10dp"
                     android:text="A+"
-                    android:textSize="30dp"/>
+                    android:textSize="25dp"/>
 
             </LinearLayout>
 
@@ -257,7 +257,7 @@
                     android:layout_height="wrap_content"
                     android:text="Obra Social: "
                     android:textAlignment="center"
-                    android:textSize="30dp" />
+                    android:textSize="25dp" />
 
                 <TextView
                     android:id="@+id/obraSocialMisDatos"
@@ -265,7 +265,7 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="10dp"
                     android:text="obra social"
-                    android:textSize="30dp"/>
+                    android:textSize="25dp"/>
 
             </LinearLayout>
 
@@ -281,7 +281,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Número emergencia obra social: "
-                    android:textSize="30dp" />
+                    android:textSize="25dp" />
 
                 <TextView
                     android:id="@+id/numeroEmergenciaMisDatos"
@@ -289,7 +289,7 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="10dp"
                     android:text="********"
-                    android:textSize="30dp"/>
+                    android:textSize="25dp"/>
 
             </LinearLayout>
 
@@ -306,7 +306,7 @@
                     android:layout_height="wrap_content"
                     android:text="Alergias: "
                     android:textAlignment="center"
-                    android:textSize="30dp" />
+                    android:textSize="25dp" />
 
                 <TextView
                     android:id="@+id/alergiasMisDatos"
@@ -314,7 +314,7 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="10dp"
                     android:text="alergias"
-                    android:textSize="30dp"/>
+                    android:textSize="25dp"/>
 
             </LinearLayout>
 
@@ -330,7 +330,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Medicamentos prohibidos: "
-                    android:textSize="30dp" />
+                    android:textSize="25dp" />
 
                 <TextView
                     android:id="@+id/medicamentosProhibidosMisDatos"
@@ -338,7 +338,7 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="10dp"
                     android:text="medicamentos prohibidos"
-                    android:textSize="30dp"/>
+                    android:textSize="25dp"/>
 
             </LinearLayout>
 
@@ -355,7 +355,7 @@
                     android:layout_height="wrap_content"
                     android:text="Enfermedades Crónicas: "
                     android:textAlignment="center"
-                    android:textSize="30dp" />
+                    android:textSize="25dp" />
 
                 <TextView
                     android:id="@+id/enfermedadesCronicasMisDatos"
@@ -363,7 +363,7 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="10dp"
                     android:text="enfermedades cronicas"
-                    android:textSize="30dp"/>
+                    android:textSize="25dp"/>
 
             </LinearLayout>
 
@@ -379,15 +379,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Contacto de Emergencia 1: "
-                    android:textSize="30dp" />
-
-                <TextView
-                    android:id="@+id/contactoemergencia1MisDatos"
+                    android:textSize="25dp" />
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="10dp"
-                    android:text="**********"
-                    android:textSize="30dp"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/contactoemergencia1MisDatos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="10dp"
+                        android:text="**********"
+                        android:textSize="25dp"/>
+
+                    <ImageButton
+                        android:id="@+id/btnLlamarContacto1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_call_black_24dp"
+                        android:background="@null"
+                        android:layout_margin="5dp"/>
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -403,15 +418,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Contacto de Emergencia 2: "
-                    android:textSize="30dp" />
+                    android:textSize="25dp" />
 
-                <TextView
-                    android:id="@+id/contactoemergenci21MisDatos"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="10dp"
-                    android:text="**********"
-                    android:textSize="30dp"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/contactoemergenci21MisDatos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="10dp"
+                        android:text="**********"
+                        android:textSize="25dp"/>
+
+                    <ImageButton
+                        android:id="@+id/btnLlamarContacto2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_call_black_24dp"
+                        android:background="@null"
+                        android:layout_margin="5dp"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -424,13 +454,12 @@
                 android:layout_marginTop="35dp"
                 android:layout_marginBottom="35dp"
                 android:background="@drawable/fondo_redondeado"
-                android:backgroundTint="#77168C"
-                android:textColor="#FFFFFF"
+                android:backgroundTint="#AFC2FF"
+                android:textColor="#000"
                 android:text="Editar Mis Datos"
                 android:textAllCaps="false"
                 android:textAlignment="center"
-                android:textSize="30dp"
-                android:textStyle="bold" />
+                android:textSize="30dp" />
 
         </LinearLayout>
 
