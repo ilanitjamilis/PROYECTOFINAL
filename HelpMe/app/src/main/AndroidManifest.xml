@@ -34,6 +34,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ActividadRegistro" />
+        <activity android:name=".ActividadRegistroDos" />
+        <activity android:name=".ActividadRegistroTres" />
+
         <activity
             android:name=".MyIntro"
             android:configChanges="orientation"
