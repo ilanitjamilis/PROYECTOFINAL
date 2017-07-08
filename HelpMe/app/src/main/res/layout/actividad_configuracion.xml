@@ -54,6 +54,25 @@
             android:textAlignment="center"
             android:textSize="30dp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingTop="200dp"
+            android:textColor="@color/android:black"
+            android:text="Notificación"
+            android:textAlignment="center"
+            android:textSize="30dp" />
+
+
+        <Switch
+            android:id="@+id/switch1"
+            android:checked="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/btnEditarMisDatos"
+            android:layout_alignParentBottom="true" />
+
     </RelativeLayout>
 
 </ScrollView>

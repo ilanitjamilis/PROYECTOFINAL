@@ -5,24 +5,70 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <android.support.constraint.ConstraintLayout
+    <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="proyectofinal.helpme.ActividadMisDatos">
+        tools:context="proyectofinal.helpme.ActividadRegistro">
 
-        <TextView
-            android:layout_width="344dp"
-            android:layout_height="495dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/linearLayout1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:paddingTop="20dp"
+                android:textColor="@color/android:black"
+                android:text="Denunciar"
+                android:textAlignment="center"
+                android:textSize="40dp" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="74dp"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:paddingTop="15dp"
+                android:src="@drawable/ic_notifications_active_black_24dp" />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_below="@+id/linearLayout1"
+            android:id="@+id/btnDenunciar"
+            android:layout_width="315dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/fondo_redondeado"
+            android:backgroundTint="#AFC2FF"
+            android:textColor="#000"
             android:text="Denunciar"
+            android:textAllCaps="false"
             android:textAlignment="center"
-            android:textSize="50dp"
-            android:paddingTop="200dp"
-            tools:layout_editor_absoluteY="8dp"
-            tools:layout_editor_absoluteX="8dp" />
+            android:textSize="30dp" />
 
-    </android.support.constraint.ConstraintLayout>
+        <Button
+            android:layout_below="@+id/btnDenunciar"
+            android:id="@+id/btnVerDenuncias"
+            android:layout_width="315dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/fondo_redondeado"
+            android:backgroundTint="#AFC2FF"
+            android:textColor="#000"
+            android:text="Ver Denuncias"
+            android:textAllCaps="false"
+            android:textAlignment="center"
+            android:textSize="30dp" />
+
+    </RelativeLayout>
 
 </ScrollView>

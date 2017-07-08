@@ -7,5 +7,7 @@
     <string name="navigation_drawer_close">Cerrar navigation drawer</string>
 
     <string name="app_intro_skip">Saltear</string>
+    <string name="title_activity_actividad_mapa_denunciar">Map</string>
+    <string name="title_activity_actividad_mapa_ver_denuncias">Map</string>
 
 </resources>
