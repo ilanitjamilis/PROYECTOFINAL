@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -37,6 +38,10 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
     RadioGroup radioGroupTipoDenuncia;
     String denunciaTexto;
     String tipoDenunciaTexto;
+    Double latitudActual;
+    Double longitudActual;
+    Boolean error;
+    String miError;
 
     private LocationManager locationManager;
     private LocationListener listener;
@@ -90,15 +95,16 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
             mMap.setMyLocationEnabled(true);
             if (mMap != null) {
                 mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-
                     @Override
                     public void onMyLocationChange(Location arg0) {
-                        mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("Ubicación Actual"));
+                        //mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("Ubicación Actual"));
                         final double milatitud = arg0.getLatitude();
                         final double milongitud = arg0.getLongitude();
+                        latitudActual = milatitud;
+                        longitudActual = milongitud;
                         Log.d("ila", "latitud: "+milatitud);
                         Log.d("ila", "longitud: "+milongitud);
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arg0.getLatitude(), arg0.getLongitude()),18));
+                        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arg0.getLatitude(), arg0.getLongitude()),18));
                     }
                 });
             }
@@ -167,6 +173,41 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
         denunciaTexto = denuncia.getText().toString();
         Log.d("ila","denuncia: "+denunciaTexto);
         Log.d("ila", "tipo denuncia: "+tipoDenunciaTexto);
+
+        error = false;
+        miError = "";
+
+        if(denunciaTexto.compareTo("")==0){
+            error = true;
+            miError += "Ingrese denuncia";
+        }
+        if(tipoDenunciaTexto.compareTo("")==0){
+            error = true;
+            if(miError.compareTo("")==0) {
+                miError += "Seleccione tipo denuncia";
+            }
+            else{
+                miError += " y seleccione tipo denuncia";
+            }
+        }
+
+        if(!error) {
+            //Conectar con api guardar datos en db
+            //Mostrar mensaje de denuncia realizada con exito
+            //Alert Dialog con opcion de ir ver denuncias / cancelar (form de hacer denuncia)
+            MostrarMensaje("Latitud: " + latitudActual + " // Longitud: " + longitudActual);
+            MostrarMensaje("Denuncia: " + denunciaTexto);
+            MostrarMensaje("Tipo: " + tipoDenunciaTexto);
+            denuncia.setText("");
+            radioGroupTipoDenuncia.clearCheck();
+        }
+        else{
+            MostrarMensaje(miError);
+        }
+    }
+
+    public void MostrarMensaje(String mensaje){
+        Toast.makeText(this,mensaje,Toast.LENGTH_SHORT).show();
     }
 
 }

@@ -87,15 +87,14 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
             mMap.setMyLocationEnabled(true);
             if (mMap != null) {
                 mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-
                     @Override
                     public void onMyLocationChange(Location arg0) {
-                        mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("Ubicación Actual"));
+                        //mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("Ubicación Actual"));
                         final double milatitud = arg0.getLatitude();
                         final double milongitud = arg0.getLongitude();
                         Log.d("ila", "latitud: "+milatitud);
                         Log.d("ila", "longitud: "+milongitud);
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arg0.getLatitude(), arg0.getLongitude()),18));
+                        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arg0.getLatitude(), arg0.getLongitude()),18));
                     }
                 });
             }
