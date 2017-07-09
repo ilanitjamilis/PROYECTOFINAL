@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ScrollView01"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -38,10 +36,11 @@
         <EditText
             android:id="@+id/textoDenuncia"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:textSize="25dp" />
     </LinearLayout>
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -51,9 +50,9 @@
             android:text="Tipo: "
             android:textSize="25dp"/>
         <RadioGroup
+            android:id="@+id/tipoDenuncia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checkedButton="@+id/tipoDenuncia"
             android:orientation="vertical">
             <RadioButton
                 android:id="@+id/tipoDenunciaRobo"
@@ -111,7 +110,7 @@
         android:background="@drawable/fondo_redondeado"
         android:backgroundTint="@android:color/holo_red_dark"
         android:textColor="#FFFFFF"
+        android:onClick="hacerDenuncia"
         android:text="DENUNCIAR"/>
-
 </LinearLayout>
 </ScrollView>
