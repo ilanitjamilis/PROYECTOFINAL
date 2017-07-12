@@ -3,6 +3,7 @@ package proyectofinal.helpme;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -25,15 +27,15 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class ActividadMapaDenunciar extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    String latitud;
-    String longitud;
-    Boolean detectoUbicacion;
+    Marker marcador;
     EditText denuncia;
     RadioGroup radioGroupTipoDenuncia;
     String denunciaTexto;
@@ -42,9 +44,8 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
     Double longitudActual;
     Boolean error;
     String miError;
+    Boolean detectoMarcador;
 
-    private LocationManager locationManager;
-    private LocationListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +54,7 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        detectoUbicacion = false;
-        latitud = "-34.608056";
-        longitud = "-58.370278";
-
-        //Sacar latitud y longitud actual y poner detectoUbicacion=true
+        detectoMarcador = false;
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -66,58 +63,59 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
 
         denuncia = (EditText) findViewById(R.id.textoDenuncia);
         radioGroupTipoDenuncia = (RadioGroup) findViewById(R.id.tipoDenuncia);
+
+    }
+
+    private void ponerMarcador(Double lat, Double lng) {
+        if(marcador!=null){
+            marcador.remove();
+        }
+        MarkerOptions unMarcador = new MarkerOptions()
+                .title("Denunciar Aquí")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
+                .position(new LatLng(lat, lng));
+        //snipet("") es para mas info
+        marcador = mMap.addMarker(unMarcador);
+        marcador.showInfoWindow();
     }
 
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        Double latitudBien = Double.parseDouble(latitud);
-        Double longitudBien = Double.parseDouble(longitud);
-        Log.d("ila", "Latitud: " + latitudBien);
-        Log.d("ila", "Longitud: " + longitudBien);
-
-        LatLng ubicacionActual = new LatLng(latitudBien, longitudBien);
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Log.d("ila", "tiene permisos");
+
             mMap.setMyLocationEnabled(true);
-            if (mMap != null) {
-                mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-                    @Override
-                    public void onMyLocationChange(Location arg0) {
-                        //mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("Ubicación Actual"));
-                        final double milatitud = arg0.getLatitude();
-                        final double milongitud = arg0.getLongitude();
-                        latitudActual = milatitud;
-                        longitudActual = milongitud;
-                        Log.d("ila", "latitud: "+milatitud);
-                        Log.d("ila", "longitud: "+milongitud);
-                        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(arg0.getLatitude(), arg0.getLongitude()),18));
-                    }
-                });
+            mMap.getUiSettings().setZoomControlsEnabled(true);
+
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            Criteria criteria = new Criteria();
+            String provider = locationManager.getBestProvider(criteria, true);
+            Location location = locationManager.getLastKnownLocation(provider);
+            if (location != null) {
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
+                LatLng latLng = new LatLng(latitude, longitude);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,13));
             }
         }
 
-        /*if(detectoUbicacion) {
-            mMap.addMarker(new MarkerOptions().position(ubicacionActual).title("Ubicación Actual"));
-        }
-        else{
-            mMap.addMarker(new MarkerOptions().position(ubicacionActual).title("Ubicación Actual No Detectada"));
-        }
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ubicacionActual,18));*/
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+
+            @Override
+            public void onMapClick(LatLng point) {
+                latitudActual = point.latitude;
+                longitudActual = point.longitude;
+                detectoMarcador = true;
+                ponerMarcador(latitudActual, longitudActual);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marcador.getPosition(),18));
+            }
+        });
     }
+
 
     public void hacerDenuncia (View vista){
         Log.d("ila", "entra a hacer denuncia");
@@ -131,64 +129,25 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
         else{
             tipoDenunciaTexto = "";
         }
-        /*int radioButtonID = radioGroupTipoDenuncia.getCheckedRadioButtonId();
-        Log.d("ila","radiobuttonselectedid: "+radioButtonID);
-        switch (radioButtonID) {
-            case R.id.tipoDenunciaRobo:
-                //Seleccionado: Robo
-                tipoDenunciaTexto = "Robo";
-                Log.d("ila", "opcion seleccionada: robo");
-                break;
-            case R.id.tipoDenunciaViolacion:
-                //Seleccionado: Violacion
-                tipoDenunciaTexto = "Violacion";
-                Log.d("ila", "opcion seleccionada: violacion");
-                break;
-            case R.id.tipoDenunciaAcoso:
-                //Seleccionado: Acoso
-                tipoDenunciaTexto = "Acoso";
-                Log.d("ila", "opcion seleccionada: acoso");
-                break;
-            case R.id.tipoDenunciaAccidenteTransito:
-                //Seleccionado: Accidente de Transito
-                tipoDenunciaTexto = "Accidente de Transito";
-                Log.d("ila", "opcion seleccionada: accidente");
-                break;
-            case R.id.tipoDenunciaZonaOscura:
-                //Seleccionado: Zona Oscura
-                tipoDenunciaTexto = "Zona Oscura";
-                Log.d("ila", "opcion seleccionada: zona oscura");
-                break;
-            case R.id.tipoDenunciaOtro:
-                //Seleccionado: Otro
-                tipoDenunciaTexto = "Otro";
-                Log.d("ila", "opcion seleccionada: otro");
-                break;
-            default:
-                //Nada seleccionado
-                tipoDenunciaTexto = "";
-                Log.d("ila", "opcion seleccionada: ninguna");
-                break;
-        }*/
-        denunciaTexto = denuncia.getText().toString();
+        denunciaTexto = denuncia.getText().toString().trim();
         Log.d("ila","denuncia: "+denunciaTexto);
         Log.d("ila", "tipo denuncia: "+tipoDenunciaTexto);
 
         error = false;
         miError = "";
 
+        if(!detectoMarcador){
+            error = true;
+            MostrarMensaje("Marque el lugar");
+        }
+
         if(denunciaTexto.compareTo("")==0){
             error = true;
-            miError += "Ingrese denuncia";
+            MostrarMensaje("Ingrese denuncia");
         }
         if(tipoDenunciaTexto.compareTo("")==0){
             error = true;
-            if(miError.compareTo("")==0) {
-                miError += "Seleccione tipo denuncia";
-            }
-            else{
-                miError += " y seleccione tipo denuncia";
-            }
+            MostrarMensaje("Seleccione tipo denuncia");
         }
 
         if(!error) {
@@ -198,11 +157,10 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
             MostrarMensaje("Latitud: " + latitudActual + " // Longitud: " + longitudActual);
             MostrarMensaje("Denuncia: " + denunciaTexto);
             MostrarMensaje("Tipo: " + tipoDenunciaTexto);
+            detectoMarcador = false;
+            marcador.remove();
             denuncia.setText("");
             radioGroupTipoDenuncia.clearCheck();
-        }
-        else{
-            MostrarMensaje(miError);
         }
     }
 
