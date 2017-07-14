@@ -1,6 +1,8 @@
 package proyectofinal.helpme;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -84,11 +86,12 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
             mMap.setMyLocationEnabled(true);
-            mMap.getUiSettings().setZoomControlsEnabled(true);
 
             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             Criteria criteria = new Criteria();
@@ -100,6 +103,18 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
                 LatLng latLng = new LatLng(latitude, longitude);
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,13));
             }
+        }else{
+            AlertDialog.Builder adb = new AlertDialog.Builder(this);
+
+            adb.setTitle("Su ubicación no ha podido ser detectada");
+
+            adb.setIcon(android.R.drawable.ic_dialog_alert);
+
+            adb.setNeutralButton("Aceptar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                } });
+            adb.show();
         }
 
 

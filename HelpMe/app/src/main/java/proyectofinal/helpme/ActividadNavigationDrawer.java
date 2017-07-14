@@ -59,6 +59,8 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     Boolean hayUbicacion;
     Boolean estaActualizando = false;
 
+    NavigationView navigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -322,7 +324,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_menu1);
 
@@ -437,7 +439,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             TransaccionDeFragment.commit();
 
         } else if (id == R.id.nav_menu4) {
-
             Fragment frgMostrar;
             frgMostrar = new ActividadDenunciar();
             TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
@@ -549,13 +550,16 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
     public void llamarPolicia(View vista){
         if(utilidades.paisActual.codigoP.compareTo("NOT FOUND")!= 0) {
-            Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
+            Intent intentoLlamada;
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                intentoLlamada = new Intent(Intent.ACTION_CALL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
+
+            }else{
+                intentoLlamada = new Intent(Intent.ACTION_DIAL);
+            }
             String numPolicia = utilidades.paisActual.numPoliciaP.toString();
             intentoLlamada.setData(Uri.parse("tel:" + numPolicia));
             startActivity(intentoLlamada);
-
-            /*String mensaje = "Funcionalidad en construcción";
-            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();*/
         }
         else{
             String mensaje = "ERROR";
@@ -565,13 +569,16 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
     public void llamarAmbulancia(View vista){
         if(utilidades.paisActual.codigoP.compareTo("NOT FOUND")!= 0) {
-            Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
+            Intent intentoLlamada;
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                intentoLlamada = new Intent(Intent.ACTION_CALL);
+
+            }else{
+                intentoLlamada = new Intent(Intent.ACTION_DIAL);
+            }
             String numAmbulancia = utilidades.paisActual.numAmbulanciaP.toString();
             intentoLlamada.setData(Uri.parse("tel:" + numAmbulancia));
             startActivity(intentoLlamada);
-
-            /*String mensaje = "Funcionalidad en construcción";
-            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();*/
         }
         else{
             String mensaje = "ERROR";
@@ -581,13 +588,16 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
     public void llamarBomberos(View vista){
         if(utilidades.paisActual.codigoP.compareTo("NOT FOUND")!= 0) {
-            Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
+            Intent intentoLlamada;
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                intentoLlamada = new Intent(Intent.ACTION_CALL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
+
+            }else{
+                intentoLlamada = new Intent(Intent.ACTION_DIAL);
+            }
             String numBomberos = utilidades.paisActual.numBomberosP.toString();
             intentoLlamada.setData(Uri.parse("tel:" + numBomberos));
             startActivity(intentoLlamada);
-
-            /*String mensaje = "Funcionalidad en construcción";
-            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();*/
         }
         else{
             String mensaje = "ERROR";
@@ -598,6 +608,28 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     public void enviarMensajeEmergencia (View vista){
         String mensaje = "Funcionalidad en construcción";
         Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
+
+        /*if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+            String contactoEmergencia1 = tomarDatosUsuarioContactoEmergencia1();
+            String contactoEmergencia2 = tomarDatosUsuarioContactoEmergencia2();
+            Boolean enviarA1=false;
+            Boolean enviarA2=false;
+            if(contactoEmergencia1.compareTo("-")!=0) {
+                enviarA1=true;
+            }
+            if(contactoEmergencia2.compareTo("-")!=0) {
+                enviarA2=true;
+            }
+            if(enviarA1){
+                enviarSMS(contactoEmergencia1, "Prueba");
+            }
+            if(enviarA2){
+                enviarSMS(contactoEmergencia2, "Prueba");
+            }
+            if(enviarA1==false&&enviarA2==false){
+                MostrarMensajeLargo("Usted no tiene contactos de emergencia, edite sus datos");
+            }
+        }*/ //No anda
 
         /*String contactoEmergencia1 = tomarDatosUsuarioContactoEmergencia1();
         enviarSMS(contactoEmergencia1, "Prueba");*/
@@ -613,6 +645,8 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             Toast.makeText(getApplicationContext(),ex.getMessage().toString(),
                     Toast.LENGTH_LONG).show();
             ex.printStackTrace();
+            Toast.makeText(getApplicationContext(), "Hubo un error, el mensaje no ha sido enviado",
+                    Toast.LENGTH_LONG).show();
         }
     }
 
@@ -922,8 +956,14 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     }
 
     public void llamarContactoEmergencia(String contacto){
-        if(contacto.compareTo("")!= 0) {
-            Intent intentoLlamada = new Intent(Intent.ACTION_DIAL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
+        if(contacto.compareTo("-")!= 0) {
+            Intent intentoLlamada;
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                intentoLlamada = new Intent(Intent.ACTION_CALL);
+
+            }else{
+                intentoLlamada = new Intent(Intent.ACTION_DIAL);
+            }
             intentoLlamada.setData(Uri.parse("tel:" + contacto));
             startActivity(intentoLlamada);
         }
@@ -961,6 +1001,10 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
     public void MostrarMensaje(String mensaje){
         Toast.makeText(this,mensaje,Toast.LENGTH_SHORT).show();
+    }
+
+    public void MostrarMensajeLargo(String mensaje){
+        Toast.makeText(this,mensaje,Toast.LENGTH_LONG).show();
     }
 
 }

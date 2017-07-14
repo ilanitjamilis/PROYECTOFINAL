@@ -46,7 +46,7 @@ public class ActividadPinParaRegistro extends Fragment implements View.OnClickLi
             ActividadNavigationDrawer.MostrarMensaje("Ingrese pin");
         }
         else {
-            if (pinUsuario.compareTo(pinIngresado) == 0) {
+            if (pinUsuario.compareTo(pinIngresado) == 0) { //Si el pin empieza con 0 no lo toma. Ej: 0001 = 1.
                 //Ir editar datos
                 ActividadNavigationDrawer.irEditarDatos();
             } else {

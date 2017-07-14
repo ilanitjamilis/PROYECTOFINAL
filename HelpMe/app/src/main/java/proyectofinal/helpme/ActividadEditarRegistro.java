@@ -65,6 +65,8 @@ public class ActividadEditarRegistro extends Fragment implements View.OnClickLis
 
         ActividadNavigationDrawer ActividadNavigationDrawer = (ActividadNavigationDrawer) getActivity();
 
+        ActividadNavigationDrawer.navigationView.setCheckedItem(R.id.nav_menu2);
+
         opcionesGrupoSanguineo = new ArrayList<>();
         opcionesGrupoSanguineo.add("-");
         opcionesGrupoSanguineo.add("A+");
