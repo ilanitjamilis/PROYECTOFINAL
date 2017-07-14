@@ -154,6 +154,8 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
             //Conectar con api guardar datos en db
             //Mostrar mensaje de denuncia realizada con exito
             //Alert Dialog con opcion de ir ver denuncias / cancelar (form de hacer denuncia)
+
+
             MostrarMensaje("Latitud: " + latitudActual + " // Longitud: " + longitudActual);
             MostrarMensaje("Denuncia: " + denunciaTexto);
             MostrarMensaje("Tipo: " + tipoDenunciaTexto);

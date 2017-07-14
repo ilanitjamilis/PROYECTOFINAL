@@ -933,6 +933,31 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         }
     }
 
+    public Boolean tomarDatosUsuarioNotificacion(){
+        Boolean notifActivada = false;
+        String notificacion = utilidades.sharedPref.getString("notificacionUsuario", "0");
+        if(notificacion.compareTo("1")==0)
+        {
+            notifActivada = true;
+        }
+        return notifActivada;
+    }
+
+    public void setearNotificacionsuario(Boolean notificacionActiva){
+        SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+        String paraNotif="";
+        if(notificacionActiva){
+            paraNotif="1";
+
+        }
+        else{
+            paraNotif="0";
+        }
+        editor.putString("notificacionUsuario", paraNotif);
+        editor.apply();
+    }
+
+
 
     public void MostrarMensaje(String mensaje){
         Toast.makeText(this,mensaje,Toast.LENGTH_SHORT).show();
