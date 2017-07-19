@@ -21,8 +21,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 
 public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMapReadyCallback {
 
@@ -30,6 +34,7 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
     Double latitud;
     Double longitud;
     Boolean detectoUbicacion;
+    ArrayList<Denuncia> miListaDenuncias;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,5 +82,92 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
                 } });
             adb.show();
         }
+
+        miListaDenuncias = LlenarListaDenuncias();
+        for(int i=0; i<miListaDenuncias.size(); i++){
+            Denuncia unaDenuncia = miListaDenuncias.get(i);
+            ponerMarcador(unaDenuncia);
+        }
+
+    }
+
+    public ArrayList<Denuncia> LlenarListaDenuncias(){
+        ArrayList<Denuncia> miLista = new ArrayList<>();
+
+        Denuncia unaDenuncia;
+
+        unaDenuncia = new Denuncia();
+        unaDenuncia.latitud = -34.604853;
+        unaDenuncia.longitud = -58.420865;
+        unaDenuncia.descripcion = "Me robaron 2 tipos armados";
+        unaDenuncia.tipo = "Robo";
+        miLista.add(unaDenuncia);
+
+        unaDenuncia = new Denuncia();
+        unaDenuncia.latitud = -34.597762;
+        unaDenuncia.longitud = -58.419844;
+        unaDenuncia.descripcion = "Fui víctima de una violación por un señor viejo";
+        unaDenuncia.tipo = "Violacion";
+        miLista.add(unaDenuncia);
+
+        unaDenuncia = new Denuncia();
+        unaDenuncia.latitud = -34.602675;
+        unaDenuncia.longitud = -58.412077;
+        unaDenuncia.descripcion = "Obreros gritando desde un techo";
+        unaDenuncia.tipo = "Acoso";
+        miLista.add(unaDenuncia);
+
+        unaDenuncia = new Denuncia();
+        unaDenuncia.latitud = -34.598200;
+        unaDenuncia.longitud = -58.431705;
+        unaDenuncia.descripcion = "Chocó un taxi con una moto";
+        unaDenuncia.tipo = "Accidente de tránsito";
+        miLista.add(unaDenuncia);
+
+        unaDenuncia = new Denuncia();
+        unaDenuncia.latitud = -34.599484;
+        unaDenuncia.longitud = -58.408493;
+        unaDenuncia.descripcion = "Me robaron 2 tipos armados";
+        unaDenuncia.tipo = "Zona oscura";
+        miLista.add(unaDenuncia);
+
+        unaDenuncia = new Denuncia();
+        unaDenuncia.latitud = -34.605987;
+        unaDenuncia.longitud = -58.419641;
+        unaDenuncia.descripcion = "Señora loca gritándole a la gente";
+        unaDenuncia.tipo = "Otro";
+        miLista.add(unaDenuncia);
+
+        return miLista;
+    }
+
+    private void ponerMarcador(Denuncia unaDenuncia) {
+        Marker marcador;
+        MarkerOptions unMarcador = new MarkerOptions()
+                .title(unaDenuncia.descripcion)
+                .position(new LatLng(unaDenuncia.latitud, unaDenuncia.longitud))
+                .snippet("Tipo: "+unaDenuncia.tipo);
+
+        switch(unaDenuncia.tipo){
+            case "Robo":
+                unMarcador.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+                break;
+            case "Violacion":
+                unMarcador.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                break;
+            case "Acoso":
+                unMarcador.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+                break;
+            case "Accidente de tránsito":
+                unMarcador.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+                break;
+            case "Zona oscura":
+                unMarcador.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                break;
+            case "Otro":
+                unMarcador.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
+                break;
+        }
+        marcador = mMap.addMarker(unMarcador);
     }
 }

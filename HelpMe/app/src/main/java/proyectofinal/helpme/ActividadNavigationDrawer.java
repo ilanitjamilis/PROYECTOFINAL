@@ -10,6 +10,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -69,23 +71,15 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         utilidades.sharedPref = getSharedPreferences("mispreferencias", MODE_PRIVATE);
 
         try {
-            Log.d("ila", "entra al try");
-
             Bundle datosRecibidos = this.getIntent().getExtras();
             String fragmentIr = datosRecibidos.getString("ir");
-
-            Log.d("ila","fragment ir: "+fragmentIr);
 
             String deDondeVengo = datosRecibidos.getString("anterior");
 
             if(deDondeVengo.compareTo("registro")==0) {
-                Log.d("ila", "viene de registro");
-
                 String nombreRegistro = datosRecibidos.getString("nombre");
                 String apellidoRegistro = datosRecibidos.getString("apellido");
                 Integer pinRegistro = datosRecibidos.getInt("pin");
-
-                Log.d("ila", "recibe bien el bundle");
 
                 SharedPreferences.Editor editor = utilidades.sharedPref.edit();
                 editor.putString("nombreUsuario", nombreRegistro);
@@ -103,17 +97,13 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                 TransaccionDeFragment.commit();
             }
             else{
-                Log.d("ila", "no editar datos");
                 Fragment miFragmentIngreso = new ActividadPrincipal();
                 TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
                 TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso);
                 TransaccionDeFragment.commit();
             }
 
-            Log.d("ila", "termina el try");
-
         } catch (NullPointerException e ) {
-            Log.d("ila", "entra al catch");
             Fragment miFragmentIngreso = new ActividadPrincipal();
             TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
             TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso);
@@ -134,8 +124,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
         /*Intent irWizard = new Intent(ActividadPrincipal.this, MyIntro.class);
         startActivity(irWizard);*/
-
-
 
         if(AveriguarSiHayRegistros() == false){
             // Agregar registros
@@ -358,6 +346,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             e.putBoolean("firstStart2", false);
             e.apply();
         }
+
     }
 
 
@@ -543,8 +532,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             countryCode="NOTFOUND";
         }
 
-        Log.d("ila","countryCode: "+countryCode);
-
         return countryCode;
     }
 
@@ -590,7 +577,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         if(utilidades.paisActual.codigoP.compareTo("NOT FOUND")!= 0) {
             Intent intentoLlamada;
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-                intentoLlamada = new Intent(Intent.ACTION_CALL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
+                intentoLlamada = new Intent(Intent.ACTION_CALL);
 
             }else{
                 intentoLlamada = new Intent(Intent.ACTION_DIAL);
@@ -606,10 +593,8 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     }
 
     public void enviarMensajeEmergencia (View vista){
-        String mensaje = "Funcionalidad en construcción";
-        Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
 
-        /*if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
             String contactoEmergencia1 = tomarDatosUsuarioContactoEmergencia1();
             String contactoEmergencia2 = tomarDatosUsuarioContactoEmergencia2();
             Boolean enviarA1=false;
@@ -621,15 +606,19 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                 enviarA2=true;
             }
             if(enviarA1){
-                enviarSMS(contactoEmergencia1, "Prueba");
+                enviarSMS(contactoEmergencia1, "Mensaje de emergencia enviado desde la aplicación HelpMe! "+
+                        tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" se encuentra en una situación" +
+                        " de riesgo. Mensaje enviado el "+TiempoAhora()+", desde "+TomarUbicacion()+". Esperamos que usted lo pueda ayudar.");
             }
             if(enviarA2){
-                enviarSMS(contactoEmergencia2, "Prueba");
+                enviarSMS(contactoEmergencia1, "Mensaje de emergencia enviado desde la aplicación HelpMe! "+
+                        tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" se encuentra en una situación" +
+                        " de riesgo. Mensaje enviado el "+TiempoAhora()+", desde "+TomarUbicacion()+". Esperamos que usted lo pueda ayudar.");
             }
             if(enviarA1==false&&enviarA2==false){
                 MostrarMensajeLargo("Usted no tiene contactos de emergencia, edite sus datos");
             }
-        }*/ //No anda
+        }
 
         /*String contactoEmergencia1 = tomarDatosUsuarioContactoEmergencia1();
         enviarSMS(contactoEmergencia1, "Prueba");*/
@@ -677,13 +666,8 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         ultimoCodigoDetectado = utilidades.sharedPref.getString("CÓDIGO", "NONE");
         ultimoTiempoDetectado = utilidades.sharedPref.getString("ultUbicacionTiempo", "NONE");
 
-        Log.d("ila","último código detectado: "+ ultimoCodigoDetectado);
-        Log.d("ila","último tiempo detectado: "+ ultimoTiempoDetectado);
-
         String codPais = getCountryCode().toUpperCase();
-        Log.d("ila","mi codPais: "+codPais);
         if(codPais != null){
-            Log.d("ila","entro acá1");
             if(codPais=="NOTFOUND"){
                 if(ultimoCodigoDetectado.compareTo("NONE")==0) {
                     codPais = "NOT FOUND";
@@ -714,8 +698,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                     editor.commit();
 
                     ultimoCodigoDetectado = utilidades.sharedPref.getString("CÓDIGO", "NONE");
-
-                    Log.d("ila","mi último código detectado ahora es: "+ultimoCodigoDetectado);
                 }
                 else{
                     if(ultimoCodigoDetectado.compareTo("NONE")==0) {
@@ -762,6 +744,14 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     public String TiempoAhora(){
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
         return currentDateTimeString;
+    }
+
+    public String TomarUbicacion(){
+        String latLong = "ubicación no detectada";
+
+        //Detectar coordenadas
+
+        return latLong;
     }
 
     public String tomarDatosUsuarioNombre(){
