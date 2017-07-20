@@ -1,9 +1,13 @@
 package proyectofinal.helpme;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -214,83 +218,112 @@ public class ActividadEditarRegistro extends Fragment implements View.OnClickLis
                 if(apellidoIngresado.compareTo("")!=0){
                     ActividadNavigationDrawer.setearApellidoUsuario(apellidoIngresado);
                 }
+                if(nombreIngresado.compareTo("")==0||apellidoIngresado.compareTo("")==0){
+                    ActividadNavigationDrawer.MostrarMensaje("El nombre y el apellido son obligatorios");
+                }
                 if(nacimientoIngresado.compareTo("")!=0){
                     ActividadNavigationDrawer.setearFechaNacimientoUsuario(nacimientoIngresado);
                 }
                 else{
-                    ActividadNavigationDrawer.setearContactoEmergencia2Usuario("-");
+                    ActividadNavigationDrawer.setearFechaNacimientoUsuario("-");
                 }
                 if(edadIngresado.compareTo("")!=0){
                     ActividadNavigationDrawer.setearEdadUsuario(edadIngresado);
                 }
                 else{
-                    ActividadNavigationDrawer.setearContactoEmergencia2Usuario("-");
+                    ActividadNavigationDrawer.setearEdadUsuario("-");
                 }
                 if(estaturaIngresado.compareTo("")!=0){
                     ActividadNavigationDrawer.setearEstaturaUsuario(estaturaIngresado);
                 }
                 else{
-                    ActividadNavigationDrawer.setearContactoEmergencia2Usuario("-");
+                    ActividadNavigationDrawer.setearEstaturaUsuario("-");
                 }
                 if(pesoIngresado.compareTo("")!=0){
                     ActividadNavigationDrawer.setearPesoUsuario(pesoIngresado);
                 }
                 else{
-                    ActividadNavigationDrawer.setearContactoEmergencia2Usuario("-");
+                    ActividadNavigationDrawer.setearPesoUsuario("-");
                 }
                 if(generoIngresado.compareTo("")!=0){
                     ActividadNavigationDrawer.setearGeneroUsuario(generoIngresado);
                 }
                 else{
-                    ActividadNavigationDrawer.setearContactoEmergencia2Usuario("-");
+                    ActividadNavigationDrawer.setearGeneroUsuario("-");
                 }
                 if(grupoSanguineoIngresado.compareTo("")!=0){
                     ActividadNavigationDrawer.setearGrupoSanguineoUsuario(grupoSanguineoIngresado);
                 }
                 else{
-                    ActividadNavigationDrawer.setearContactoEmergencia2Usuario("-");
+                    ActividadNavigationDrawer.setearGrupoSanguineoUsuario("-");
                 }
                 if(obraSocialIngresado.compareTo("")!=0){
                     ActividadNavigationDrawer.setearObraSocialUsuario(obraSocialIngresado);
                 }
                 else{
-                    ActividadNavigationDrawer.setearContactoEmergencia2Usuario("-");
+                    ActividadNavigationDrawer.setearObraSocialUsuario("-");
                 }
                 if(numEmergenciaIngresado.compareTo("")!=0){
                     ActividadNavigationDrawer.setearNumeroEmergenciaObraSocialUsuario(numEmergenciaIngresado);
                 }
                 else{
-                    ActividadNavigationDrawer.setearContactoEmergencia2Usuario("-");
+                    ActividadNavigationDrawer.setearNumeroEmergenciaObraSocialUsuario("-");
                 }
                 if(alergiasIngresado.compareTo("")!=0){
                     ActividadNavigationDrawer.setearAlergiasUsuario(alergiasIngresado);
                 }
                 else{
-                    ActividadNavigationDrawer.setearContactoEmergencia2Usuario("-");
+                    ActividadNavigationDrawer.setearAlergiasUsuario("-");
                 }
                 if(medicProhibIngresado.compareTo("")!=0){
                     ActividadNavigationDrawer.setearMedicamentosProhibidosUsuario(medicProhibIngresado);
                 }
                 else{
-                    ActividadNavigationDrawer.setearContactoEmergencia2Usuario("-");
+                    ActividadNavigationDrawer.setearMedicamentosProhibidosUsuario("-");
                 }
                 if(enfermedadesIngresado.compareTo("")!=0){
                     ActividadNavigationDrawer.setearEnfermedadesCronicasUsuario(enfermedadesIngresado);
                 }
                 else{
-                    ActividadNavigationDrawer.setearContactoEmergencia2Usuario("-");
+                    ActividadNavigationDrawer.setearEnfermedadesCronicasUsuario("-");
                 }
                 if(contactEmergencia1Ingresado.compareTo("")!=0){
                     ActividadNavigationDrawer.setearContactoEmergencia1Usuario(contactEmergencia1Ingresado);
                 }
                 else{
-                    ActividadNavigationDrawer.setearContactoEmergencia2Usuario("-");
+                    ActividadNavigationDrawer.setearContactoEmergencia1Usuario("-");
                 }
                 if(contactEmergencia2Ingresado.compareTo("")!=0){
                     ActividadNavigationDrawer.setearContactoEmergencia2Usuario(contactEmergencia2Ingresado);
                 }
                 else{
                     ActividadNavigationDrawer.setearContactoEmergencia2Usuario("-");
+                }
+
+                boolean notificacionActivada = ActividadNavigationDrawer.tomarDatosUsuarioNotificacion();
+                if(notificacionActivada){
+                    ((NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE)).cancel(001);
+
+                    NotificationCompat.Builder mBuilder =
+                            new NotificationCompat.Builder(getContext())
+                                    .setContentTitle("HelpMe!")
+                                    .setContentText("Desliza para ver...")
+                                    .setSmallIcon(R.drawable.logo)
+                                    .setAutoCancel(false)
+                                    .setOngoing(true)
+                                    .setStyle(new NotificationCompat.BigTextStyle().bigText("Hola " + ActividadNavigationDrawer.tomarDatosUsuarioNombre() + " " + ActividadNavigationDrawer.tomarDatosUsuarioApellido() + ", tus números de emergencia son: " + ActividadNavigationDrawer.tomarDatosUsuarioContactoEmergencia1() + " y " + ActividadNavigationDrawer.tomarDatosUsuarioContactoEmergencia2()))
+                                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+
+                    PendingIntent resultPendingIntent =
+                            PendingIntent.getActivity(
+                                    getContext(),
+                                    0,
+                                    new Intent(getContext(), ActividadNavigationDrawer.class),
+                                    PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    mBuilder.setContentIntent(resultPendingIntent);
+                    NotificationManager mNotifyMgr = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                    mNotifyMgr.notify(001, mBuilder.build());
                 }
 
                 ActividadNavigationDrawer.MostrarMensaje("Datos guardados correctamente");

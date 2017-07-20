@@ -52,7 +52,7 @@
             android:text="Editar Mis Datos"
             android:textAllCaps="false"
             android:textAlignment="center"
-            android:textSize="30dp" />
+            android:textSize="25dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,9 +60,9 @@
             android:paddingLeft="20dp"
             android:paddingTop="200dp"
             android:textColor="@color/android:black"
-            android:text="Notificación"
+            android:text="Notificación Mis Datos"
             android:textAlignment="center"
-            android:textSize="30dp" />
+            android:textSize="25dp" />
 
 
         <Switch

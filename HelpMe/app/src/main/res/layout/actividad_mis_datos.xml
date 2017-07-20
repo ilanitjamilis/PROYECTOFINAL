@@ -48,9 +48,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:paddingTop="20dp">
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/fondo_redondeado"
+                android:backgroundTint="#B2EAFF">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -73,9 +77,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:paddingTop="20dp">
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/fondo_redondeado"
+                android:backgroundTint="#B2EAFF">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -98,9 +106,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:paddingTop="20dp">
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/fondo_redondeado"
+                android:backgroundTint="#B2EAFF">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -123,9 +135,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:paddingTop="20dp">
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/fondo_redondeado"
+                android:backgroundTint="#B2EAFF">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -139,7 +155,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:paddingLeft="10dp"
-                    android:text="00"
+                    android:text="00 años"
                     android:textSize="25dp"/>
 
             </LinearLayout>
@@ -148,9 +164,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:paddingTop="20dp">
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/fondo_redondeado"
+                android:backgroundTint="#B2EAFF">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -173,9 +193,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:paddingTop="20dp">
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/fondo_redondeado"
+                android:backgroundTint="#B2EAFF">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -198,9 +222,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:paddingTop="20dp">
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/fondo_redondeado"
+                android:backgroundTint="#B2EAFF">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -223,9 +251,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:paddingTop="20dp">
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/fondo_redondeado"
+                android:backgroundTint="#B2EAFF">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -248,9 +280,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:paddingTop="20dp">
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/fondo_redondeado"
+                android:backgroundTint="#B2EAFF">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -273,9 +309,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:paddingTop="20dp">
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/fondo_redondeado"
+                android:backgroundTint="#B2EAFF">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -297,9 +337,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:paddingTop="20dp">
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/fondo_redondeado"
+                android:backgroundTint="#B2EAFF">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -322,9 +366,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:paddingTop="20dp">
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/fondo_redondeado"
+                android:backgroundTint="#B2EAFF">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -346,9 +394,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:paddingTop="20dp">
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/fondo_redondeado"
+                android:backgroundTint="#B2EAFF">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -371,9 +423,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:paddingTop="20dp">
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/fondo_redondeado"
+                android:backgroundTint="#B2EAFF">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -410,9 +466,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:paddingTop="20dp">
+                android:layout_marginTop="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="20dp"
+                android:background="@drawable/fondo_redondeado"
+                android:backgroundTint="#B2EAFF">
 
                 <TextView
                     android:layout_width="wrap_content"

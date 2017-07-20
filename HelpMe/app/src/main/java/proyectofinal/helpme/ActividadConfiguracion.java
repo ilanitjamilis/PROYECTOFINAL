@@ -73,8 +73,6 @@ public class ActividadConfiguracion extends Fragment implements View.OnClickList
                     NotificationManager mNotifyMgr = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
                     mNotifyMgr.notify(mNotificationId, mBuilder.build());
 
-
-
                 } else {
                     miAdministrador.setearNotificacionsuario(false);
                     ((NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE)).cancel(mNotificationId);

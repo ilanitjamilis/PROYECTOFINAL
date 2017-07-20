@@ -88,9 +88,17 @@ public class ActividadMisDatos extends Fragment implements View.OnClickListener 
         }
 
         TextView TextViewEdad = (TextView)vistaADevolver.findViewById(R.id.edadMisDatos);
-        TextViewEdad.setText(edad);
         if(edad.compareTo("-")!=0){
+            if(edad.compareTo("1")==0){
+                TextViewEdad.setText(edad + " año");
+            }
+            else {
+                TextViewEdad.setText(edad + " años");
+            }
             TextViewEdad.setTextColor(Color.BLUE);
+        }
+        else{
+            TextViewEdad.setText(edad);
         }
 
         TextView TextViewEstatura = (TextView)vistaADevolver.findViewById(R.id.estaturaMisDatos);
@@ -184,7 +192,6 @@ public class ActividadMisDatos extends Fragment implements View.OnClickListener 
 
         switch(vista.getId()) {
             case R.id.btnEditarMisDatos:
-                Log.d("ila","entro al case editar mis datos");
                 ActividadNavigationDrawer.irPinParaEditarDatos();
                 break;
             case R.id.btnLlamarContacto1:
