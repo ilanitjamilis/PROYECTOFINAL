@@ -5,6 +5,22 @@ package proyectofinal.helpme;
  */
 
 public class Denuncia {
+
+    Denuncia(int idD, double latD, double longD, String descripcionD, String tipoD){
+        this.id = idD;
+        this.latitud = latD;
+        this.longitud = longD;
+        this.descripcion = descripcionD;
+        this.tipo = tipoD;
+    }
+
+    Denuncia(double latD, double longD, String descripcionD, String tipoD){
+        this.latitud = latD;
+        this.longitud = longD;
+        this.descripcion = descripcionD;
+        this.tipo = tipoD;
+    }
+
     int id;
     double latitud;
     double longitud;

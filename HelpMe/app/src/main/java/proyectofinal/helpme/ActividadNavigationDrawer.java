@@ -1,10 +1,13 @@
 package proyectofinal.helpme;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -346,7 +349,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
     }
 
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -467,7 +469,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         return resultado;
     }
 
-
     public Boolean AveriguarPaisActual(String miCodPais){
         Boolean paisEncontrado = false;
         miBaseDatosAbierta = utilidades.baseDeDatosAbierta(this);
@@ -517,8 +518,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         utilidades.baseDatos.close();
     }
 
-
-
     public String getCountryCode(){
         String countryCode;
 
@@ -536,7 +535,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         if(utilidades.paisActual.codigoP.compareTo("NOT FOUND")!= 0) {
             Intent intentoLlamada;
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-                intentoLlamada = new Intent(Intent.ACTION_CALL); //ACTION_CALL dice que faltan permisos, por eso ACTION_DIAL
+                intentoLlamada = new Intent(Intent.ACTION_CALL);
 
             }else{
                 intentoLlamada = new Intent(Intent.ACTION_DIAL);
@@ -591,31 +590,49 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
     public void enviarMensajeEmergencia (View vista){
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
-            String contactoEmergencia1 = tomarDatosUsuarioContactoEmergencia1();
-            String contactoEmergencia2 = tomarDatosUsuarioContactoEmergencia2();
-            Boolean enviarA1=false;
-            Boolean enviarA2=false;
-            if(contactoEmergencia1.compareTo("-")!=0) {
-                enviarA1=true;
-            }
-            if(contactoEmergencia2.compareTo("-")!=0) {
-                enviarA2=true;
-            }
-            if(enviarA1){
-                enviarSMS(contactoEmergencia1, "Mensaje de emergencia enviado desde la aplicación HelpMe! "+
-                        tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" se encuentra en una situación" +
-                        " de riesgo. Mensaje enviado el "+TiempoAhora()+", desde "+TomarUbicacion()+". Esperamos que usted lo pueda ayudar.");
-            }
-            if(enviarA2){
-                enviarSMS(contactoEmergencia1, "Mensaje de emergencia enviado desde la aplicación HelpMe! "+
-                        tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" se encuentra en una situación" +
-                        " de riesgo. Mensaje enviado el "+TiempoAhora()+", desde "+TomarUbicacion()+". Esperamos que usted lo pueda ayudar.");
-            }
-            if(enviarA1==false&&enviarA2==false){
-                MostrarMensajeLargo("Usted no tiene contactos de emergencia, edite sus datos");
-            }
-        }
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        adb.setTitle("Enviar mensaje");
+        adb.setIcon(android.R.drawable.ic_dialog_alert);
+
+        adb.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (ActivityCompat.checkSelfPermission(ActividadNavigationDrawer.this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+
+                    String contactoEmergencia1 = tomarDatosUsuarioContactoEmergencia1();
+                    String contactoEmergencia2 = tomarDatosUsuarioContactoEmergencia2();
+                    Boolean enviarA1=false;
+                    Boolean enviarA2=false;
+                    if(contactoEmergencia1.compareTo("-")!=0) {
+                        enviarA1=true;
+                    }
+                    if(contactoEmergencia2.compareTo("-")!=0) {
+                        enviarA2=true;
+                    }
+                    if(enviarA1){
+                        enviarSMS(contactoEmergencia1, "Mensaje de emergencia enviado desde la aplicación HelpMe! "+
+                                tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" se encuentra en una situación" +
+                                " de riesgo. Mensaje enviado el "+TiempoAhora()+", desde "+TomarUbicacion()+". Esperamos que usted lo pueda ayudar.");
+                    }
+                    if(enviarA2){
+                        enviarSMS(contactoEmergencia1, "Mensaje de emergencia enviado desde la aplicación HelpMe! "+
+                                tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" se encuentra en una situación" +
+                                " de riesgo. Mensaje enviado el "+TiempoAhora()+", desde "+TomarUbicacion()+". Esperamos que usted lo pueda ayudar.");
+                    }
+                    if(enviarA1==false&&enviarA2==false){
+                        MostrarMensajeLargo("Usted no tiene contactos de emergencia, edite sus datos");
+                    }
+                }
+                else{
+                    MostrarMensaje("Usted no posee los permisos necesarios");
+                }
+            } });
+
+
+        adb.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            } });
+        adb.show();
 
         /*String contactoEmergencia1 = tomarDatosUsuarioContactoEmergencia1();
         enviarSMS(contactoEmergencia1, "Prueba");*/
@@ -983,8 +1000,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         editor.putString("notificacionUsuario", paraNotif);
         editor.apply();
     }
-
-
 
     public void MostrarMensaje(String mensaje){
         Toast.makeText(this,mensaje,Toast.LENGTH_SHORT).show();

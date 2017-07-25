@@ -9,6 +9,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -33,6 +34,19 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class ActividadMapaDenunciar extends FragmentActivity implements OnMapReadyCallback {
 
@@ -169,7 +183,8 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
             //Conectar con api guardar datos en db
             //Mostrar mensaje de denuncia realizada con exito
             //Alert Dialog con opcion de ir ver denuncias / cancelar (form de hacer denuncia)
-
+            Denuncia denunciaRealizar = new Denuncia(latitudActual, longitudActual, denunciaTexto, tipoDenunciaTexto);
+            //new InsertarDenuncia().execute(denunciaRealizar);
 
             MostrarMensaje("Latitud: " + latitudActual + " // Longitud: " + longitudActual);
             MostrarMensaje("Denuncia: " + denunciaTexto);
@@ -183,6 +198,60 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
 
     public void MostrarMensaje(String mensaje){
         Toast.makeText(this,mensaje,Toast.LENGTH_SHORT).show();
+    }
+
+    public void MostrarMensajeLargo(String mensaje){
+        Toast.makeText(this,mensaje,Toast.LENGTH_LONG).show();
+    }
+
+
+    private class InsertarDenuncia extends AsyncTask<Denuncia, Void, String> {
+
+        protected void onPostExecute(String resultado) {
+            super.onPostExecute(resultado);
+            if(resultado=="funciono"){
+                MostrarMensaje("Denuncia realizada correctamente");
+            }
+            else{
+                MostrarMensajeLargo("Hubo un error, intente nuevamente");
+            }
+        }
+
+        @Override
+        protected String doInBackground(Denuncia... parametros) {
+            String miURL = "http://ort.edu.ar/serviciox"; //url insertar mi denuncia
+
+            Denuncia miDenuncia = parametros[0];
+
+            OkHttpClient client = new OkHttpClient();
+            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            JSONObject miJSONDenuncia = new JSONObject();
+
+            try {
+                miJSONDenuncia.put("latitud", miDenuncia.latitud);
+                miJSONDenuncia.put("longiutd", miDenuncia.longitud);
+                miJSONDenuncia.put("descripcion", miDenuncia.descripcion);
+                miJSONDenuncia.put("tipo", miDenuncia.tipo);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Log.d("ila", "JSON exception");
+            }
+            RequestBody body = RequestBody.create(JSON, miJSONDenuncia.toString());
+            Request request = new Request.Builder()
+                    .url(miURL)
+                    .post(body)
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();  // Llamo al API Rest servicio1 en ejemplo.com
+                String resultado = response.body().string();
+                return resultado;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
     }
 
 }

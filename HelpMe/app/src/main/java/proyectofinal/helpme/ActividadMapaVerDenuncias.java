@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -26,7 +27,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMapReadyCallback {
 
@@ -45,6 +55,9 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        /*String url = "http://ort.edu.ar/serviciox"; //url traer mis denuncias
+        new BuscarDatosDenuncias().execute(url);*/
     }
 
 
@@ -86,62 +99,37 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
         miListaDenuncias = LlenarListaDenuncias();
         for(int i=0; i<miListaDenuncias.size(); i++){
             Denuncia unaDenuncia = miListaDenuncias.get(i);
-            ponerMarcador(unaDenuncia);
+            PonerMarcador(unaDenuncia);
         }
 
     }
 
     public ArrayList<Denuncia> LlenarListaDenuncias(){
         ArrayList<Denuncia> miLista = new ArrayList<>();
-
         Denuncia unaDenuncia;
 
-        unaDenuncia = new Denuncia();
-        unaDenuncia.latitud = -34.604853;
-        unaDenuncia.longitud = -58.420865;
-        unaDenuncia.descripcion = "Me robaron 2 tipos armados";
-        unaDenuncia.tipo = "Robo";
+        unaDenuncia = new Denuncia(-34.604853, -58.420865, "Me robaron 2 tipos armados", "Robo");
         miLista.add(unaDenuncia);
 
-        unaDenuncia = new Denuncia();
-        unaDenuncia.latitud = -34.597762;
-        unaDenuncia.longitud = -58.419844;
-        unaDenuncia.descripcion = "Fui víctima de una violación por un señor viejo";
-        unaDenuncia.tipo = "Violacion";
+        unaDenuncia = new Denuncia(-34.597762, -58.419844, "Fui víctima de una violación por un señor de unos 45 años", "Violacion");
         miLista.add(unaDenuncia);
 
-        unaDenuncia = new Denuncia();
-        unaDenuncia.latitud = -34.602675;
-        unaDenuncia.longitud = -58.412077;
-        unaDenuncia.descripcion = "Obreros gritando desde un techo";
-        unaDenuncia.tipo = "Acoso";
+        unaDenuncia = new Denuncia(-34.602675, -58.412077, "Obreros gritando desde un techo", "Acoso");
         miLista.add(unaDenuncia);
 
-        unaDenuncia = new Denuncia();
-        unaDenuncia.latitud = -34.598200;
-        unaDenuncia.longitud = -58.431705;
-        unaDenuncia.descripcion = "Chocó un taxi con una moto";
-        unaDenuncia.tipo = "Accidente de tránsito";
+        unaDenuncia = new Denuncia(-34.598200, -58.431705, "Chocó un taxi con una moto", "Accidente de tránsito");
         miLista.add(unaDenuncia);
 
-        unaDenuncia = new Denuncia();
-        unaDenuncia.latitud = -34.599484;
-        unaDenuncia.longitud = -58.408493;
-        unaDenuncia.descripcion = "Me robaron 2 tipos armados";
-        unaDenuncia.tipo = "Zona oscura";
+        unaDenuncia = new Denuncia(-34.599484, -58.408493, "No hay nada de iluminación en la zona", "Zona oscura");
         miLista.add(unaDenuncia);
 
-        unaDenuncia = new Denuncia();
-        unaDenuncia.latitud = -34.605987;
-        unaDenuncia.longitud = -58.419641;
-        unaDenuncia.descripcion = "Señora loca gritándole a la gente";
-        unaDenuncia.tipo = "Otro";
+        unaDenuncia = new Denuncia(-34.605987, -58.419641, "Señora loca gritándole a la gente", "Otro");
         miLista.add(unaDenuncia);
 
         return miLista;
     }
 
-    private void ponerMarcador(Denuncia unaDenuncia) {
+    private void PonerMarcador(Denuncia unaDenuncia) {
         Marker marcador;
         MarkerOptions unMarcador = new MarkerOptions()
                 .title(unaDenuncia.descripcion)
@@ -169,5 +157,56 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
                 break;
         }
         marcador = mMap.addMarker(unMarcador);
+    }
+
+    private class BuscarDatosDenuncias extends AsyncTask<String, Void, ArrayList<Denuncia>> {
+
+        protected void onPostExecute(ArrayList<Denuncia> listaDenuncias) {
+            super.onPostExecute(listaDenuncias);
+            for(int i=0; i<listaDenuncias.size(); i++){
+                Denuncia unaDenuncia = listaDenuncias.get(i);
+                PonerMarcador(unaDenuncia);
+            }
+        }
+
+        @Override
+        protected ArrayList<Denuncia> doInBackground(String... parametros) {
+            String miURL = parametros[0];
+            ArrayList<Denuncia> misDenuncias = new ArrayList<>();
+
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(miURL)
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();  // Llamo al API Rest servicio1 en ejemplo.com
+                String resultado = response.body().string();
+                misDenuncias = ParsearResultado(resultado);
+                return misDenuncias;
+
+            } catch (IOException e) {
+                return null;
+            } catch (JSONException e) {
+                return null;
+            }
+        }
+
+        ArrayList<Denuncia> ParsearResultado(String result) throws JSONException {
+            ArrayList<Denuncia> denuncias = new ArrayList<>();
+            JSONArray jsonDenuncias = new JSONArray(result);
+            for (int i = 0; i < jsonDenuncias.length(); i++) {
+                JSONObject jsonResultado = jsonDenuncias.getJSONObject(i);
+
+                int idD = jsonResultado.getInt("id");
+                double latitudD = jsonResultado.getDouble("latitud");
+                double longitudD = jsonResultado.getDouble("longitud");
+                String descripcionD = jsonResultado.getString("descripcion");
+                String tipoD = jsonResultado.getString("tipo");
+
+                Denuncia d = new Denuncia(idD, latitudD, longitudD, descripcionD, tipoD);
+                denuncias.add(d);
+            }
+            return denuncias;
+        }
     }
 }
