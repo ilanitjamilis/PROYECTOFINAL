@@ -14,10 +14,12 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -40,6 +42,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
 
 import java.security.CodeSigner;
 import java.text.DateFormat;
@@ -621,13 +626,13 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     public void procesoDeEnviarSMS(){
         String contactoEmergencia1 = tomarDatosUsuarioContactoEmergencia1();
         String contactoEmergencia2 = tomarDatosUsuarioContactoEmergencia2();
-        Boolean enviarA1=false;
-        Boolean enviarA2=false;
+        Boolean enviarA1 = false;
+        Boolean enviarA2 = false;
         if(contactoEmergencia1.compareTo("-")!=0) {
-            enviarA1=true;
+            enviarA1 = true;
         }
         if(contactoEmergencia2.compareTo("-")!=0) {
-            enviarA2=true;
+            enviarA2 = true;
         }
         String[] mensaje = new String[3];
         String mimensaje = "Mensaje de emergencia enviado desde la aplicación HelpMe! "+
@@ -637,18 +642,17 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         mimensaje = "Mensaje enviado desde HelpMe! "+
                 tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" está en riesgo. "+TiempoAhora()+" - "+TomarUbicacion();
 
-        mensaje[0] = "Mensaje de emergencia enviado desde la aplicación HelpMe!";
-        mensaje[1] = tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" se encuentra en una situación" +
+        mensaje[0] = tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" se encuentra en una situación" +
                 " de riesgo.";
-        mensaje[2] = "Mensaje enviado el "+TiempoAhora()+" desde "+TomarUbicacion();
+        mensaje[1] = "Mensaje enviado el "+TiempoAhora()+" desde "+TomarUbicacion()+" - HelpMe!";
         if(enviarA1){
-            for(int i=0; i<=2; i++) {
+            for(int i=0; i<2; i++) {
                 enviarSMS(contactoEmergencia1, mensaje[i]);
             }
             //enviarSMS(contactoEmergencia1, mimensaje);
         }
         if(enviarA2){
-            for(int i=0; i<=2; i++) {
+            for(int i=0; i<2; i++) {
                 enviarSMS(contactoEmergencia2, mensaje[i]);
             }
             //enviarSMS(contactoEmergencia2, mimensaje);
@@ -782,9 +786,22 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     }
 
     public String TomarUbicacion(){
-        String latLong = "ubicación no detectada";
+        String latLong;
 
         //Detectar coordenadas
+
+        if (ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
+            LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            Log.d("ubicacion", "latitud: "+latitude);
+            Log.d("ubicacion", "longitud: "+longitude);
+            latLong = "latitud: "+latitude+" / longitud: "+longitude;
+        }
+        else{
+            latLong = "ubicación no detectada";
+        }
 
         return latLong;
     }
