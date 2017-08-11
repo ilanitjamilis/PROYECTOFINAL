@@ -163,9 +163,14 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
 
         protected void onPostExecute(ArrayList<Denuncia> listaDenuncias) {
             super.onPostExecute(listaDenuncias);
-            for(int i=0; i<listaDenuncias.size(); i++){
-                Denuncia unaDenuncia = listaDenuncias.get(i);
-                PonerMarcador(unaDenuncia);
+            if(listaDenuncias!=null) {
+                for (int i = 0; i < listaDenuncias.size(); i++) {
+                    Denuncia unaDenuncia = listaDenuncias.get(i);
+                    PonerMarcador(unaDenuncia);
+                }
+            }
+            else{
+                MostrarMensaje("Hubo un error, intente nuevamente");
             }
         }
 
@@ -181,8 +186,13 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
             try {
                 Response response = client.newCall(request).execute();  // Llamo al API Rest servicio1 en ejemplo.com
                 String resultado = response.body().string();
-                misDenuncias = ParsearResultado(resultado);
-                return misDenuncias;
+                if(resultado.compareTo("error")!=0){
+                    misDenuncias = ParsearResultado(resultado);
+                    return misDenuncias;
+                }
+                else{
+                    return null;
+                }
 
             } catch (IOException e) {
                 return null;
@@ -208,5 +218,9 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
             }
             return denuncias;
         }
+    }
+
+    public void MostrarMensaje(String mensaje){
+        Toast.makeText(this,mensaje,Toast.LENGTH_SHORT).show();
     }
 }

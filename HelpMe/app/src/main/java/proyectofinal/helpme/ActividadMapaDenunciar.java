@@ -210,6 +210,10 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
         protected void onPostExecute(String resultado) {
             super.onPostExecute(resultado);
             if(resultado=="funciono"){
+                detectoMarcador = false;
+                marcador.remove();
+                denuncia.setText("");
+                radioGroupTipoDenuncia.clearCheck();
                 MostrarMensaje("Denuncia realizada correctamente");
             }
             else{
@@ -220,6 +224,7 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
         @Override
         protected String doInBackground(Denuncia... parametros) {
             String miURL = "http://ort.edu.ar/serviciox"; //url insertar mi denuncia
+            String resultado;
 
             Denuncia miDenuncia = parametros[0];
 
@@ -244,12 +249,12 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
                     .build();
             try {
                 Response response = client.newCall(request).execute();  // Llamo al API Rest servicio1 en ejemplo.com
-                String resultado = response.body().string();
+                resultado = response.body().string();
                 return resultado;
 
             } catch (IOException e) {
-                e.printStackTrace();
-                return null;
+                resultado = "error";
+                return resultado;
             }
         }
     }

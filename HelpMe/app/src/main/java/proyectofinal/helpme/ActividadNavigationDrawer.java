@@ -597,33 +597,13 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         adb.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 if (ActivityCompat.checkSelfPermission(ActividadNavigationDrawer.this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
-
-                    String contactoEmergencia1 = tomarDatosUsuarioContactoEmergencia1();
-                    String contactoEmergencia2 = tomarDatosUsuarioContactoEmergencia2();
-                    Boolean enviarA1=false;
-                    Boolean enviarA2=false;
-                    if(contactoEmergencia1.compareTo("-")!=0) {
-                        enviarA1=true;
-                    }
-                    if(contactoEmergencia2.compareTo("-")!=0) {
-                        enviarA2=true;
-                    }
-                    if(enviarA1){
-                        enviarSMS(contactoEmergencia1, "Mensaje de emergencia enviado desde la aplicación HelpMe! "+
-                                tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" se encuentra en una situación" +
-                                " de riesgo. Mensaje enviado el "+TiempoAhora()+", desde "+TomarUbicacion()+". Esperamos que usted lo pueda ayudar.");
-                    }
-                    if(enviarA2){
-                        enviarSMS(contactoEmergencia1, "Mensaje de emergencia enviado desde la aplicación HelpMe! "+
-                                tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" se encuentra en una situación" +
-                                " de riesgo. Mensaje enviado el "+TiempoAhora()+", desde "+TomarUbicacion()+". Esperamos que usted lo pueda ayudar.");
-                    }
-                    if(enviarA1==false&&enviarA2==false){
-                        MostrarMensajeLargo("Usted no tiene contactos de emergencia, edite sus datos");
-                    }
+                    procesoDeEnviarSMS();
                 }
                 else{
-                    MostrarMensaje("Usted no posee los permisos necesarios");
+                    ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.SEND_SMS}, 123);
+                    if (ActivityCompat.checkSelfPermission(ActividadNavigationDrawer.this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+                        procesoDeEnviarSMS();
+                    }
                 }
             } });
 
@@ -638,18 +618,59 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         enviarSMS(contactoEmergencia1, "Prueba");*/
     }
 
+    public void procesoDeEnviarSMS(){
+        String contactoEmergencia1 = tomarDatosUsuarioContactoEmergencia1();
+        String contactoEmergencia2 = tomarDatosUsuarioContactoEmergencia2();
+        Boolean enviarA1=false;
+        Boolean enviarA2=false;
+        if(contactoEmergencia1.compareTo("-")!=0) {
+            enviarA1=true;
+        }
+        if(contactoEmergencia2.compareTo("-")!=0) {
+            enviarA2=true;
+        }
+        String[] mensaje = new String[3];
+        String mimensaje = "Mensaje de emergencia enviado desde la aplicación HelpMe! "+
+                tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" se encuentra en una situación" +
+                " de riesgo. Mensaje enviado el "+TiempoAhora()+", desde "+TomarUbicacion()+". Esperamos que usted lo pueda ayudar.";
+
+        mimensaje = "Mensaje enviado desde HelpMe! "+
+                tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" está en riesgo. "+TiempoAhora()+" - "+TomarUbicacion();
+
+        mensaje[0] = "Mensaje de emergencia enviado desde la aplicación HelpMe!";
+        mensaje[1] = tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" se encuentra en una situación" +
+                " de riesgo.";
+        mensaje[2] = "Mensaje enviado el "+TiempoAhora()+" desde "+TomarUbicacion();
+        if(enviarA1){
+            for(int i=0; i<=2; i++) {
+                enviarSMS(contactoEmergencia1, mensaje[i]);
+            }
+            //enviarSMS(contactoEmergencia1, mimensaje);
+        }
+        if(enviarA2){
+            for(int i=0; i<=2; i++) {
+                enviarSMS(contactoEmergencia2, mensaje[i]);
+            }
+            //enviarSMS(contactoEmergencia2, mimensaje);
+        }
+        if(enviarA1==false&&enviarA2==false){
+            MostrarMensajeLargo("Usted no tiene contactos de emergencia, edite sus datos");
+        }
+    }
+
     public void enviarSMS(String phoneNo, String msg) {
         try {
             SmsManager smsManager = SmsManager.getDefault();
+
+            /*PendingIntent sentPI;
+            String SENT = "SMS_SENT";
+            sentPI = PendingIntent.getBroadcast(this, 0,new Intent(SENT), 0); sentPI en el anteultimo parametro*/
+
             smsManager.sendTextMessage(phoneNo, null, msg, null, null);
-            Toast.makeText(getApplicationContext(), "Mensaje enviado",
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Mensaje enviado", Toast.LENGTH_LONG).show();
+            Log.d("mensaje", "mensaje: "+msg+" enviado a: "+phoneNo);
         } catch (Exception ex) {
-            Toast.makeText(getApplicationContext(),ex.getMessage().toString(),
-                    Toast.LENGTH_LONG).show();
-            ex.printStackTrace();
-            Toast.makeText(getApplicationContext(), "Hubo un error, el mensaje no ha sido enviado",
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Hubo un error, el mensaje no ha sido enviado", Toast.LENGTH_LONG).show();
         }
     }
 
