@@ -43,6 +43,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -184,15 +185,8 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
             //Mostrar mensaje de denuncia realizada con exito
             //Alert Dialog con opcion de ir ver denuncias / cancelar (form de hacer denuncia)
             Denuncia denunciaRealizar = new Denuncia(latitudActual, longitudActual, denunciaTexto, tipoDenunciaTexto);
-            //new InsertarDenuncia().execute(denunciaRealizar);
+            new InsertarDenuncia().execute(denunciaRealizar);
 
-            MostrarMensaje("Latitud: " + latitudActual + " // Longitud: " + longitudActual);
-            MostrarMensaje("Denuncia: " + denunciaTexto);
-            MostrarMensaje("Tipo: " + tipoDenunciaTexto);
-            detectoMarcador = false;
-            marcador.remove();
-            denuncia.setText("");
-            radioGroupTipoDenuncia.clearCheck();
         }
     }
 
@@ -205,15 +199,17 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
     }
 
 
-    private class InsertarDenuncia extends AsyncTask<Denuncia, Void, String> {
+    public class InsertarDenuncia extends AsyncTask<Denuncia, Void, String> {
 
-        protected void onPostExecute(String resultado) {
+        public void onPostExecute(String resultado) {
             super.onPostExecute(resultado);
-            if(resultado=="funciono"){
+
+            if(resultado.compareTo("funciono")==0){
                 detectoMarcador = false;
                 marcador.remove();
                 denuncia.setText("");
                 radioGroupTipoDenuncia.clearCheck();
+
                 MostrarMensaje("Denuncia realizada correctamente");
             }
             else{
@@ -222,11 +218,13 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
         }
 
         @Override
-        protected String doInBackground(Denuncia... parametros) {
-            String miURL = "http://ort.edu.ar/serviciox"; //url insertar mi denuncia
+        public String doInBackground(Denuncia... parametros) {
+            String miURL = "http://helpmeayudame.azurewebsites.net/insertarDenuncia.php"; //url insertar mi denuncia
             String resultado;
 
             Denuncia miDenuncia = parametros[0];
+
+            Log.d("ila","miDenuncia: "+miDenuncia);
 
             OkHttpClient client = new OkHttpClient();
             MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -234,22 +232,36 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
 
             try {
                 miJSONDenuncia.put("latitud", miDenuncia.latitud);
-                miJSONDenuncia.put("longiutd", miDenuncia.longitud);
+                miJSONDenuncia.put("longitud", miDenuncia.longitud);
                 miJSONDenuncia.put("descripcion", miDenuncia.descripcion);
                 miJSONDenuncia.put("tipo", miDenuncia.tipo);
+
+                Log.d("ila", "mi json denuncia: "+miJSONDenuncia);
 
             } catch (JSONException e) {
                 e.printStackTrace();
                 Log.d("ila", "JSON exception");
             }
+
             RequestBody body = RequestBody.create(JSON, miJSONDenuncia.toString());
+
+            /*RequestBody body = new MultipartBody().Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("lat", miDenuncia.latitud)
+                    .addFormDataPart("lon", miDenuncia.longitud)
+                    .addFormDataPart("tip", miDenuncia.tipo)
+                    .addFormDataPart("des", miDenuncia.descripcion)
+                    .build();*/
+
             Request request = new Request.Builder()
                     .url(miURL)
+                    //.method("POST", RequestBody.create(null, new byte[0]))
                     .post(body)
                     .build();
             try {
                 Response response = client.newCall(request).execute();  // Llamo al API Rest servicio1 en ejemplo.com
                 resultado = response.body().string();
+                Log.d("ila", "resultado: "+resultado);
                 return resultado;
 
             } catch (IOException e) {

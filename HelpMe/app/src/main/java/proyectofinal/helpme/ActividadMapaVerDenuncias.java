@@ -56,8 +56,8 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        /*String url = "http://ort.edu.ar/serviciox"; //url traer mis denuncias
-        new BuscarDatosDenuncias().execute(url);*/
+        String url = "http://helpmeayudame.azurewebsites.net/traerDenuncias.php"; //url traer mis denuncias
+        new BuscarDatosDenuncias().execute(url);
     }
 
 
@@ -96,11 +96,11 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
             adb.show();
         }
 
-        miListaDenuncias = LlenarListaDenuncias();
+        /*miListaDenuncias = LlenarListaDenuncias();
         for(int i=0; i<miListaDenuncias.size(); i++){
             Denuncia unaDenuncia = miListaDenuncias.get(i);
             PonerMarcador(unaDenuncia);
-        }
+        }*/
 
     }
 
@@ -177,6 +177,7 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
         @Override
         protected ArrayList<Denuncia> doInBackground(String... parametros) {
             String miURL = parametros[0];
+            Log.d("ila","url: "+miURL);
             ArrayList<Denuncia> misDenuncias = new ArrayList<>();
 
             OkHttpClient client = new OkHttpClient();
@@ -186,7 +187,9 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
             try {
                 Response response = client.newCall(request).execute();  // Llamo al API Rest servicio1 en ejemplo.com
                 String resultado = response.body().string();
+                Log.d("ila", "resultado: "+resultado);
                 if(resultado.compareTo("error")!=0){
+                    Log.d("ila", "entro para parsear");
                     misDenuncias = ParsearResultado(resultado);
                     return misDenuncias;
                 }
@@ -204,16 +207,17 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
         ArrayList<Denuncia> ParsearResultado(String result) throws JSONException {
             ArrayList<Denuncia> denuncias = new ArrayList<>();
             JSONArray jsonDenuncias = new JSONArray(result);
+            Log.d("ila", "jsonDenuncias: "+jsonDenuncias);
             for (int i = 0; i < jsonDenuncias.length(); i++) {
                 JSONObject jsonResultado = jsonDenuncias.getJSONObject(i);
 
-                int idD = jsonResultado.getInt("id");
+
                 double latitudD = jsonResultado.getDouble("latitud");
                 double longitudD = jsonResultado.getDouble("longitud");
                 String descripcionD = jsonResultado.getString("descripcion");
                 String tipoD = jsonResultado.getString("tipo");
 
-                Denuncia d = new Denuncia(idD, latitudD, longitudD, descripcionD, tipoD);
+                Denuncia d = new Denuncia(latitudD, longitudD, descripcionD, tipoD);
                 denuncias.add(d);
             }
             return denuncias;
