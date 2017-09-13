@@ -72,15 +72,22 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
 
             mMap.setMyLocationEnabled(true);
 
-            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+            /*LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             Criteria criteria = new Criteria();
             String provider = locationManager.getBestProvider(criteria, true);
-            Location location = locationManager.getLastKnownLocation(provider);
+            Location location2 = locationManager.getLastKnownLocation(provider);
+            double latitude2 = location2.getLatitude(); Log.d("ila", "latitud2: "+latitude2);
+            double longitude2 = location2.getLongitude(); Log.d("ila", "longitud2: "+longitude2);*/
+
+            LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            double latitude = location.getLatitude(); Log.d("ila", "latitud: "+latitude);
+            double longitude = location.getLongitude(); Log.d("ila", "longitud: "+longitude);
+
             if (location != null) {
-                double latitiud = location.getLatitude();
-                double longitude = location.getLongitude();
-                LatLng latLng = new LatLng(latitiud, longitude);
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,13));
+                LatLng latLng = new LatLng(latitude, longitude); Log.d("ila", "latlng: "+latLng);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,14));
             }
         }else{
             AlertDialog.Builder adb = new AlertDialog.Builder(this);

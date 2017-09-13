@@ -606,9 +606,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                 }
                 else{
                     ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.SEND_SMS}, 123);
-                    if (ActivityCompat.checkSelfPermission(ActividadNavigationDrawer.this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
-                        procesoDeEnviarSMS();
-                    }
+                    MostrarMensaje("Intente nuevamente");
                 }
             } });
 
