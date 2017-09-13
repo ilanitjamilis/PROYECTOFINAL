@@ -2,6 +2,7 @@ package proyectofinal.helpme;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -40,7 +42,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -63,6 +70,12 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
     String miError;
     Boolean detectoMarcador;
 
+    Calendar myCalendar;
+    EditText etFecha;
+    DatePickerDialog.OnDateSetListener date;
+    String fechaString;
+    String fechaParaSQL;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +85,7 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         detectoMarcador = false;
+        fechaString = "";
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -81,6 +95,42 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
         denuncia = (EditText) findViewById(R.id.textoDenuncia);
         radioGroupTipoDenuncia = (RadioGroup) findViewById(R.id.tipoDenuncia);
 
+        myCalendar = Calendar.getInstance();
+
+        etFecha = (EditText) findViewById(R.id.fechaDenuncia);
+        date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                updateLabel();
+            }
+
+        };
+
+        etFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v) {
+                new DatePickerDialog(ActividadMapaDenunciar.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+    }
+
+    private void updateLabel() {
+        String myFormat = "dd/MM/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        etFecha.setText(sdf.format(myCalendar.getTime()));
+        fechaString = etFecha.getText().toString();
+        Log.d("ila", "fecha: "+fechaString);
+
+        myFormat = "yyyy-MM-dd";
+        sdf = new SimpleDateFormat(myFormat, Locale.US);
+        fechaParaSQL = sdf.format(myCalendar.getTime());
+        Log.d("ila", "fecha para SQL: "+fechaParaSQL);
     }
 
     private void ponerMarcador(Double lat, Double lng) {
@@ -171,6 +221,11 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
             MostrarMensaje("Marque el lugar");
         }
 
+
+        if(fechaString.compareTo("")==0){
+            error = true;
+            MostrarMensaje("Elija fecha");
+        }
         if(denunciaTexto.compareTo("")==0){
             error = true;
             MostrarMensaje("Ingrese denuncia");
