@@ -125,12 +125,10 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         etFecha.setText(sdf.format(myCalendar.getTime()));
         fechaString = etFecha.getText().toString();
-        Log.d("ila", "fecha: "+fechaString);
 
         myFormat = "yyyy-MM-dd";
         sdf = new SimpleDateFormat(myFormat, Locale.US);
         fechaParaSQL = sdf.format(myCalendar.getTime());
-        Log.d("ila", "fecha para SQL: "+fechaParaSQL);
     }
 
     private void ponerMarcador(Double lat, Double lng) {
@@ -220,8 +218,6 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
             error = true;
             MostrarMensaje("Marque el lugar");
         }
-
-
         if(fechaString.compareTo("")==0){
             error = true;
             MostrarMensaje("Elija fecha");
@@ -239,7 +235,7 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
             //Conectar con api guardar datos en db
             //Mostrar mensaje de denuncia realizada con exito
             //Alert Dialog con opcion de ir ver denuncias / cancelar (form de hacer denuncia)
-            Denuncia denunciaRealizar = new Denuncia(latitudActual, longitudActual, denunciaTexto, tipoDenunciaTexto);
+            Denuncia denunciaRealizar = new Denuncia(latitudActual, longitudActual, denunciaTexto, tipoDenunciaTexto, fechaParaSQL);
             new InsertarDenuncia().execute(denunciaRealizar);
 
         }
@@ -274,7 +270,7 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
 
         @Override
         public String doInBackground(Denuncia... parametros) {
-            String miURL = "http://helpmeayudame.azurewebsites.net/insertarDenuncia.php"; //url insertar mi denuncia
+            String miURL = "http://helpmeayudame.azurewebsites.net/insertarDenuncia2.php"; //url insertar mi denuncia
             String resultado;
 
             Denuncia miDenuncia = parametros[0];
@@ -290,6 +286,9 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
                 miJSONDenuncia.put("longitud", miDenuncia.longitud);
                 miJSONDenuncia.put("descripcion", miDenuncia.descripcion);
                 miJSONDenuncia.put("tipo", miDenuncia.tipo);
+                miJSONDenuncia.put("fecha", miDenuncia.fecha);
+
+                Log.d("ila", "fecha mi denuncia: "+miDenuncia.fecha);
 
                 Log.d("ila", "mi json denuncia: "+miJSONDenuncia);
 

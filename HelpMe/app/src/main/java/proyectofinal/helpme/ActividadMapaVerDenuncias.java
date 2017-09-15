@@ -16,6 +16,8 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,7 +34,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -56,7 +61,7 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        String url = "http://helpmeayudame.azurewebsites.net/traerDenuncias.php"; //url traer mis denuncias
+        String url = "http://helpmeayudame.azurewebsites.net/traerDenuncias2.php"; //url traer mis denuncias
         new BuscarDatosDenuncias().execute(url);
     }
 
@@ -82,13 +87,14 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
 
             LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
             Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            double latitude = location.getLatitude(); Log.d("ila", "latitud: "+latitude);
-            double longitude = location.getLongitude(); Log.d("ila", "longitud: "+longitude);
 
             if (location != null) {
+                double latitude = location.getLatitude(); Log.d("ila", "latitud: "+latitude);
+                double longitude = location.getLongitude(); Log.d("ila", "longitud: "+longitude);
                 LatLng latLng = new LatLng(latitude, longitude); Log.d("ila", "latlng: "+latLng);
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,14));
             }
+
         }else{
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
 
@@ -136,12 +142,23 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
         return miLista;
     }
 
-    private void PonerMarcador(Denuncia unaDenuncia) {
+
+    private void PonerMarcador(Denuncia unaDenuncia) throws ParseException {
+
+        String strCurrentDate = unaDenuncia.fecha;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date newDate = format.parse(strCurrentDate);
+
+        format = new SimpleDateFormat("dd-MM-yyyy");
+        String date = format.format(newDate);
+
+        unaDenuncia.fecha = date;
+
         Marker marcador;
         MarkerOptions unMarcador = new MarkerOptions()
                 .title(unaDenuncia.descripcion)
                 .position(new LatLng(unaDenuncia.latitud, unaDenuncia.longitud))
-                .snippet("Tipo: "+unaDenuncia.tipo);
+                .snippet("Fecha: "+unaDenuncia.fecha);
 
         switch(unaDenuncia.tipo){
             case "Robo":
@@ -173,7 +190,11 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
             if(listaDenuncias!=null) {
                 for (int i = 0; i < listaDenuncias.size(); i++) {
                     Denuncia unaDenuncia = listaDenuncias.get(i);
-                    PonerMarcador(unaDenuncia);
+                    try {
+                        PonerMarcador(unaDenuncia);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             else{
@@ -223,8 +244,11 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
                 double longitudD = jsonResultado.getDouble("longitud");
                 String descripcionD = jsonResultado.getString("descripcion");
                 String tipoD = jsonResultado.getString("tipo");
+                String fechaD = jsonResultado.getString("fecha");
 
-                Denuncia d = new Denuncia(latitudD, longitudD, descripcionD, tipoD);
+                Log.d("ila", "fechaD: "+fechaD);
+
+                Denuncia d = new Denuncia(latitudD, longitudD, descripcionD, tipoD, fechaD);
                 denuncias.add(d);
             }
             return denuncias;

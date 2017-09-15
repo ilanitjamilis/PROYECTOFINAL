@@ -6,12 +6,30 @@ package proyectofinal.helpme;
 
 public class Denuncia {
 
+    Denuncia(int idD, double latD, double longD, String descripcionD, String tipoD, String fechaD){
+        this.id = idD;
+        this.latitud = latD;
+        this.longitud = longD;
+        this.descripcion = descripcionD;
+        this.tipo = tipoD;
+        this.fecha = fechaD;
+    }
+
+
     Denuncia(int idD, double latD, double longD, String descripcionD, String tipoD){
         this.id = idD;
         this.latitud = latD;
         this.longitud = longD;
         this.descripcion = descripcionD;
         this.tipo = tipoD;
+    }
+
+    Denuncia(double latD, double longD, String descripcionD, String tipoD, String fechaD){
+        this.latitud = latD;
+        this.longitud = longD;
+        this.descripcion = descripcionD;
+        this.tipo = tipoD;
+        this.fecha = fechaD;
     }
 
     Denuncia(double latD, double longD, String descripcionD, String tipoD){
@@ -26,4 +44,5 @@ public class Denuncia {
     double longitud;
     String descripcion;
     String tipo;
+    String fecha;
 }
