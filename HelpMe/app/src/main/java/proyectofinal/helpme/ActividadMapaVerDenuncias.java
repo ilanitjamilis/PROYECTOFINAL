@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -78,22 +79,49 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
             mMap.setMyLocationEnabled(true);
 
 
-            /*LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-            Criteria criteria = new Criteria();
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+            /*Criteria criteria = new Criteria();
             String provider = locationManager.getBestProvider(criteria, true);
             Location location2 = locationManager.getLastKnownLocation(provider);
-            double latitude2 = location2.getLatitude(); Log.d("ila", "latitud2: "+latitude2);
-            double longitude2 = location2.getLongitude(); Log.d("ila", "longitud2: "+longitude2);*/
+            double latitude2 = location2.getLatitude();
+            double longitude2 = location2.getLongitude();
 
             LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
             Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
             if (location != null) {
-                double latitude = location.getLatitude(); Log.d("ila", "latitud: "+latitude);
-                double longitude = location.getLongitude(); Log.d("ila", "longitud: "+longitude);
-                LatLng latLng = new LatLng(latitude, longitude); Log.d("ila", "latlng: "+latLng);
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
+                LatLng latLng = new LatLng(latitude, longitude);
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,14));
-            }
+            }*/
+
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location) {
+
+                    double lat = location.getLatitude();
+                    double lng = location.getLongitude();
+                    LatLng latLng = new LatLng(lat, lng);
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
+                }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                }
+
+                @Override
+                public void onProviderEnabled(String provider) {
+
+                }
+
+                @Override
+                public void onProviderDisabled(String provider) {
+
+                }
+            });
 
         }else{
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
@@ -205,7 +233,6 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
         @Override
         protected ArrayList<Denuncia> doInBackground(String... parametros) {
             String miURL = parametros[0];
-            Log.d("ila","url: "+miURL);
             ArrayList<Denuncia> misDenuncias = new ArrayList<>();
 
             OkHttpClient client = new OkHttpClient();
@@ -215,9 +242,7 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
             try {
                 Response response = client.newCall(request).execute();  // Llamo al API Rest servicio1 en ejemplo.com
                 String resultado = response.body().string();
-                Log.d("ila", "resultado: "+resultado);
                 if(resultado.compareTo("error")!=0){
-                    Log.d("ila", "entro para parsear");
                     misDenuncias = ParsearResultado(resultado);
                     return misDenuncias;
                 }
@@ -235,7 +260,6 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
         ArrayList<Denuncia> ParsearResultado(String result) throws JSONException {
             ArrayList<Denuncia> denuncias = new ArrayList<>();
             JSONArray jsonDenuncias = new JSONArray(result);
-            Log.d("ila", "jsonDenuncias: "+jsonDenuncias);
             for (int i = 0; i < jsonDenuncias.length(); i++) {
                 JSONObject jsonResultado = jsonDenuncias.getJSONObject(i);
 
@@ -245,8 +269,6 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
                 String descripcionD = jsonResultado.getString("descripcion");
                 String tipoD = jsonResultado.getString("tipo");
                 String fechaD = jsonResultado.getString("fecha");
-
-                Log.d("ila", "fechaD: "+fechaD);
 
                 Denuncia d = new Denuncia(latitudD, longitudD, descripcionD, tipoD, fechaD);
                 denuncias.add(d);
