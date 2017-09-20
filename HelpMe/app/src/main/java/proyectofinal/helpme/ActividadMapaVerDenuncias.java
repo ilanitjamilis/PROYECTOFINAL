@@ -78,50 +78,12 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
 
             mMap.setMyLocationEnabled(true);
 
-
-            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-            /*Criteria criteria = new Criteria();
-            String provider = locationManager.getBestProvider(criteria, true);
-            Location location2 = locationManager.getLastKnownLocation(provider);
-            double latitude2 = location2.getLatitude();
-            double longitude2 = location2.getLongitude();
-
-            LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-            if (location != null) {
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
-                LatLng latLng = new LatLng(latitude, longitude);
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,14));
-            }*/
-
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, new LocationListener() {
-                @Override
-                public void onLocationChanged(Location location) {
-
-                    double lat = location.getLatitude();
-                    double lng = location.getLongitude();
-                    LatLng latLng = new LatLng(lat, lng);
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
-                }
-
-                @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                }
-
-                @Override
-                public void onProviderEnabled(String provider) {
-
-                }
-
-                @Override
-                public void onProviderDisabled(String provider) {
-
-                }
-            });
+            GPSTracker miGPSTracker = new GPSTracker(getApplicationContext());
+            Location location = miGPSTracker.getLocation();
+            Double lat = location.getLatitude();
+            Double lng = location.getLongitude();
+            LatLng latLng = new LatLng(lat, lng);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
 
         }else{
             AlertDialog.Builder adb = new AlertDialog.Builder(this);

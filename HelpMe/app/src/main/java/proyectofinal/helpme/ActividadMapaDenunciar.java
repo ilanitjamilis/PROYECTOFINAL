@@ -98,6 +98,7 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
         myCalendar = Calendar.getInstance();
 
         etFecha = (EditText) findViewById(R.id.fechaDenuncia);
+
         date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -109,6 +110,7 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
             }
 
         };
+
 
         etFecha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,43 +158,12 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
 
             mMap.setMyLocationEnabled(true);
 
-            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-            /*Criteria criteria = new Criteria();
-            String provider = locationManager.getBestProvider(criteria, true);
-            Location location = locationManager.getLastKnownLocation(provider);
-            if (location != null) {
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
-                LatLng latLng = new LatLng(latitude, longitude);
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,13));
-            }*/
-
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, new LocationListener() {
-                @Override
-                public void onLocationChanged(Location location) {
-
-                    double lat = location.getLatitude();
-                    double lng = location.getLongitude();
-                    LatLng latLng = new LatLng(lat, lng);
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
-                }
-
-                @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                }
-
-                @Override
-                public void onProviderEnabled(String provider) {
-
-                }
-
-                @Override
-                public void onProviderDisabled(String provider) {
-
-                }
-            });
+            GPSTracker miGPSTracker = new GPSTracker(getApplicationContext());
+            Location location = miGPSTracker.getLocation();
+            Double lat = location.getLatitude();
+            Double lng = location.getLongitude();
+            LatLng latLng = new LatLng(lat, lng);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
 
         }else{
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
@@ -285,6 +256,7 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
                 marcador.remove();
                 denuncia.setText("");
                 radioGroupTipoDenuncia.clearCheck();
+                etFecha.setText("");
 
                 MostrarMensaje("Denuncia realizada correctamente");
             }
