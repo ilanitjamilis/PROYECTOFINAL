@@ -53,9 +53,7 @@ import java.util.Date;
 
 public class ActividadNavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    //19/09/2017 conecto HelpMe con GitHub desde Android Studio
-
+    
     public boolean isFirstStart;
     public boolean isFirstStart2;
     Context mcontext;
