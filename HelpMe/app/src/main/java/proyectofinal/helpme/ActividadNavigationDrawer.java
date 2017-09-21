@@ -45,6 +45,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.security.CodeSigner;
 import java.text.DateFormat;
@@ -641,17 +642,20 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         mimensaje = "Mensaje enviado desde HelpMe! " +
                 tomarDatosUsuarioNombre() + " " + tomarDatosUsuarioApellido() + " está en riesgo. " + TiempoAhora() + " - " + TomarUbicacion();
 
+        Double[] coordenadasEmergencia = TomarCoordenadas();
+
         mensaje[0] = tomarDatosUsuarioNombre() + " " + tomarDatosUsuarioApellido() + " se encuentra en una situación" +
                 " de riesgo.";
         mensaje[1] = "Mensaje enviado el " + TiempoAhora() + " desde " + TomarUbicacion() + " - HelpMe!";
+        mensaje[2] = "Click aquí: http://maps.google.com/?q="+coordenadasEmergencia[0]+","+coordenadasEmergencia[1];
         if (enviarA1) {
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 3; i++) {
                 enviarSMS(contactoEmergencia1, mensaje[i]);
             }
             //enviarSMS(contactoEmergencia1, mimensaje);
         }
         if (enviarA2) {
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 3; i++) {
                 enviarSMS(contactoEmergencia2, mensaje[i]);
             }
             //enviarSMS(contactoEmergencia2, mimensaje);
@@ -774,11 +778,10 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
     public String TomarUbicacion() {
         String latLong;
+        Double[] misCoordenadasObtenidas = TomarCoordenadas();
 
-        GPSTracker miGPSTracker = new GPSTracker(getApplicationContext());
-        Location location = miGPSTracker.getLocation();
-        Double lat = location.getLatitude();
-        Double lng = location.getLongitude();
+        Double lat = misCoordenadasObtenidas[0];
+        Double lng = misCoordenadasObtenidas[1];
 
         if(lat != null && lng != null){
             latLong = "latitud: " + lat + " / longitud: " + lng;
@@ -789,6 +792,17 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
         return latLong;
 
+    }
+
+    public Double[] TomarCoordenadas(){
+        Double[] misCoordenadas = new Double[2];
+        GPSTracker miGPSTracker = new GPSTracker(getApplicationContext());
+        Location location = miGPSTracker.getLocation();
+        Double lat = location.getLatitude();
+        Double lng = location.getLongitude();
+        misCoordenadas[0]=lat;
+        misCoordenadas[1]=lng;
+        return misCoordenadas;
     }
 
     public String tomarDatosUsuarioNombre(){
