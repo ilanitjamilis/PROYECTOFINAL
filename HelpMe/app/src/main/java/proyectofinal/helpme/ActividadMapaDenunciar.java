@@ -146,7 +146,6 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
         marcador.showInfoWindow();
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -158,12 +157,7 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
 
             mMap.setMyLocationEnabled(true);
 
-            GPSTracker miGPSTracker = new GPSTracker(getApplicationContext());
-            Location location = miGPSTracker.getLocation();
-            Double lat = location.getLatitude();
-            Double lng = location.getLongitude();
-            LatLng latLng = new LatLng(lat, lng);
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
+            ubicarmeEnMapa();
 
         }else{
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
@@ -193,6 +187,14 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
         });
     }
 
+    public void ubicarmeEnMapa(){
+        GPSTracker miGPSTracker = new GPSTracker(getApplicationContext());
+        Location location = miGPSTracker.getLocation();
+        Double lat = location.getLatitude();
+        Double lng = location.getLongitude();
+        LatLng latLng = new LatLng(lat, lng);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
+    }
 
     public void hacerDenuncia (View vista){
         if(radioGroupTipoDenuncia.getCheckedRadioButtonId()!=-1){
@@ -245,7 +247,6 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
         Toast.makeText(this,mensaje,Toast.LENGTH_LONG).show();
     }
 
-
     public class InsertarDenuncia extends AsyncTask<Denuncia, Void, String> {
 
         public void onPostExecute(String resultado) {
@@ -257,6 +258,7 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
                 denuncia.setText("");
                 radioGroupTipoDenuncia.clearCheck();
                 etFecha.setText("");
+                ubicarmeEnMapa();
 
                 MostrarMensaje("Denuncia realizada correctamente");
             }

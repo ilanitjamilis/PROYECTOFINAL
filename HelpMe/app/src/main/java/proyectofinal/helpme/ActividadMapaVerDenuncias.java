@@ -40,17 +40,25 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMapReadyCallback {
+public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMapReadyCallback,
+        GoogleMap.OnCameraMoveStartedListener,
+        GoogleMap.OnCameraMoveListener,
+        GoogleMap.OnCameraMoveCanceledListener,
+        GoogleMap.OnCameraIdleListener {
 
     private GoogleMap mMap;
     Double latitud;
     Double longitud;
     Boolean detectoUbicacion;
     ArrayList<Denuncia> miListaDenuncias;
+    Double latitudCentral;
+    Double longitudCentral;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +74,16 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
         new BuscarDatosDenuncias().execute(url);
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.setOnCameraIdleListener(this);
+        mMap.setOnCameraMoveStartedListener(this);
+        mMap.setOnCameraMoveListener(this);
+        mMap.setOnCameraMoveCanceledListener(this);
+
+        mMap.getUiSettings().setZoomControlsEnabled(false);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -107,6 +119,46 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
 
     }
 
+
+    @Override
+    public void onCameraMoveStarted(int reason) {
+
+        if (reason == GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE) {
+            //Toast.makeText(this, "The user gestured on the map.", Toast.LENGTH_SHORT).show();
+        } else if (reason == GoogleMap.OnCameraMoveStartedListener
+                .REASON_API_ANIMATION) {
+            //Toast.makeText(this, "The user tapped something on the map.", Toast.LENGTH_SHORT).show();
+        } else if (reason == GoogleMap.OnCameraMoveStartedListener
+                .REASON_DEVELOPER_ANIMATION) {
+            //Toast.makeText(this, "The app moved the camera.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onCameraMove() {
+        //Toast.makeText(this, "The camera is moving.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCameraMoveCanceled() {
+       // Toast.makeText(this, "Camera movement canceled.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCameraIdle() {
+        //Traer marcadores en esta zona
+        LatLng latLng = mMap.getCameraPosition().target;
+        latitudCentral = latLng.latitude;
+        longitudCentral = latLng.longitude;
+
+        //Toast.makeText(this, "Lat: "+latLng.latitude+"// Lng: "+latLng.longitude, Toast.LENGTH_SHORT).show();
+
+        String url = "http://helpmeayudame.azurewebsites.net/traerDenunciasRadar.php"; //url traer mis denuncias
+        //new BuscarDatosDenuncias().execute(url);
+
+        //Toast.makeText(this, "The camera has stopped moving.", Toast.LENGTH_SHORT).show();
+    }
+
     public ArrayList<Denuncia> LlenarListaDenuncias(){
         ArrayList<Denuncia> miLista = new ArrayList<>();
         Denuncia unaDenuncia;
@@ -131,7 +183,6 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
 
         return miLista;
     }
-
 
     private void PonerMarcador(Denuncia unaDenuncia) throws ParseException {
 
@@ -175,16 +226,24 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
 
     private class BuscarDatosDenuncias extends AsyncTask<String, Void, ArrayList<Denuncia>> {
 
+        String resultado;
+
         protected void onPostExecute(ArrayList<Denuncia> listaDenuncias) {
             super.onPostExecute(listaDenuncias);
             if(listaDenuncias!=null) {
-                for (int i = 0; i < listaDenuncias.size(); i++) {
-                    Denuncia unaDenuncia = listaDenuncias.get(i);
-                    try {
-                        PonerMarcador(unaDenuncia);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                if(resultado.compareTo("error")!=0) {
+                    mMap.clear();
+                    for (int i = 0; i < listaDenuncias.size(); i++) {
+                        Denuncia unaDenuncia = listaDenuncias.get(i);
+                        try {
+                            PonerMarcador(unaDenuncia);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                     }
+                }
+                else{
+                    MostrarMensaje("Hubo un error");
                 }
             }
             else{
@@ -194,28 +253,73 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
 
         @Override
         protected ArrayList<Denuncia> doInBackground(String... parametros) {
+
             String miURL = parametros[0];
+
+            resultado = "";
+
             ArrayList<Denuncia> misDenuncias = new ArrayList<>();
 
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(miURL)
-                    .build();
-            try {
-                Response response = client.newCall(request).execute();  // Llamo al API Rest servicio1 en ejemplo.com
-                String resultado = response.body().string();
-                if(resultado.compareTo("error")!=0){
-                    misDenuncias = ParsearResultado(resultado);
-                    return misDenuncias;
-                }
-                else{
+            if(miURL.compareTo("http://helpmeayudame.azurewebsites.net/traerDenunciasRadar.php")!=0) {
+
+                OkHttpClient client = new OkHttpClient();
+                Request request = new Request.Builder()
+                        .url(miURL)
+                        .build();
+                try {
+                    Response response = client.newCall(request).execute();  // Llamo al API Rest servicio1 en ejemplo.com
+                    resultado = response.body().string();
+                    if (resultado.compareTo("error") != 0) {
+                        misDenuncias = ParsearResultado(resultado);
+                        return misDenuncias;
+                    } else {
+                        return null;
+                    }
+
+                } catch (IOException e) {
+                    return null;
+                } catch (JSONException e) {
                     return null;
                 }
+            }
+            else{
+                Log.d("denuncias", "entra bien");
+                MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                JSONObject miJSONDenuncia = new JSONObject();
 
-            } catch (IOException e) {
-                return null;
-            } catch (JSONException e) {
-                return null;
+                try {
+                    miJSONDenuncia.put("miLat", latitudCentral);
+                    miJSONDenuncia.put("miLng", longitudCentral);
+                    Log.d("denuncias", "miJSONDenuncia--->   "+miJSONDenuncia.get("miLat")+"//"+miJSONDenuncia.get("miLng"));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                RequestBody body = RequestBody.create(JSON, miJSONDenuncia.toString());
+
+                OkHttpClient client = new OkHttpClient();
+                Request request = new Request.Builder()
+                        .url(miURL)
+                        .post(body)
+                        .build();
+
+                try {
+                    Response response = client.newCall(request).execute();  // Llamo al API Rest servicio1 en ejemplo.com
+                    resultado = response.body().string();
+                    Log.d("denuncias", "resultado---->  "+resultado);
+                    if (resultado.compareTo("error") != 0) {
+                        misDenuncias = ParsearResultado(resultado);
+                        return misDenuncias;
+                    } else {
+                        return null;
+                    }
+
+                } catch (IOException e) {
+                    return null;
+                } catch (JSONException e) {
+                    return null;
+                }
             }
         }
 
