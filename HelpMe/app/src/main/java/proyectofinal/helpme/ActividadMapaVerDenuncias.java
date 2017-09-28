@@ -119,7 +119,6 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
 
     }
 
-
     @Override
     public void onCameraMoveStarted(int reason) {
 
@@ -154,6 +153,12 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
         //Toast.makeText(this, "Lat: "+latLng.latitude+"// Lng: "+latLng.longitude, Toast.LENGTH_SHORT).show();
 
         String url = "http://helpmeayudame.azurewebsites.net/traerDenunciasRadar.php"; //url traer mis denuncias
+        url = "http://helpmeayudame.azurewebsites.net/traerDenuncias2.php";
+
+        Log.d("denuncias", "busco denuncias");
+
+        MostrarMensaje("buscar denuncias");
+
         //new BuscarDatosDenuncias().execute(url);
 
         //Toast.makeText(this, "The camera has stopped moving.", Toast.LENGTH_SHORT).show();
@@ -290,7 +295,7 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
                 try {
                     miJSONDenuncia.put("miLat", latitudCentral);
                     miJSONDenuncia.put("miLng", longitudCentral);
-                    Log.d("denuncias", "miJSONDenuncia--->   "+miJSONDenuncia.get("miLat")+"//"+miJSONDenuncia.get("miLng"));
+                    Log.d("denuncias", "miJSONDenuncia--->   "+miJSONDenuncia);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
