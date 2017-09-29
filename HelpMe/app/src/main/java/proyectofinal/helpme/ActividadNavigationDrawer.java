@@ -698,6 +698,27 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         startActivity(intent);
     }
 
+    public void irInconSi() {
+        Fragment miFragment = new ActividadInconSi();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragment);
+        TransaccionDeFragment.commit();
+    }
+
+    public void irInconNo() {
+        Fragment miFragment = new ActividadInconNo();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragment);
+        TransaccionDeFragment.commit();
+    }
+
+    public void irActividadRCP() {
+        Fragment miFragment = new ActividadRCP();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragment);
+        TransaccionDeFragment.commit();
+    }
+
     public void TomarUbicacionActual() {
         ultimoCodigoDetectado = utilidades.sharedPref.getString("CÓDIGO", "NONE");
         ultimoTiempoDetectado = utilidades.sharedPref.getString("ultUbicacionTiempo", "NONE");
