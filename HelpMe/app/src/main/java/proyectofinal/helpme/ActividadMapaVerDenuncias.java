@@ -71,7 +71,7 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
         mapFragment.getMapAsync(this);
 
         String url = "http://helpmeayudame.azurewebsites.net/traerDenuncias2.php"; //url traer mis denuncias
-        new BuscarDatosDenuncias().execute(url);
+        //new BuscarDatosDenuncias().execute(url);
     }
 
     @Override
@@ -153,13 +153,9 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
         //Toast.makeText(this, "Lat: "+latLng.latitude+"// Lng: "+latLng.longitude, Toast.LENGTH_SHORT).show();
 
         String url = "http://helpmeayudame.azurewebsites.net/traerDenunciasRadar.php"; //url traer mis denuncias
-        url = "http://helpmeayudame.azurewebsites.net/traerDenuncias2.php";
+        url = "http://helpmeayudame.azurewebsites.net/traerDenunciasRadar.php";
 
-        Log.d("denuncias", "busco denuncias");
-
-        MostrarMensaje("buscar denuncias");
-
-        //new BuscarDatosDenuncias().execute(url);
+        new BuscarDatosDenuncias().execute(url);
 
         //Toast.makeText(this, "The camera has stopped moving.", Toast.LENGTH_SHORT).show();
     }
