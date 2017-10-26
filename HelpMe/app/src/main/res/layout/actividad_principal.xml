@@ -5,85 +5,88 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <android.support.constraint.ConstraintLayout
+    <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
         tools:context="proyectofinal.helpme.ActividadPrincipal">
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="368dp"
-            android:layout_height="495dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageButton
-                        android:id="@+id/imgbtnPolicia"
-                        android:layout_width="170dp"
-                        android:layout_height="200dp"
-                        android:layout_marginTop="3dp"
-                        android:background="@null"
-                        android:src="@drawable/policia2" />
-
-                    <ImageButton
-                        android:id="@+id/imgbtnAmbulancia"
-                        android:layout_width="170dp"
-                        android:layout_height="200dp"
-                        android:layout_marginTop="3dp"
-                        android:background="@null"
-                        android:src="@drawable/ambulancia" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageButton
-                        android:id="@+id/imgbtnBomberos"
-                        android:layout_width="170dp"
-                        android:layout_height="200dp"
-                        android:background="@null"
-                        android:src="@drawable/bomberos" />
-
-                    <ImageButton
-                        android:id="@+id/imgbtnMensajeEmergencia"
-                        android:layout_width="170dp"
-                        android:layout_height="200dp"
-                        android:background="@null"
-                        android:src="@drawable/help" />
-
-                </LinearLayout>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/imgbtnUbicacion"
-                    android:layout_width="360dp"
-                    android:layout_height="86dp"
-                    android:layout_marginLeft="-10dp"
-                    android:layout_marginTop="6dp"
+                    android:id="@+id/imgbtnPolicia"
+                    android:layout_width="170dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="3dp"
                     android:background="@null"
-                    android:onClick="irMapas"
-                    android:src="@drawable/ubicacion" />
+                    android:src="@drawable/policia2"
+                    android:layout_alignParentBottom="true"/>
+
+                <ImageButton
+                    android:id="@+id/imgbtnAmbulancia"
+                    android:layout_width="170dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@null"
+                    android:layout_toRightOf="@id/imgbtnPolicia"
+                    android:src="@drawable/ambulancia"
+                    android:layout_toEndOf="@id/imgbtnPolicia"
+                    android:layout_alignParentBottom="true" />
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imgbtnBomberos"
+                    android:layout_width="170dp"
+                    android:layout_height="200dp"
+                    android:background="@null"
+                    android:layout_alignBottom="@id/imgbtnPolicia"
+                    android:src="@drawable/bomberos"
+                    android:layout_alignParentBottom="true" />
+
+                <ImageButton
+                    android:id="@+id/imgbtnMensajeEmergencia"
+                    android:layout_width="170dp"
+                    android:layout_height="200dp"
+                    android:background="@null"
+                    android:layout_alignBottom="@id/imgbtnAmbulancia"
+                    android:layout_toRightOf="@id/imgbtnBomberos"
+                    android:src="@drawable/help"
+                    android:layout_toEndOf="@id/imgbtnBomberos"
+                    android:layout_alignParentBottom="true" />
+
+            </LinearLayout>
+
+
+
+            <ImageButton
+                android:id="@+id/imgbtnUbicacion"
+                android:layout_width="360dp"
+                android:layout_height="86dp"
+                android:layout_marginLeft="-10dp"
+                android:layout_marginTop="6dp"
+                android:background="@null"
+                android:onClick="irMapas"
+                android:src="@drawable/ubicacion"
+                android:layout_alignParentBottom="true" />
+
         </LinearLayout>
 
-    </android.support.constraint.ConstraintLayout>
+    </RelativeLayout>
 
 </ScrollView>

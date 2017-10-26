@@ -10,8 +10,9 @@
 
     <ImageView
         android:layout_width="280dp"
-        android:layout_marginLeft="30dp"
-        android:layout_height="match_parent"
-        android:src="@drawable/logo"/>
+        android:layout_height="495dp"
+        android:src="@drawable/logo"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="0dp" />
 
 </android.support.constraint.ConstraintLayout>
