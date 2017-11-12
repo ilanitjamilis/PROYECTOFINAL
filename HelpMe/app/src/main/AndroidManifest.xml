@@ -16,7 +16,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
+    <service
+        android:name="proyectofinal.helpme.GPSTracker"
+        android:enabled="true" >
+    </service>
 
 
     <!--
@@ -75,13 +78,6 @@
         <activity
             android:name=".ActividadMapaVerDenuncias"
             android:label="@string/title_activity_actividad_mapa_ver_denuncias"></activity>
-
-        <service
-            android:name="proyectofinal.helpme.GPSTracker"
-            android:enabled="true" >
-        </service>
-
-
     </application>
 
 </manifest>

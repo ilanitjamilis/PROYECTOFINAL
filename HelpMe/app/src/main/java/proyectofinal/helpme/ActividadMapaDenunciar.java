@@ -98,7 +98,6 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
         myCalendar = Calendar.getInstance();
 
         etFecha = (EditText) findViewById(R.id.fechaDenuncia);
-
         date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -110,7 +109,6 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
             }
 
         };
-
 
         etFecha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +144,7 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
         marcador.showInfoWindow();
     }
 
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -157,8 +156,16 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
 
             mMap.setMyLocationEnabled(true);
 
-            ubicarmeEnMapa();
-
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            Criteria criteria = new Criteria();
+            String provider = locationManager.getBestProvider(criteria, true);
+            Location location = locationManager.getLastKnownLocation(provider);
+            if (location != null) {
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
+                LatLng latLng = new LatLng(latitude, longitude);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,13));
+            }
         }else{
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
 
@@ -187,16 +194,9 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
         });
     }
 
-    public void ubicarmeEnMapa(){
-        GPSTracker miGPSTracker = new GPSTracker(getApplicationContext());
-        Location location = miGPSTracker.getLocation();
-        Double lat = location.getLatitude();
-        Double lng = location.getLongitude();
-        LatLng latLng = new LatLng(lat, lng);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
-    }
 
     public void hacerDenuncia (View vista){
+        Log.d("ila", "entra a hacer denuncia");
         if(radioGroupTipoDenuncia.getCheckedRadioButtonId()!=-1){
             int id = radioGroupTipoDenuncia.getCheckedRadioButtonId();
             View radioButton = radioGroupTipoDenuncia.findViewById(id);
@@ -208,6 +208,8 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
             tipoDenunciaTexto = "";
         }
         denunciaTexto = denuncia.getText().toString().trim();
+        Log.d("ila","denuncia: "+denunciaTexto);
+        Log.d("ila", "tipo denuncia: "+tipoDenunciaTexto);
 
         error = false;
         miError = "";
@@ -247,6 +249,7 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
         Toast.makeText(this,mensaje,Toast.LENGTH_LONG).show();
     }
 
+
     public class InsertarDenuncia extends AsyncTask<Denuncia, Void, String> {
 
         public void onPostExecute(String resultado) {
@@ -257,8 +260,6 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
                 marcador.remove();
                 denuncia.setText("");
                 radioGroupTipoDenuncia.clearCheck();
-                etFecha.setText("");
-                ubicarmeEnMapa();
 
                 MostrarMensaje("Denuncia realizada correctamente");
             }
@@ -274,6 +275,8 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
 
             Denuncia miDenuncia = parametros[0];
 
+            Log.d("ila","miDenuncia: "+miDenuncia);
+
             OkHttpClient client = new OkHttpClient();
             MediaType JSON = MediaType.parse("application/json; charset=utf-8");
             JSONObject miJSONDenuncia = new JSONObject();
@@ -285,8 +288,13 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
                 miJSONDenuncia.put("tipo", miDenuncia.tipo);
                 miJSONDenuncia.put("fecha", miDenuncia.fecha);
 
+                Log.d("ila", "fecha mi denuncia: "+miDenuncia.fecha);
+
+                Log.d("ila", "mi json denuncia: "+miJSONDenuncia);
+
             } catch (JSONException e) {
                 e.printStackTrace();
+                Log.d("ila", "JSON exception");
             }
 
             RequestBody body = RequestBody.create(JSON, miJSONDenuncia.toString());
@@ -307,6 +315,7 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
             try {
                 Response response = client.newCall(request).execute();  // Llamo al API Rest servicio1 en ejemplo.com
                 resultado = response.body().string();
+                Log.d("ila", "resultado: "+resultado);
                 return resultado;
 
             } catch (IOException e) {

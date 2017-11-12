@@ -45,7 +45,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.security.CodeSigner;
 import java.text.DateFormat;
@@ -54,8 +53,6 @@ import java.util.Date;
 
 public class ActividadNavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    //19/09/2017 conecto HelpMe con GitHub desde Android Studio
 
     public boolean isFirstStart;
     public boolean isFirstStart2;
@@ -74,8 +71,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
     NavigationView navigationView;
 
-    LocationManager locationManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +84,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
             String deDondeVengo = datosRecibidos.getString("anterior");
 
-            if (deDondeVengo.compareTo("registro") == 0) {
+            if(deDondeVengo.compareTo("registro")==0) {
                 String nombreRegistro = datosRecibidos.getString("nombre");
                 String apellidoRegistro = datosRecibidos.getString("apellido");
                 Integer pinRegistro = datosRecibidos.getInt("pin");
@@ -103,19 +98,20 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                 editor.apply();
             }
 
-            if (fragmentIr.compareTo("editarDatos") == 0) {
+            if(fragmentIr.compareTo("editarDatos")==0){
                 Fragment miFragmentIngreso2 = new ActividadEditarRegistro();
                 TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
                 TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso2);
                 TransaccionDeFragment.commit();
-            } else {
+            }
+            else{
                 Fragment miFragmentIngreso = new ActividadPrincipal();
                 TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
                 TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso);
                 TransaccionDeFragment.commit();
             }
 
-        } catch (NullPointerException e) {
+        } catch (NullPointerException e ) {
             Fragment miFragmentIngreso = new ActividadPrincipal();
             TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
             TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso);
@@ -137,7 +133,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         /*Intent irWizard = new Intent(ActividadPrincipal.this, MyIntro.class);
         startActivity(irWizard);*/
 
-        if (AveriguarSiHayRegistros() == false) {
+        if(AveriguarSiHayRegistros() == false){
             // Agregar registros
 
             AgregarRegistro("AR", 101, 107, 100);
@@ -347,8 +343,8 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         t.start();
         SharedPreferences getSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         isFirstStart2 = getSharedPreferences.getBoolean("firstStart2", true);
-        if (isFirstStart2) {
-            Intent irEmpezarRegistro = new Intent(ActividadNavigationDrawer.this, ActividadRegistro.class);
+        if(isFirstStart2){
+            Intent irEmpezarRegistro = new Intent (ActividadNavigationDrawer.this, ActividadRegistro.class);
             startActivity(irEmpezarRegistro);
 
             SharedPreferences.Editor e = getSharedPreferences.edit();
@@ -391,7 +387,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
             TomarUbicacionActual();
 
-            if (hayUbicacion) {
+            if(hayUbicacion) {
                 Toast.makeText(this, "Ubicación actualizada", Toast.LENGTH_SHORT).show();
             }
 
@@ -464,10 +460,10 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         return true;
     }
 
-    public Boolean AveriguarSiHayRegistros() {
+    public Boolean AveriguarSiHayRegistros(){
         Boolean resultado = false;
         miBaseDatosAbierta = utilidades.baseDeDatosAbierta(this);
-        if (miBaseDatosAbierta) {
+        if(miBaseDatosAbierta) {
             Cursor registros;
             registros = utilidades.baseDatos.rawQuery("select nombrePais, telPolicia, telAmbulancia, telBomberos from paisestelefonos", null);
             if (registros.moveToFirst() == true) {
@@ -478,10 +474,10 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         return resultado;
     }
 
-    public Boolean AveriguarPaisActual(String miCodPais) {
+    public Boolean AveriguarPaisActual(String miCodPais){
         Boolean paisEncontrado = false;
         miBaseDatosAbierta = utilidades.baseDeDatosAbierta(this);
-        if (miBaseDatosAbierta) {
+        if(miBaseDatosAbierta) {
             Cursor registros;
             registros = utilidades.baseDatos.rawQuery("select nombrePais, telPolicia, telAmbulancia, telBomberos from paisestelefonos", null);
             if (registros.moveToFirst() == true) {
@@ -495,9 +491,9 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                     unPais.codigoP = codigoPais;
                     unPais.numPoliciaP = numTelefonoPolicia;
                     unPais.numAmbulanciaP = numTelefonoAmbulancia;
-                    unPais.numBomberosP = numTelefonoBomberos;
+                    unPais.numBomberosP= numTelefonoBomberos;
 
-                    if (unPais.codigoP.compareTo(miCodPais) == 0) {
+                    if(unPais.codigoP.compareTo(miCodPais)==0){
                         paisEncontrado = true;
                         utilidades.paisActual = unPais;
                     }
@@ -510,7 +506,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         return paisEncontrado;
     }
 
-    public void AgregarRegistro(String codPais, int numPolicia, int numAmbulancia, int numBomberos) {
+    public void AgregarRegistro(String codPais, int numPolicia, int numAmbulancia, int numBomberos){
         ContentValues nuevoRegistro = new ContentValues();
         nuevoRegistro.put("nombrePais", codPais);
         nuevoRegistro.put("telPolicia", numPolicia);
@@ -519,82 +515,85 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         utilidades.baseDatos.insert("paisestelefonos", null, nuevoRegistro);
     }
 
-    public void BorrarRegistrosBasePaisesTelefonos() {
+    public void BorrarRegistrosBasePaisesTelefonos(){
         boolean miBaseDeDatosAbierta = utilidades.baseDeDatosAbierta(this);
-        if (miBaseDeDatosAbierta) {
-            utilidades.baseDatos.delete("paisestelefonos", "", null);
+        if(miBaseDeDatosAbierta){
+            utilidades.baseDatos.delete("paisestelefonos","",null);
         }
         utilidades.baseDatos.close();
     }
 
-    public String getCountryCode() {
+    public String getCountryCode(){
         String countryCode;
 
-        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         countryCode = tm.getNetworkCountryIso();
 
-        if (countryCode == "") {
-            countryCode = "NOTFOUND";
+        if(countryCode==""){
+            countryCode="NOTFOUND";
         }
 
         return countryCode;
     }
 
-    public void llamarPolicia(View vista) {
-        if (utilidades.paisActual.codigoP.compareTo("NOT FOUND") != 0) {
+    public void llamarPolicia(View vista){
+        if(utilidades.paisActual.codigoP.compareTo("NOT FOUND")!= 0) {
             Intent intentoLlamada;
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                 intentoLlamada = new Intent(Intent.ACTION_CALL);
 
-            } else {
+            }else{
                 intentoLlamada = new Intent(Intent.ACTION_DIAL);
             }
             String numPolicia = utilidades.paisActual.numPoliciaP.toString();
             intentoLlamada.setData(Uri.parse("tel:" + numPolicia));
             startActivity(intentoLlamada);
-        } else {
+        }
+        else{
             String mensaje = "ERROR";
-            Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void llamarAmbulancia(View vista) {
-        if (utilidades.paisActual.codigoP.compareTo("NOT FOUND") != 0) {
+    public void llamarAmbulancia(View vista){
+        if(utilidades.paisActual.codigoP.compareTo("NOT FOUND")!= 0) {
             Intent intentoLlamada;
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                 intentoLlamada = new Intent(Intent.ACTION_CALL);
 
-            } else {
+            }else{
                 intentoLlamada = new Intent(Intent.ACTION_DIAL);
             }
             String numAmbulancia = utilidades.paisActual.numAmbulanciaP.toString();
             intentoLlamada.setData(Uri.parse("tel:" + numAmbulancia));
             startActivity(intentoLlamada);
-        } else {
+        }
+        else{
             String mensaje = "ERROR";
-            Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void llamarBomberos(View vista) {
-        if (utilidades.paisActual.codigoP.compareTo("NOT FOUND") != 0) {
+    public void llamarBomberos(View vista){
+        if(utilidades.paisActual.codigoP.compareTo("NOT FOUND")!= 0) {
             Intent intentoLlamada;
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                 intentoLlamada = new Intent(Intent.ACTION_CALL);
 
-            } else {
+            }else{
                 intentoLlamada = new Intent(Intent.ACTION_DIAL);
             }
             String numBomberos = utilidades.paisActual.numBomberosP.toString();
             intentoLlamada.setData(Uri.parse("tel:" + numBomberos));
             startActivity(intentoLlamada);
-        } else {
+        }
+        else{
             String mensaje = "ERROR";
-            Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,mensaje, Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void enviarMensajeEmergencia(View vista) {
+    public void enviarMensajeEmergencia (View vista){
 
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
         adb.setTitle("Enviar mensaje");
@@ -604,63 +603,59 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             public void onClick(DialogInterface dialog, int which) {
                 if (ActivityCompat.checkSelfPermission(ActividadNavigationDrawer.this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
                     procesoDeEnviarSMS();
-                } else {
+                }
+                else{
                     ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.SEND_SMS}, 123);
                     MostrarMensaje("Intente nuevamente");
                 }
-            }
-        });
+            } });
 
 
         adb.setNegativeButton("No", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
-            }
-        });
+            } });
         adb.show();
 
         /*String contactoEmergencia1 = tomarDatosUsuarioContactoEmergencia1();
         enviarSMS(contactoEmergencia1, "Prueba");*/
     }
 
-    public void procesoDeEnviarSMS() {
+    public void procesoDeEnviarSMS(){
         String contactoEmergencia1 = tomarDatosUsuarioContactoEmergencia1();
         String contactoEmergencia2 = tomarDatosUsuarioContactoEmergencia2();
         Boolean enviarA1 = false;
         Boolean enviarA2 = false;
-        if (contactoEmergencia1.compareTo("-") != 0) {
+        if(contactoEmergencia1.compareTo("-")!=0) {
             enviarA1 = true;
         }
-        if (contactoEmergencia2.compareTo("-") != 0) {
+        if(contactoEmergencia2.compareTo("-")!=0) {
             enviarA2 = true;
         }
         String[] mensaje = new String[3];
-        String mimensaje = "Mensaje de emergencia enviado desde la aplicación HelpMe! " +
-                tomarDatosUsuarioNombre() + " " + tomarDatosUsuarioApellido() + " se encuentra en una situación" +
-                " de riesgo. Mensaje enviado el " + TiempoAhora() + ", desde " + TomarUbicacion() + ". Esperamos que usted lo pueda ayudar.";
+        String mimensaje = "Mensaje de emergencia enviado desde la aplicación HelpMe! "+
+                tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" se encuentra en una situación" +
+                " de riesgo. Mensaje enviado el "+TiempoAhora()+", desde "+TomarUbicacion()+". Esperamos que usted lo pueda ayudar.";
 
-        mimensaje = "Mensaje enviado desde HelpMe! " +
-                tomarDatosUsuarioNombre() + " " + tomarDatosUsuarioApellido() + " está en riesgo. " + TiempoAhora() + " - " + TomarUbicacion();
+        mimensaje = "Mensaje enviado desde HelpMe! "+
+                tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" está en riesgo. "+TiempoAhora()+" - "+TomarUbicacion();
 
-        Double[] coordenadasEmergencia = TomarCoordenadas();
-
-        mensaje[0] = tomarDatosUsuarioNombre() + " " + tomarDatosUsuarioApellido() + " se encuentra en una situación" +
+        mensaje[0] = tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" se encuentra en una situación" +
                 " de riesgo.";
-        mensaje[1] = "Mensaje enviado el " + TiempoAhora() + " desde " + TomarUbicacion() + " - HelpMe!";
-        mensaje[2] = "Click aquí: http://maps.google.com/?q="+coordenadasEmergencia[0]+","+coordenadasEmergencia[1];
-        if (enviarA1) {
-            for (int i = 0; i < 3; i++) {
+        mensaje[1] = "Mensaje enviado el "+TiempoAhora()+" desde "+TomarUbicacion()+" - HelpMe!";
+        if(enviarA1){
+            for(int i=0; i<2; i++) {
                 enviarSMS(contactoEmergencia1, mensaje[i]);
             }
             //enviarSMS(contactoEmergencia1, mimensaje);
         }
-        if (enviarA2) {
-            for (int i = 0; i < 3; i++) {
+        if(enviarA2){
+            for(int i=0; i<2; i++) {
                 enviarSMS(contactoEmergencia2, mensaje[i]);
             }
             //enviarSMS(contactoEmergencia2, mimensaje);
         }
-        if (enviarA1 == false && enviarA2 == false) {
+        if(enviarA1==false&&enviarA2==false){
             MostrarMensajeLargo("Usted no tiene contactos de emergencia, edite sus datos");
         }
     }
@@ -668,19 +663,25 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     public void enviarSMS(String phoneNo, String msg) {
         try {
             SmsManager smsManager = SmsManager.getDefault();
+
+            /*PendingIntent sentPI;
+            String SENT = "SMS_SENT";
+            sentPI = PendingIntent.getBroadcast(this, 0,new Intent(SENT), 0); sentPI en el anteultimo parametro*/
+
             smsManager.sendTextMessage(phoneNo, null, msg, null, null);
             Toast.makeText(getApplicationContext(), "Mensaje enviado", Toast.LENGTH_LONG).show();
+            Log.d("mensaje", "mensaje: "+msg+" enviado a: "+phoneNo);
         } catch (Exception ex) {
             Toast.makeText(getApplicationContext(), "Hubo un error, el mensaje no ha sido enviado", Toast.LENGTH_LONG).show();
         }
     }
 
-    public void irMapas(View vista) {
+    public void irMapas (View vista){
         Intent intentoMapas = new Intent(android.content.Intent.ACTION_VIEW);
         startActivity(intentoMapas);
     }
 
-    public void irDenunciar() {
+    public void irDenunciar (){
         /*Fragment miFragmentIngreso = new ActividadDenunciarDenunciar();
         TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
         TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso);
@@ -689,7 +690,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void irVerDenuncias() {
+    public void irVerDenuncias (){
         /*Fragment miFragmentIngreso = new ActividadDenunciarVerDenuncias();
         TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
         TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso);
@@ -698,53 +699,34 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void irInconSi() {
-        Fragment miFragment = new ActividadInconSi();
-        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
-        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragment);
-        TransaccionDeFragment.commit();
-    }
-
-    public void irInconNo() {
-        Fragment miFragment = new ActividadInconNo();
-        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
-        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragment);
-        TransaccionDeFragment.commit();
-    }
-
-    public void irActividadRCP() {
-        Fragment miFragment = new ActividadRCP();
-        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
-        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragment);
-        TransaccionDeFragment.commit();
-    }
-
-    public void TomarUbicacionActual() {
+    public void TomarUbicacionActual(){
         ultimoCodigoDetectado = utilidades.sharedPref.getString("CÓDIGO", "NONE");
         ultimoTiempoDetectado = utilidades.sharedPref.getString("ultUbicacionTiempo", "NONE");
 
         String codPais = getCountryCode().toUpperCase();
-        if (codPais != null) {
-            if (codPais == "NOTFOUND") {
-                if (ultimoCodigoDetectado.compareTo("NONE") == 0) {
+        if(codPais != null){
+            if(codPais=="NOTFOUND"){
+                if(ultimoCodigoDetectado.compareTo("NONE")==0) {
                     codPais = "NOT FOUND";
                     utilidades.paisActual = new Pais();
                     utilidades.paisActual.codigoP = codPais;
                     getSupportActionBar().setSubtitle("Ubicación Actual: " + utilidades.paisActual.codigoP);
-                } else {
+                }
+                else{
                     AveriguarPaisActual(ultimoCodigoDetectado);
                     getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
 
                     hayUbicacion = false;
 
-                    if (estaActualizando) {
+                    if(estaActualizando) {
                         String ultTiempoDetectado = utilidades.sharedPref.getString("ultUbicacionTiempo", "NONE");
                         Toast.makeText(this, "Última detección: " + ultTiempoDetectado, Toast.LENGTH_LONG).show();
                     }
                 }
-            } else {
+            }
+            else {
                 boolean codigoEncontrado = AveriguarPaisActual(codPais);
-                if (codigoEncontrado) {
+                if(codigoEncontrado){
                     SharedPreferences.Editor editor = utilidades.sharedPref.edit();
                     editor.putString("CÓDIGO", codPais);
                     editor.commit();
@@ -753,37 +735,41 @@ public class ActividadNavigationDrawer extends AppCompatActivity
                     editor.commit();
 
                     ultimoCodigoDetectado = utilidades.sharedPref.getString("CÓDIGO", "NONE");
-                } else {
-                    if (ultimoCodigoDetectado.compareTo("NONE") == 0) {
+                }
+                else{
+                    if(ultimoCodigoDetectado.compareTo("NONE")==0) {
                         codPais = "NOT FOUND";
                         utilidades.paisActual = new Pais();
                         utilidades.paisActual.codigoP = codPais;
-                    } else {
+                    }
+                    else{
                         AveriguarPaisActual(ultimoCodigoDetectado);
                         getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
 
                         String ultTiempoDetectado = utilidades.sharedPref.getString("ultUbicacionTiempo", "NONE");
 
-                        Toast.makeText(this, "Última detección: " + ultTiempoDetectado, Toast.LENGTH_LONG).show();
+                        Toast.makeText(this,"Última detección: "+ultTiempoDetectado, Toast.LENGTH_LONG).show();
 
                         hayUbicacion = false;
                     }
                 }
                 getSupportActionBar().setSubtitle("Ubicación Actual: " + utilidades.paisActual.codigoP);
             }
-        } else {
-            if (ultimoCodigoDetectado.compareTo("NONE") != 0) {
+        }
+        else{
+            if(ultimoCodigoDetectado.compareTo("NONE")!=0){
                 AveriguarPaisActual(ultimoCodigoDetectado);
                 getSupportActionBar().setSubtitle("Última Ubicación: " + utilidades.paisActual.codigoP);
 
-                if (estaActualizando) {
+                if(estaActualizando) {
                     String ultTiempoDetectado = utilidades.sharedPref.getString("ultUbicacionTiempo", "NONE");
 
                     Toast.makeText(this, "Última detección: " + ultTiempoDetectado, Toast.LENGTH_LONG).show();
 
                     hayUbicacion = false;
                 }
-            } else {
+            }
+            else{
                 codPais = "NOT FOUND";
                 utilidades.paisActual = new Pais();
                 utilidades.paisActual.codigoP = codPais;
@@ -792,38 +778,30 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         }
     }
 
-    public String TiempoAhora() {
+    public String TiempoAhora(){
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
         return currentDateTimeString;
     }
 
-    public String TomarUbicacion() {
+    public String TomarUbicacion(){
         String latLong;
-        Double[] misCoordenadasObtenidas = TomarCoordenadas();
 
-        Double lat = misCoordenadasObtenidas[0];
-        Double lng = misCoordenadasObtenidas[1];
+        //Detectar coordenadas
 
-        if(lat != null && lng != null){
-            latLong = "latitud: " + lat + " / longitud: " + lng;
+        if (ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
+            LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            Log.d("ubicacion", "latitud: "+latitude);
+            Log.d("ubicacion", "longitud: "+longitude);
+            latLong = "latitud: "+latitude+" / longitud: "+longitude;
         }
         else{
             latLong = "ubicación no detectada";
         }
 
         return latLong;
-
-    }
-
-    public Double[] TomarCoordenadas(){
-        Double[] misCoordenadas = new Double[2];
-        GPSTracker miGPSTracker = new GPSTracker(getApplicationContext());
-        Location location = miGPSTracker.getLocation();
-        Double lat = location.getLatitude();
-        Double lng = location.getLongitude();
-        misCoordenadas[0]=lat;
-        misCoordenadas[1]=lng;
-        return misCoordenadas;
     }
 
     public String tomarDatosUsuarioNombre(){
