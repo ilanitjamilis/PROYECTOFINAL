@@ -24,12 +24,17 @@ public class ActividadRegistro extends AppCompatActivity {
     }
 
     public void ingresoNombre(View vista){
+        Bundle datosRecibidos = this.getIntent().getExtras();
+        String dni = datosRecibidos.getString("dni");
+        Log.d("dni", "dni registro 1: "+dni);
+
         EditText nombreIngresado = (EditText)findViewById(R.id.nombreRegistracion);
         String nombre = nombreIngresado.getText().toString().trim();
 
         if(nombre.compareTo("")!=0){
             Intent irIngresarApellido = new Intent (ActividadRegistro.this, ActividadRegistroDos.class);
             Bundle misDatos = new Bundle();
+            misDatos.putString("dni",dni);
             misDatos.putString("nombre",nombre);
             irIngresarApellido.putExtras(misDatos);
             startActivity(irIngresarApellido);

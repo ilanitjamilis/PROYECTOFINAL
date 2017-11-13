@@ -22,6 +22,7 @@ public class ActividadRegistroDos extends AppCompatActivity {
 
     public void ingresoApellido(View vista){
         Bundle datosRecibidos = this.getIntent().getExtras();
+        String dni = datosRecibidos.getString("dni");
         String nombre = datosRecibidos.getString("nombre");
 
         EditText apellidoIngresado = (EditText)findViewById(R.id.apellidoRegistracion);
@@ -30,6 +31,7 @@ public class ActividadRegistroDos extends AppCompatActivity {
         if(apellido.compareTo("")!=0){
             Intent irIngresarPin = new Intent (ActividadRegistroDos.this, ActividadRegistroTres.class);
             Bundle misDatos = new Bundle();
+            misDatos.putString("dni",dni);
             misDatos.putString("nombre",nombre);
             misDatos.putString("apellido",apellido);
             irIngresarPin.putExtras(misDatos);

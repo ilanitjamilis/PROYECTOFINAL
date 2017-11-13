@@ -33,6 +33,7 @@ public class ActividadRegistroTres extends AppCompatActivity {
 
     public void registrarUsuario(View vista){
         Bundle datosRecibidos = this.getIntent().getExtras();
+        final String dni = datosRecibidos.getString("dni");
         final String nombre = datosRecibidos.getString("nombre");
         final String apellido = datosRecibidos.getString("apellido");
 
@@ -75,6 +76,7 @@ public class ActividadRegistroTres extends AppCompatActivity {
                     Bundle misDatos = new Bundle();
                     misDatos.putString("ir","editarDatos");
                     misDatos.putString("anterior","registro");
+                    misDatos.putString("dni",dni);
                     misDatos.putString("nombre",nombre);
                     misDatos.putString("apellido",apellido);
                     misDatos.putInt("pin",pinRegistracion);
@@ -90,6 +92,7 @@ public class ActividadRegistroTres extends AppCompatActivity {
                     Bundle misDatos = new Bundle();
                     misDatos.putString("ir","principal");
                     misDatos.putString("anterior","registro");
+                    misDatos.putString("dni",dni);
                     misDatos.putString("nombre",nombre);
                     misDatos.putString("apellido",apellido);
                     misDatos.putInt("pin",pinRegistracion);

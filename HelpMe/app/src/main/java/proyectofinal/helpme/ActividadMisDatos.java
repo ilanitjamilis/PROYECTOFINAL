@@ -18,6 +18,7 @@ public class ActividadMisDatos extends Fragment implements View.OnClickListener 
 
     ActividadNavigationDrawer ActividadNavigationDrawer;
 
+    String dni;
     String nombre;
     String apellido;
     String fechaNacimiento;
@@ -44,6 +45,7 @@ public class ActividadMisDatos extends Fragment implements View.OnClickListener 
 
         ActividadNavigationDrawer = (ActividadNavigationDrawer) getActivity();
 
+        dni = ActividadNavigationDrawer.tomarDatosUsuarioDni();
         nombre = ActividadNavigationDrawer.tomarDatosUsuarioNombre();
         apellido = ActividadNavigationDrawer.tomarDatosUsuarioApellido();
         fechaNacimiento = ActividadNavigationDrawer.tomarDatosUsuarioFechaNacimiento();
@@ -68,6 +70,13 @@ public class ActividadMisDatos extends Fragment implements View.OnClickListener 
         btnllamarContacto1.setOnClickListener(this);
         ImageButton btnllamarContacto2 = (ImageButton) vistaADevolver.findViewById(R.id.btnLlamarContacto2);
         btnllamarContacto2.setOnClickListener(this);
+
+
+        TextView TextViewDni = (TextView)vistaADevolver.findViewById(R.id.dniMisDatos);
+        TextViewDni.setText(dni);
+        if(dni.compareTo("-")!=0){
+            TextViewDni.setTextColor(Color.BLUE);
+        }
 
         TextView TextViewNombre = (TextView)vistaADevolver.findViewById(R.id.nombreMisDatos);
         TextViewNombre.setText(nombre);

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 public class ActividadEditarRegistro extends Fragment implements View.OnClickListener {
 
+    EditText dni;
     EditText nombre;
     EditText apellido;
     EditText nacimiento;
@@ -38,6 +39,7 @@ public class ActividadEditarRegistro extends Fragment implements View.OnClickLis
     EditText contactEmergencia1;
     EditText contactEmergencia2;
 
+    String dniIngresado;
     String nombreIngresado;
     String apellidoIngresado;
     String nacimientoIngresado;
@@ -94,6 +96,7 @@ public class ActividadEditarRegistro extends Fragment implements View.OnClickLis
         ArrayAdapter<String> adaptadorG = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, opcionesGenero);
         adaptadorG.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        dni = (EditText)vistaADevolver.findViewById(R.id.dniMisDatos);
         nombre = (EditText)vistaADevolver.findViewById(R.id.nombreMisDatos);
         apellido = (EditText)vistaADevolver.findViewById(R.id.apellidoMisDatos);
         nacimiento = (EditText)vistaADevolver.findViewById(R.id.fechaNacimientoMisDatos);
@@ -112,6 +115,8 @@ public class ActividadEditarRegistro extends Fragment implements View.OnClickLis
         contactEmergencia1 = (EditText)vistaADevolver.findViewById(R.id.contactoemergencia1MisDatos);
         contactEmergencia2 = (EditText)vistaADevolver.findViewById(R.id.contactoemergenci21MisDatos);
 
+        String dniGuardado = ActividadNavigationDrawer.tomarDatosUsuarioDni();
+        dni.setText(dniGuardado);
         String nombreGuardado = ActividadNavigationDrawer.tomarDatosUsuarioNombre();
         nombre.setText(nombreGuardado);
         String apellidoGuardado = ActividadNavigationDrawer.tomarDatosUsuarioApellido();
@@ -184,6 +189,7 @@ public class ActividadEditarRegistro extends Fragment implements View.OnClickLis
         final ActividadNavigationDrawer ActividadNavigationDrawer;
         ActividadNavigationDrawer = (ActividadNavigationDrawer) getActivity();
 
+        dniIngresado = dni.getText().toString().trim();
         nombreIngresado = nombre.getText().toString().trim();
         apellidoIngresado = apellido.getText().toString().trim();
         nacimientoIngresado = nacimiento.getText().toString().trim();
@@ -212,6 +218,9 @@ public class ActividadEditarRegistro extends Fragment implements View.OnClickLis
         adb.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 //Editar mis datos
+                if(dniIngresado.compareTo("")!=0){
+                    ActividadNavigationDrawer.setearDniUsuario(dniIngresado);
+                }
                 if(nombreIngresado.compareTo("")!=0){
                     ActividadNavigationDrawer.setearNombreUsuario(nombreIngresado);
                 }
@@ -311,7 +320,7 @@ public class ActividadEditarRegistro extends Fragment implements View.OnClickLis
                                     .setSmallIcon(R.drawable.logo)
                                     .setAutoCancel(false)
                                     .setOngoing(true)
-                                    .setStyle(new NotificationCompat.BigTextStyle().bigText("Hola " + ActividadNavigationDrawer.tomarDatosUsuarioNombre() + " " + ActividadNavigationDrawer.tomarDatosUsuarioApellido() + ", tus números de emergencia son: " + ActividadNavigationDrawer.tomarDatosUsuarioContactoEmergencia1() + " y " + ActividadNavigationDrawer.tomarDatosUsuarioContactoEmergencia2()))
+                                    .setStyle(new NotificationCompat.BigTextStyle().bigText("Hola " + ActividadNavigationDrawer.tomarDatosUsuarioNombre() + " " + ActividadNavigationDrawer.tomarDatosUsuarioApellido() + " (DNI " + ActividadNavigationDrawer.tomarDatosUsuarioDni() + ") , tus números de emergencia son: " + ActividadNavigationDrawer.tomarDatosUsuarioContactoEmergencia1() + " y " + ActividadNavigationDrawer.tomarDatosUsuarioContactoEmergencia2()))
                                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
                     PendingIntent resultPendingIntent =

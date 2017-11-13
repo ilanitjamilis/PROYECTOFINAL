@@ -85,11 +85,14 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             String deDondeVengo = datosRecibidos.getString("anterior");
 
             if(deDondeVengo.compareTo("registro")==0) {
+                String dniRegistro = datosRecibidos.getString("dni");
                 String nombreRegistro = datosRecibidos.getString("nombre");
                 String apellidoRegistro = datosRecibidos.getString("apellido");
                 Integer pinRegistro = datosRecibidos.getInt("pin");
 
                 SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+                editor.putString("dniUsuario", dniRegistro);
+                editor.apply();
                 editor.putString("nombreUsuario", nombreRegistro);
                 editor.apply();
                 editor.putString("apellidoUsuario", apellidoRegistro);
@@ -344,7 +347,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         SharedPreferences getSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         isFirstStart2 = getSharedPreferences.getBoolean("firstStart2", true);
         if(isFirstStart2){
-            Intent irEmpezarRegistro = new Intent (ActividadNavigationDrawer.this, ActividadRegistro.class);
+            Intent irEmpezarRegistro = new Intent (ActividadNavigationDrawer.this, ActividadRegistroCero.class);
             startActivity(irEmpezarRegistro);
 
             SharedPreferences.Editor e = getSharedPreferences.edit();
@@ -595,6 +598,8 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
     public void enviarMensajeEmergencia (View vista){
 
+        Log.d("mensaje", "empieza enviar mensaje");
+
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
         adb.setTitle("Enviar mensaje");
         adb.setIcon(android.R.drawable.ic_dialog_alert);
@@ -602,6 +607,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         adb.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 if (ActivityCompat.checkSelfPermission(ActividadNavigationDrawer.this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("mensaje", "acepto enviar mensaje");
                     procesoDeEnviarSMS();
                 }
                 else{
@@ -626,36 +632,40 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         String contactoEmergencia2 = tomarDatosUsuarioContactoEmergencia2();
         Boolean enviarA1 = false;
         Boolean enviarA2 = false;
-        if(contactoEmergencia1.compareTo("-")!=0) {
+        if (contactoEmergencia1.compareTo("-") != 0) {
             enviarA1 = true;
         }
-        if(contactoEmergencia2.compareTo("-")!=0) {
+        if (contactoEmergencia2.compareTo("-") != 0) {
             enviarA2 = true;
         }
         String[] mensaje = new String[3];
-        String mimensaje = "Mensaje de emergencia enviado desde la aplicación HelpMe! "+
-                tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" se encuentra en una situación" +
-                " de riesgo. Mensaje enviado el "+TiempoAhora()+", desde "+TomarUbicacion()+". Esperamos que usted lo pueda ayudar.";
+        String mimensaje = "Mensaje de emergencia enviado desde la aplicación HelpMe! " +
+                tomarDatosUsuarioNombre() + " " + tomarDatosUsuarioApellido() + " se encuentra en una situación" +
+                " de riesgo. Mensaje enviado el " + TiempoAhora() + ", desde " + TomarUbicacion() + ". Esperamos que usted lo pueda ayudar.";
 
-        mimensaje = "Mensaje enviado desde HelpMe! "+
-                tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" está en riesgo. "+TiempoAhora()+" - "+TomarUbicacion();
+        mimensaje = "Mensaje enviado desde HelpMe! " +
+                tomarDatosUsuarioNombre() + " " + tomarDatosUsuarioApellido() + " está en riesgo. " + TiempoAhora() + " - " + TomarUbicacion();
 
-        mensaje[0] = tomarDatosUsuarioNombre()+" "+tomarDatosUsuarioApellido()+" se encuentra en una situación" +
+        Double[] coordenadasEmergencia = TomarCoordenadas();
+
+        mensaje[0] = tomarDatosUsuarioNombre() + " " + tomarDatosUsuarioApellido() + " se encuentra en una situación" +
                 " de riesgo.";
-        mensaje[1] = "Mensaje enviado el "+TiempoAhora()+" desde "+TomarUbicacion()+" - HelpMe!";
-        if(enviarA1){
-            for(int i=0; i<2; i++) {
+        mensaje[1] = "Mensaje enviado el " + TiempoAhora() + " desde " + TomarUbicacion() + " - HelpMe!";
+        mensaje[2] = "Click aquí: http://maps.google.com/?q="+coordenadasEmergencia[0]+","+coordenadasEmergencia[1];
+        if (enviarA1) {
+            for (int i = 0; i < 3; i++) {
+                Log.d("mensaje", "envia mensaje "+i+" --> "+mensaje[i]);
                 enviarSMS(contactoEmergencia1, mensaje[i]);
             }
             //enviarSMS(contactoEmergencia1, mimensaje);
         }
-        if(enviarA2){
-            for(int i=0; i<2; i++) {
+        if (enviarA2) {
+            for (int i = 0; i < 3; i++) {
                 enviarSMS(contactoEmergencia2, mensaje[i]);
             }
             //enviarSMS(contactoEmergencia2, mimensaje);
         }
-        if(enviarA1==false&&enviarA2==false){
+        if (enviarA1 == false && enviarA2 == false) {
             MostrarMensajeLargo("Usted no tiene contactos de emergencia, edite sus datos");
         }
     }
@@ -783,25 +793,38 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         return currentDateTimeString;
     }
 
-    public String TomarUbicacion(){
+    public String TomarUbicacion() {
         String latLong;
+        Double[] misCoordenadasObtenidas = TomarCoordenadas();
 
-        //Detectar coordenadas
+        Double lat = misCoordenadasObtenidas[0];
+        Double lng = misCoordenadasObtenidas[1];
 
-        if (ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) == PackageManager.PERMISSION_GRANTED ) {
-            LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            double latitude = location.getLatitude();
-            double longitude = location.getLongitude();
-            Log.d("ubicacion", "latitud: "+latitude);
-            Log.d("ubicacion", "longitud: "+longitude);
-            latLong = "latitud: "+latitude+" / longitud: "+longitude;
+        if(lat != null && lng != null){
+            latLong = "latitud: " + lat + " / longitud: " + lng;
         }
         else{
             latLong = "ubicación no detectada";
         }
 
         return latLong;
+
+    }
+
+    public Double[] TomarCoordenadas(){
+        Double[] misCoordenadas = new Double[2];
+        GPSTracker miGPSTracker = new GPSTracker(getApplicationContext());
+        Location location = miGPSTracker.getLocation();
+        Double lat = location.getLatitude();
+        Double lng = location.getLongitude();
+        misCoordenadas[0]=lat;
+        misCoordenadas[1]=lng;
+        return misCoordenadas;
+    }
+
+    public String tomarDatosUsuarioDni(){
+        String dniUsuario = utilidades.sharedPref.getString("dniUsuario", "-");
+        return dniUsuario;
     }
 
     public String tomarDatosUsuarioNombre(){
@@ -903,6 +926,12 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     public Integer PinUsuario(){
         Integer pinUsuario = utilidades.sharedPref.getInt("pinUsuario",0);
         return pinUsuario;
+    }
+
+    public void setearDniUsuario(String dni){
+        SharedPreferences.Editor editor = utilidades.sharedPref.edit();
+        editor.putString("dniUsuario", dni);
+        editor.apply();
     }
 
     public void setearNombreUsuario(String nombre){

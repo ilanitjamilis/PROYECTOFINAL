@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -39,17 +40,25 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMapReadyCallback {
+public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMapReadyCallback,
+        GoogleMap.OnCameraMoveStartedListener,
+        GoogleMap.OnCameraMoveListener,
+        GoogleMap.OnCameraMoveCanceledListener,
+        GoogleMap.OnCameraIdleListener {
 
     private GoogleMap mMap;
     Double latitud;
     Double longitud;
     Boolean detectoUbicacion;
     ArrayList<Denuncia> miListaDenuncias;
+    Double latitudCentral;
+    Double longitudCentral;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,38 +71,31 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
         mapFragment.getMapAsync(this);
 
         String url = "http://helpmeayudame.azurewebsites.net/traerDenuncias2.php"; //url traer mis denuncias
-        new BuscarDatosDenuncias().execute(url);
+        //new BuscarDatosDenuncias().execute(url);
     }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.setOnCameraIdleListener(this);
+        mMap.setOnCameraMoveStartedListener(this);
+        mMap.setOnCameraMoveListener(this);
+        mMap.setOnCameraMoveCanceledListener(this);
+
+        mMap.getUiSettings().setZoomControlsEnabled(false);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
             mMap.setMyLocationEnabled(true);
 
-
-            /*LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-            Criteria criteria = new Criteria();
-            String provider = locationManager.getBestProvider(criteria, true);
-            Location location2 = locationManager.getLastKnownLocation(provider);
-            double latitude2 = location2.getLatitude(); Log.d("ila", "latitud2: "+latitude2);
-            double longitude2 = location2.getLongitude(); Log.d("ila", "longitud2: "+longitude2);*/
-
-            LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-            if (location != null) {
-                double latitude = location.getLatitude(); Log.d("ila", "latitud: "+latitude);
-                double longitude = location.getLongitude(); Log.d("ila", "longitud: "+longitude);
-                LatLng latLng = new LatLng(latitude, longitude); Log.d("ila", "latlng: "+latLng);
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,14));
-            }
+            GPSTracker miGPSTracker = new GPSTracker(getApplicationContext());
+            Location location = miGPSTracker.getLocation();
+            Double lat = location.getLatitude();
+            Double lng = location.getLongitude();
+            LatLng latLng = new LatLng(lat, lng);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
 
         }else{
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
@@ -115,6 +117,47 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
             PonerMarcador(unaDenuncia);
         }*/
 
+    }
+
+    @Override
+    public void onCameraMoveStarted(int reason) {
+
+        if (reason == GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE) {
+            //Toast.makeText(this, "The user gestured on the map.", Toast.LENGTH_SHORT).show();
+        } else if (reason == GoogleMap.OnCameraMoveStartedListener
+                .REASON_API_ANIMATION) {
+            //Toast.makeText(this, "The user tapped something on the map.", Toast.LENGTH_SHORT).show();
+        } else if (reason == GoogleMap.OnCameraMoveStartedListener
+                .REASON_DEVELOPER_ANIMATION) {
+            //Toast.makeText(this, "The app moved the camera.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onCameraMove() {
+        //Toast.makeText(this, "The camera is moving.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCameraMoveCanceled() {
+        // Toast.makeText(this, "Camera movement canceled.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCameraIdle() {
+        //Traer marcadores en esta zona
+        LatLng latLng = mMap.getCameraPosition().target;
+        latitudCentral = latLng.latitude;
+        longitudCentral = latLng.longitude;
+
+        //Toast.makeText(this, "Lat: "+latLng.latitude+"// Lng: "+latLng.longitude, Toast.LENGTH_SHORT).show();
+
+        String url = "http://helpmeayudame.azurewebsites.net/traerDenunciasRadar.php"; //url traer mis denuncias
+        url = "http://helpmeayudame.azurewebsites.net/traerDenunciasRadar.php";
+
+        new BuscarDatosDenuncias().execute(url);
+
+        //Toast.makeText(this, "The camera has stopped moving.", Toast.LENGTH_SHORT).show();
     }
 
     public ArrayList<Denuncia> LlenarListaDenuncias(){
@@ -141,7 +184,6 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
 
         return miLista;
     }
-
 
     private void PonerMarcador(Denuncia unaDenuncia) throws ParseException {
 
@@ -185,16 +227,24 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
 
     private class BuscarDatosDenuncias extends AsyncTask<String, Void, ArrayList<Denuncia>> {
 
+        String resultado;
+
         protected void onPostExecute(ArrayList<Denuncia> listaDenuncias) {
             super.onPostExecute(listaDenuncias);
             if(listaDenuncias!=null) {
-                for (int i = 0; i < listaDenuncias.size(); i++) {
-                    Denuncia unaDenuncia = listaDenuncias.get(i);
-                    try {
-                        PonerMarcador(unaDenuncia);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                if(resultado.compareTo("error")!=0) {
+                    mMap.clear();
+                    for (int i = 0; i < listaDenuncias.size(); i++) {
+                        Denuncia unaDenuncia = listaDenuncias.get(i);
+                        try {
+                            PonerMarcador(unaDenuncia);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                     }
+                }
+                else{
+                    MostrarMensaje("Hubo un error");
                 }
             }
             else{
@@ -204,38 +254,79 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
 
         @Override
         protected ArrayList<Denuncia> doInBackground(String... parametros) {
+
             String miURL = parametros[0];
-            Log.d("ila","url: "+miURL);
+
+            resultado = "";
+
             ArrayList<Denuncia> misDenuncias = new ArrayList<>();
 
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(miURL)
-                    .build();
-            try {
-                Response response = client.newCall(request).execute();  // Llamo al API Rest servicio1 en ejemplo.com
-                String resultado = response.body().string();
-                Log.d("ila", "resultado: "+resultado);
-                if(resultado.compareTo("error")!=0){
-                    Log.d("ila", "entro para parsear");
-                    misDenuncias = ParsearResultado(resultado);
-                    return misDenuncias;
-                }
-                else{
+            if(miURL.compareTo("http://helpmeayudame.azurewebsites.net/traerDenunciasRadar.php")!=0) {
+
+                OkHttpClient client = new OkHttpClient();
+                Request request = new Request.Builder()
+                        .url(miURL)
+                        .build();
+                try {
+                    Response response = client.newCall(request).execute();  // Llamo al API Rest servicio1 en ejemplo.com
+                    resultado = response.body().string();
+                    if (resultado.compareTo("error") != 0) {
+                        misDenuncias = ParsearResultado(resultado);
+                        return misDenuncias;
+                    } else {
+                        return null;
+                    }
+
+                } catch (IOException e) {
+                    return null;
+                } catch (JSONException e) {
                     return null;
                 }
+            }
+            else{
+                Log.d("denuncias", "entra bien");
+                MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                JSONObject miJSONDenuncia = new JSONObject();
 
-            } catch (IOException e) {
-                return null;
-            } catch (JSONException e) {
-                return null;
+                try {
+                    miJSONDenuncia.put("miLat", latitudCentral);
+                    miJSONDenuncia.put("miLng", longitudCentral);
+                    Log.d("denuncias", "miJSONDenuncia--->   "+miJSONDenuncia);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                RequestBody body = RequestBody.create(JSON, miJSONDenuncia.toString());
+
+                OkHttpClient client = new OkHttpClient();
+                Request request = new Request.Builder()
+                        .url(miURL)
+                        .post(body)
+                        .build();
+
+                try {
+                    Response response = client.newCall(request).execute();  // Llamo al API Rest servicio1 en ejemplo.com
+                    resultado = response.body().string();
+                    Log.d("denuncias", "resultado---->  "+resultado);
+                    if (resultado.compareTo("error") != 0) {
+                        misDenuncias = ParsearResultado(resultado);
+                        return misDenuncias;
+                    } else {
+                        return null;
+                    }
+
+                } catch (IOException e) {
+                    return null;
+                } catch (JSONException e) {
+                    return null;
+                }
             }
         }
 
         ArrayList<Denuncia> ParsearResultado(String result) throws JSONException {
             ArrayList<Denuncia> denuncias = new ArrayList<>();
             JSONArray jsonDenuncias = new JSONArray(result);
-            Log.d("ila", "jsonDenuncias: "+jsonDenuncias);
             for (int i = 0; i < jsonDenuncias.length(); i++) {
                 JSONObject jsonResultado = jsonDenuncias.getJSONObject(i);
 
@@ -245,8 +336,6 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
                 String descripcionD = jsonResultado.getString("descripcion");
                 String tipoD = jsonResultado.getString("tipo");
                 String fechaD = jsonResultado.getString("fecha");
-
-                Log.d("ila", "fechaD: "+fechaD);
 
                 Denuncia d = new Denuncia(latitudD, longitudD, descripcionD, tipoD, fechaD);
                 denuncias.add(d);

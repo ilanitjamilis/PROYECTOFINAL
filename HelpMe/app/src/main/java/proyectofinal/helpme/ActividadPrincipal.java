@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -63,6 +64,7 @@ public class ActividadPrincipal extends Fragment implements View.OnClickListener
                 break;
             case R.id.imgbtnMensajeEmergencia :
                 ActividadNavigationDrawer.enviarMensajeEmergencia(vista);
+                Log.d("mensaje", "toco enviar mensaje");
                 break;
             case R.id.imgbtnUbicacion :
                 ActividadNavigationDrawer.irMapas(vista);
