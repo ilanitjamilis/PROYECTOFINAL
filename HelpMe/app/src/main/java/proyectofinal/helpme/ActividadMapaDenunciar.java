@@ -160,6 +160,9 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
             ubicarmeEnMapa();
 
         }else{
+            ActivityCompat.requestPermissions(ActividadMapaDenunciar.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
+            ActivityCompat.requestPermissions(ActividadMapaDenunciar.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 123);
+
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
 
             adb.setTitle("Su ubicación no ha podido ser detectada");
@@ -169,6 +172,7 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
             adb.setNeutralButton("Aceptar", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
+                    MostrarMensaje("Intente nuevamente");
                 } });
             adb.show();
         }
@@ -260,7 +264,22 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
                 etFecha.setText("");
                 ubicarmeEnMapa();
 
-                MostrarMensaje("Denuncia realizada correctamente");
+                AlertDialog.Builder adb = new AlertDialog.Builder(ActividadMapaDenunciar.this);
+
+                adb.setTitle("Denuncia realizada correctamente");
+
+                adb.setIcon(android.R.drawable.ic_dialog_alert);
+
+                adb.setPositiveButton("VER DENUNCIAS", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent irVerDenuncias = new Intent (ActividadMapaDenunciar.this, ActividadMapaVerDenuncias.class);
+                        startActivity(irVerDenuncias);
+                    } });
+                adb.setNegativeButton("REALIZAR OTRA DENUNCIA", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    } });
+                adb.show();
             }
             else{
                 MostrarMensajeLargo("Hubo un error, intente nuevamente");

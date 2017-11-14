@@ -99,6 +99,9 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
 
         }else{
+            ActivityCompat.requestPermissions(ActividadMapaVerDenuncias.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
+            ActivityCompat.requestPermissions(ActividadMapaVerDenuncias.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 123);
+
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
 
             adb.setTitle("Su ubicación no ha podido ser detectada");
@@ -108,6 +111,7 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
             adb.setNeutralButton("Aceptar", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
+                    MostrarMensaje("Intente nuevamente");
                 } });
             adb.show();
         }
@@ -230,10 +234,10 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
                 unMarcador.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
                 break;
             case "Zona oscura":
-                unMarcador.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                unMarcador.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
                 break;
             case "Otro":
-                unMarcador.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
+                unMarcador.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
                 break;
         }
         marcador = mMap.addMarker(unMarcador);

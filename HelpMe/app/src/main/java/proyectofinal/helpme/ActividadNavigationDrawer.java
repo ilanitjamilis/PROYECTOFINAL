@@ -76,6 +76,8 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        PedirPermisos();
+
         utilidades.sharedPref = getSharedPreferences("mispreferencias", MODE_PRIVATE);
 
         try {
@@ -139,176 +141,13 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         if(AveriguarSiHayRegistros() == false){
             // Agregar registros
 
-            AgregarRegistro("AR", 101, 107, 100);
-            AgregarRegistro("BO", 110, 118, 119);
-            AgregarRegistro("BR", 190, 192, 193);
-            AgregarRegistro("CL", 133, 131, 132);
-            AgregarRegistro("CO", 112, 125, 119);
-            AgregarRegistro("EC", 101, 131, 102);
-            AgregarRegistro("FK", 112, 112, 112);
-            AgregarRegistro("GF", 17, 15, 18);
-            AgregarRegistro("GY", 911, 913, 912);
-            AgregarRegistro("PY", 912, 141, 132);
-            AgregarRegistro("PE", 105, 116, 116);
-            AgregarRegistro("GS", 999, 999, 999);
-            AgregarRegistro("SR", 115, 113, 110);
-            AgregarRegistro("UY", 109, 115, 104);
-            AgregarRegistro("VE", 911, 911, 911);
-            AgregarRegistro("AG", 911, 911, 911);
-            AgregarRegistro("AI", 911, 911, 911);
-            AgregarRegistro("AW", 911, 911, 911);
-            AgregarRegistro("BZ", 911, 911, 911);
-            AgregarRegistro("BM", 911, 911, 911);
-            AgregarRegistro("CA", 911, 911, 911);
-            AgregarRegistro("CU", 106, 104, 105);
-            AgregarRegistro("DM", 999, 999, 999);
-            AgregarRegistro("GD", 911, 911, 911);
-            AgregarRegistro("GP", 17, 15, 18);
-            AgregarRegistro("MQ", 17, 15, 18);
-            AgregarRegistro("MX", 066, 066, 066);
-            AgregarRegistro("MS", 911, 911, 911);
-            AgregarRegistro("KN", 911, 911, 911);
-            AgregarRegistro("LC", 911, 911, 911);
-            AgregarRegistro("PM", 17, 15, 18);
-            AgregarRegistro("VC", 911, 911, 911);
-            AgregarRegistro("US", 911, 911, 911);
-            AgregarRegistro("BB", 211, 511, 311);
-            AgregarRegistro("BS", 112, 112, 112);
-            AgregarRegistro("KY", 911, 911, 911);
-            AgregarRegistro("CR", 112, 112, 112);
-            AgregarRegistro("DO", 911, 911, 911);
-            AgregarRegistro("GT", 110, 128, 122);
-            AgregarRegistro("SV", 911, 132, 913);
-            AgregarRegistro("HT", 114, 116, 115);
-            AgregarRegistro("HN", 112, 195, 198);
-            AgregarRegistro("JM", 119, 110, 110);
-            AgregarRegistro("NI", 118, 128, 115);
-            AgregarRegistro("PA", 104, 911, 103);
-            AgregarRegistro("PR", 911, 911, 911);
-            AgregarRegistro("TT", 999, 990, 990);
-            AgregarRegistro("AS", 911, 911, 911);
-            AgregarRegistro("AU", 000, 000, 000);
-            AgregarRegistro("CK", 999, 998, 996);
-            AgregarRegistro("FJ", 000, 000, 000);
-            AgregarRegistro("PF", 17, 15, 18);
-            AgregarRegistro("GU", 911, 911, 911);
-            AgregarRegistro("KI", 192, 194, 193);
-            AgregarRegistro("MH", 911, 911, 911);
-            AgregarRegistro("FM", 911, 911, 911);
-            AgregarRegistro("NR", 110, 111, 112);
-            AgregarRegistro("NC", 17, 15, 18);
-            AgregarRegistro("NZ", 111, 111, 111);
-            AgregarRegistro("PW", 911, 911, 911);
-            AgregarRegistro("PG", 112, 111, 110);
-            AgregarRegistro("WS", 995, 996, 994);
-            AgregarRegistro("SB", 911, 911, 911);
-            AgregarRegistro("TO", 922, 933, 999);
-            AgregarRegistro("TV", 911, 911, 911);
-            AgregarRegistro("VU", 112, 112, 112);
-            AgregarRegistro("AX", 112, 112, 112);
-            AgregarRegistro("AL", 129, 127, 128);
-            AgregarRegistro("AD", 110, 118, 118);
-            AgregarRegistro("AM", 102, 103, 101);
-            AgregarRegistro("AT", 133, 144, 122);
-            AgregarRegistro("AZ", 102, 103, 101);
-            AgregarRegistro("BY", 102, 103, 101);
-            AgregarRegistro("BE", 101, 100, 100);
-            AgregarRegistro("BA", 122, 124, 123);
-            AgregarRegistro("BG", 112, 112, 112);
-            AgregarRegistro("HR", 192, 194, 193);
-            AgregarRegistro("CY", 112, 112, 1407);
-            AgregarRegistro("CZ", 158, 155, 150);
-            AgregarRegistro("DK", 112, 114, 114);
-            AgregarRegistro("EE", 112, 112, 112);
-            AgregarRegistro("FO", 112, 114, 114);
-            AgregarRegistro("FI", 112, 112, 112);
-            AgregarRegistro("FR", 17, 15, 18);
-            AgregarRegistro("GE", 112, 112, 112);
-            AgregarRegistro("DE", 110, 112, 112);
-            AgregarRegistro("GI", 199, 190, 190);
-            AgregarRegistro("GR", 100, 166, 199);
-            AgregarRegistro("GL", 112, 112, 112);
-            AgregarRegistro("HU", 107, 104, 105);
-            AgregarRegistro("IS", 112, 112, 112);
-            AgregarRegistro("IE", 112, 112, 112);
-            AgregarRegistro("IT", 113, 118, 115);
-            AgregarRegistro("LV", 110, 113, 114);
-            AgregarRegistro("LT", 112, 112, 112);
-            AgregarRegistro("LI", 117, 144, 118);
-            AgregarRegistro("LU", 113, 112, 112);
-            AgregarRegistro("EE", 112, 112, 112);
-            AgregarRegistro("MK", 192, 194, 193);
-            AgregarRegistro("MT", 112, 112, 112);
-            AgregarRegistro("MD", 902, 903, 901);
-            AgregarRegistro("MC", 17, 15, 18);
-            AgregarRegistro("CS", 192, 194, 192);
-            AgregarRegistro("NL", 112, 112, 112);
-            AgregarRegistro("NO", 112, 113, 110);
-            AgregarRegistro("PL", 997, 999, 998);
-            AgregarRegistro("PT", 112, 112, 112);
-            AgregarRegistro("RO", 112, 112, 112);
-            AgregarRegistro("RU", 102, 103, 101);
-            AgregarRegistro("SM", 113, 118, 115);
-            AgregarRegistro("SK", 158, 155, 150);
-            AgregarRegistro("SI", 113, 112, 112);
-            AgregarRegistro("ES", 112, 112, 112);
-            AgregarRegistro("SE", 112, 112, 112);
-            AgregarRegistro("CH", 117, 144, 118);
-            AgregarRegistro("TR", 155, 112, 110);
-            AgregarRegistro("UA", 102, 103, 101);
-            AgregarRegistro("GB", 112, 112, 112);
-            AgregarRegistro("VA", 113, 118, 115);
-            AgregarRegistro("AF", 119, 112, 119);
-            AgregarRegistro("BH", 112, 112, 112);
-            AgregarRegistro("BD", 999, 199, 199);
-            AgregarRegistro("BT", 113, 112, 110);
-            AgregarRegistro("IO", 112, 112, 112);
-            AgregarRegistro("BN", 993, 991, 995);
-            AgregarRegistro("KH", 117, 119, 118);
-            AgregarRegistro("CN", 110, 120, 119);
-            AgregarRegistro("CX", 000, 000, 000);
-            AgregarRegistro("CC", 000, 000, 000);
-            AgregarRegistro("HK", 112, 112, 112);
-            AgregarRegistro("IN", 100, 102, 101);
-            AgregarRegistro("ID", 110, 118, 113);
-            AgregarRegistro("IR", 110, 115, 125);
-            AgregarRegistro("IQ", 104, 122, 115);
-            AgregarRegistro("IS", 100, 101, 102);
-            AgregarRegistro("JP", 110, 119, 119);
-            AgregarRegistro("JO", 112, 112, 112);
-            AgregarRegistro("KZ", 102, 103, 101);
-            AgregarRegistro("KG", 102, 103, 101);
-            AgregarRegistro("KP", 112, 112, 112);
-            AgregarRegistro("KR", 112, 119, 119);
-            AgregarRegistro("LB", 160, 140, 175);
-            AgregarRegistro("MO", 112, 112, 112);
-            AgregarRegistro("MV", 119, 102, 118);
-            AgregarRegistro("MY", 999, 999, 999);
-            AgregarRegistro("MN", 102, 103, 101);
-            AgregarRegistro("NP", 100, 102, 101);
-            AgregarRegistro("OM", 112, 112, 112);
-            AgregarRegistro("PK", 15, 1122, 16);
-            AgregarRegistro("PH", 911, 911, 911);
-            AgregarRegistro("QA", 112, 112, 112);
-            AgregarRegistro("SA", 999, 997, 998);
-            AgregarRegistro("SG", 999, 995, 995);
-            AgregarRegistro("LK", 119, 110, 110);
-            AgregarRegistro("SY", 112, 110, 113);
-            AgregarRegistro("TJ", 102, 103, 101);
-            AgregarRegistro("TH", 191, 1669, 199);
-            AgregarRegistro("TM", 102, 103, 101);
-            AgregarRegistro("AE", 999, 998, 997);
-            AgregarRegistro("UZ", 102, 103, 101);
-            AgregarRegistro("VN", 113, 115, 114);
-            AgregarRegistro("YE", 194, 191, 191);
-            AgregarRegistro("AQ", 911, 911, 911);
+            AgregarRegistros();
 
             utilidades.baseDatos.close();
 
             //Falta África
             //Números: https://en.wikipedia.org/wiki/List_of_emergency_telephone_numbers
             //Códigos ISO: http://kirste.userpage.fu-berlin.de/diverse/doc/ISO_3166.html
-
 
             utilidades.sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor editor = utilidades.sharedPref.edit();
@@ -355,6 +194,205 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             e.apply();
         }
 
+    }
+
+    private void PedirPermisos() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 123);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.SEND_SMS}, 123);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.CALL_PHONE}, 123);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 123);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.READ_PHONE_STATE}, 123);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 123);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.VIBRATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.VIBRATE}, 123);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.INTERNET}, 123);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.ACCESS_NETWORK_STATE}, 123);
+        }
+    }
+
+    private void AgregarRegistros() {
+        AgregarRegistro("AR", 101, 107, 100);
+        AgregarRegistro("BO", 110, 118, 119);
+        AgregarRegistro("BR", 190, 192, 193);
+        AgregarRegistro("CL", 133, 131, 132);
+        AgregarRegistro("CO", 112, 125, 119);
+        AgregarRegistro("EC", 101, 131, 102);
+        AgregarRegistro("FK", 112, 112, 112);
+        AgregarRegistro("GF", 17, 15, 18);
+        AgregarRegistro("GY", 911, 913, 912);
+        AgregarRegistro("PY", 912, 141, 132);
+        AgregarRegistro("PE", 105, 116, 116);
+        AgregarRegistro("GS", 999, 999, 999);
+        AgregarRegistro("SR", 115, 113, 110);
+        AgregarRegistro("UY", 109, 115, 104);
+        AgregarRegistro("VE", 911, 911, 911);
+        AgregarRegistro("AG", 911, 911, 911);
+        AgregarRegistro("AI", 911, 911, 911);
+        AgregarRegistro("AW", 911, 911, 911);
+        AgregarRegistro("BZ", 911, 911, 911);
+        AgregarRegistro("BM", 911, 911, 911);
+        AgregarRegistro("CA", 911, 911, 911);
+        AgregarRegistro("CU", 106, 104, 105);
+        AgregarRegistro("DM", 999, 999, 999);
+        AgregarRegistro("GD", 911, 911, 911);
+        AgregarRegistro("GP", 17, 15, 18);
+        AgregarRegistro("MQ", 17, 15, 18);
+        AgregarRegistro("MX", 066, 066, 066);
+        AgregarRegistro("MS", 911, 911, 911);
+        AgregarRegistro("KN", 911, 911, 911);
+        AgregarRegistro("LC", 911, 911, 911);
+        AgregarRegistro("PM", 17, 15, 18);
+        AgregarRegistro("VC", 911, 911, 911);
+        AgregarRegistro("US", 911, 911, 911);
+        AgregarRegistro("BB", 211, 511, 311);
+        AgregarRegistro("BS", 112, 112, 112);
+        AgregarRegistro("KY", 911, 911, 911);
+        AgregarRegistro("CR", 112, 112, 112);
+        AgregarRegistro("DO", 911, 911, 911);
+        AgregarRegistro("GT", 110, 128, 122);
+        AgregarRegistro("SV", 911, 132, 913);
+        AgregarRegistro("HT", 114, 116, 115);
+        AgregarRegistro("HN", 112, 195, 198);
+        AgregarRegistro("JM", 119, 110, 110);
+        AgregarRegistro("NI", 118, 128, 115);
+        AgregarRegistro("PA", 104, 911, 103);
+        AgregarRegistro("PR", 911, 911, 911);
+        AgregarRegistro("TT", 999, 990, 990);
+        AgregarRegistro("AS", 911, 911, 911);
+        AgregarRegistro("AU", 000, 000, 000);
+        AgregarRegistro("CK", 999, 998, 996);
+        AgregarRegistro("FJ", 000, 000, 000);
+        AgregarRegistro("PF", 17, 15, 18);
+        AgregarRegistro("GU", 911, 911, 911);
+        AgregarRegistro("KI", 192, 194, 193);
+        AgregarRegistro("MH", 911, 911, 911);
+        AgregarRegistro("FM", 911, 911, 911);
+        AgregarRegistro("NR", 110, 111, 112);
+        AgregarRegistro("NC", 17, 15, 18);
+        AgregarRegistro("NZ", 111, 111, 111);
+        AgregarRegistro("PW", 911, 911, 911);
+        AgregarRegistro("PG", 112, 111, 110);
+        AgregarRegistro("WS", 995, 996, 994);
+        AgregarRegistro("SB", 911, 911, 911);
+        AgregarRegistro("TO", 922, 933, 999);
+        AgregarRegistro("TV", 911, 911, 911);
+        AgregarRegistro("VU", 112, 112, 112);
+        AgregarRegistro("AX", 112, 112, 112);
+        AgregarRegistro("AL", 129, 127, 128);
+        AgregarRegistro("AD", 110, 118, 118);
+        AgregarRegistro("AM", 102, 103, 101);
+        AgregarRegistro("AT", 133, 144, 122);
+        AgregarRegistro("AZ", 102, 103, 101);
+        AgregarRegistro("BY", 102, 103, 101);
+        AgregarRegistro("BE", 101, 100, 100);
+        AgregarRegistro("BA", 122, 124, 123);
+        AgregarRegistro("BG", 112, 112, 112);
+        AgregarRegistro("HR", 192, 194, 193);
+        AgregarRegistro("CY", 112, 112, 1407);
+        AgregarRegistro("CZ", 158, 155, 150);
+        AgregarRegistro("DK", 112, 114, 114);
+        AgregarRegistro("EE", 112, 112, 112);
+        AgregarRegistro("FO", 112, 114, 114);
+        AgregarRegistro("FI", 112, 112, 112);
+        AgregarRegistro("FR", 17, 15, 18);
+        AgregarRegistro("GE", 112, 112, 112);
+        AgregarRegistro("DE", 110, 112, 112);
+        AgregarRegistro("GI", 199, 190, 190);
+        AgregarRegistro("GR", 100, 166, 199);
+        AgregarRegistro("GL", 112, 112, 112);
+        AgregarRegistro("HU", 107, 104, 105);
+        AgregarRegistro("IS", 112, 112, 112);
+        AgregarRegistro("IE", 112, 112, 112);
+        AgregarRegistro("IT", 113, 118, 115);
+        AgregarRegistro("LV", 110, 113, 114);
+        AgregarRegistro("LT", 112, 112, 112);
+        AgregarRegistro("LI", 117, 144, 118);
+        AgregarRegistro("LU", 113, 112, 112);
+        AgregarRegistro("EE", 112, 112, 112);
+        AgregarRegistro("MK", 192, 194, 193);
+        AgregarRegistro("MT", 112, 112, 112);
+        AgregarRegistro("MD", 902, 903, 901);
+        AgregarRegistro("MC", 17, 15, 18);
+        AgregarRegistro("CS", 192, 194, 192);
+        AgregarRegistro("NL", 112, 112, 112);
+        AgregarRegistro("NO", 112, 113, 110);
+        AgregarRegistro("PL", 997, 999, 998);
+        AgregarRegistro("PT", 112, 112, 112);
+        AgregarRegistro("RO", 112, 112, 112);
+        AgregarRegistro("RU", 102, 103, 101);
+        AgregarRegistro("SM", 113, 118, 115);
+        AgregarRegistro("SK", 158, 155, 150);
+        AgregarRegistro("SI", 113, 112, 112);
+        AgregarRegistro("ES", 112, 112, 112);
+        AgregarRegistro("SE", 112, 112, 112);
+        AgregarRegistro("CH", 117, 144, 118);
+        AgregarRegistro("TR", 155, 112, 110);
+        AgregarRegistro("UA", 102, 103, 101);
+        AgregarRegistro("GB", 112, 112, 112);
+        AgregarRegistro("VA", 113, 118, 115);
+        AgregarRegistro("AF", 119, 112, 119);
+        AgregarRegistro("BH", 112, 112, 112);
+        AgregarRegistro("BD", 999, 199, 199);
+        AgregarRegistro("BT", 113, 112, 110);
+        AgregarRegistro("IO", 112, 112, 112);
+        AgregarRegistro("BN", 993, 991, 995);
+        AgregarRegistro("KH", 117, 119, 118);
+        AgregarRegistro("CN", 110, 120, 119);
+        AgregarRegistro("CX", 000, 000, 000);
+        AgregarRegistro("CC", 000, 000, 000);
+        AgregarRegistro("HK", 112, 112, 112);
+        AgregarRegistro("IN", 100, 102, 101);
+        AgregarRegistro("ID", 110, 118, 113);
+        AgregarRegistro("IR", 110, 115, 125);
+        AgregarRegistro("IQ", 104, 122, 115);
+        AgregarRegistro("IS", 100, 101, 102);
+        AgregarRegistro("JP", 110, 119, 119);
+        AgregarRegistro("JO", 112, 112, 112);
+        AgregarRegistro("KZ", 102, 103, 101);
+        AgregarRegistro("KG", 102, 103, 101);
+        AgregarRegistro("KP", 112, 112, 112);
+        AgregarRegistro("KR", 112, 119, 119);
+        AgregarRegistro("LB", 160, 140, 175);
+        AgregarRegistro("MO", 112, 112, 112);
+        AgregarRegistro("MV", 119, 102, 118);
+        AgregarRegistro("MY", 999, 999, 999);
+        AgregarRegistro("MN", 102, 103, 101);
+        AgregarRegistro("NP", 100, 102, 101);
+        AgregarRegistro("OM", 112, 112, 112);
+        AgregarRegistro("PK", 15, 1122, 16);
+        AgregarRegistro("PH", 911, 911, 911);
+        AgregarRegistro("QA", 112, 112, 112);
+        AgregarRegistro("SA", 999, 997, 998);
+        AgregarRegistro("SG", 999, 995, 995);
+        AgregarRegistro("LK", 119, 110, 110);
+        AgregarRegistro("SY", 112, 110, 113);
+        AgregarRegistro("TJ", 102, 103, 101);
+        AgregarRegistro("TH", 191, 1669, 199);
+        AgregarRegistro("TM", 102, 103, 101);
+        AgregarRegistro("AE", 999, 998, 997);
+        AgregarRegistro("UZ", 102, 103, 101);
+        AgregarRegistro("VN", 113, 115, 114);
+        AgregarRegistro("YE", 194, 191, 191);
+        AgregarRegistro("AQ", 911, 911, 911);
     }
 
     @Override
@@ -547,6 +585,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
             }else{
                 intentoLlamada = new Intent(Intent.ACTION_DIAL);
+                ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.CALL_PHONE}, 123);
             }
             String numPolicia = utilidades.paisActual.numPoliciaP.toString();
             intentoLlamada.setData(Uri.parse("tel:" + numPolicia));
@@ -566,6 +605,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
             }else{
                 intentoLlamada = new Intent(Intent.ACTION_DIAL);
+                ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.CALL_PHONE}, 123);
             }
             String numAmbulancia = utilidades.paisActual.numAmbulanciaP.toString();
             intentoLlamada.setData(Uri.parse("tel:" + numAmbulancia));
@@ -585,6 +625,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
             }else{
                 intentoLlamada = new Intent(Intent.ACTION_DIAL);
+                ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.CALL_PHONE}, 123);
             }
             String numBomberos = utilidades.paisActual.numBomberosP.toString();
             intentoLlamada.setData(Uri.parse("tel:" + numBomberos));
