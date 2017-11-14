@@ -82,6 +82,7 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
         mMap.setOnCameraMoveStartedListener(this);
         mMap.setOnCameraMoveListener(this);
         mMap.setOnCameraMoveCanceledListener(this);
+        //mMap.setOnInfoWindowClickListener(this);
 
         mMap.getUiSettings().setZoomControlsEnabled(false);
 
@@ -160,6 +161,19 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
         //Toast.makeText(this, "The camera has stopped moving.", Toast.LENGTH_SHORT).show();
     }
 
+    /*@Override
+    public void onInfoWindowClick(Marker marker) {
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        adb.setTitle(marker.getTitle());
+        adb.setMessage(marker.getSnippet());
+        adb.setIcon(android.R.drawable.ic_dialog_alert);
+        adb.setNeutralButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            } });
+        adb.show();
+    }*/
+
     public ArrayList<Denuncia> LlenarListaDenuncias(){
         ArrayList<Denuncia> miLista = new ArrayList<>();
         Denuncia unaDenuncia;
@@ -223,6 +237,7 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
                 break;
         }
         marcador = mMap.addMarker(unMarcador);
+        marcador.showInfoWindow();
     }
 
     private class BuscarDatosDenuncias extends AsyncTask<String, Void, ArrayList<Denuncia>> {
