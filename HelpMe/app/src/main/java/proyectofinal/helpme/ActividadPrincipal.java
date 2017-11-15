@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -64,10 +66,12 @@ public class ActividadPrincipal extends Fragment implements View.OnClickListener
                 break;
             case R.id.imgbtnMensajeEmergencia :
                 ActividadNavigationDrawer.enviarMensajeEmergencia(vista);
-                Log.d("mensaje", "toco enviar mensaje");
                 break;
             case R.id.imgbtnUbicacion :
-                ActividadNavigationDrawer.irMapas(vista);
+                Fragment frgMostrar = new ActividadMapa();
+                ActividadNavigationDrawer.TransaccionDeFragment = ActividadNavigationDrawer.AdministradorDeFragments.beginTransaction();
+                ActividadNavigationDrawer.TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
+                ActividadNavigationDrawer.TransaccionDeFragment.commit();
                 break;
         }
     }

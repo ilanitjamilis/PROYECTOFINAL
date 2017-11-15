@@ -515,7 +515,6 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         }
         else if (id == R.id.nav_menu8) {
 
-            Log.d("mapa", "declaro el cambio de fragment");
             Fragment frgMostrar;
             frgMostrar = new ActividadMapa();
             TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
@@ -755,8 +754,13 @@ public class ActividadNavigationDrawer extends AppCompatActivity
     }
 
     public void irMapas (View vista){
-        Intent intentoMapas = new Intent(android.content.Intent.ACTION_VIEW);
-        startActivity(intentoMapas);
+        /*Intent intentoMapas = new Intent(android.content.Intent.ACTION_VIEW);
+        startActivity(intentoMapas);*/
+
+        Fragment frgMostrar = new ActividadMapa();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
+        TransaccionDeFragment.commit();
     }
 
     public void irDenunciar (){
