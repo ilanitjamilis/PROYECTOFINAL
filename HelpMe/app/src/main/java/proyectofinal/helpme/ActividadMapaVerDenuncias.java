@@ -13,6 +13,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -59,6 +60,7 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
     ArrayList<Denuncia> miListaDenuncias;
     Double latitudCentral;
     Double longitudCentral;
+    Integer cantDenunciasRadar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -254,12 +256,16 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
                 if(resultado.compareTo("error")!=0) {
                     mMap.clear();
                     for (int i = 0; i < listaDenuncias.size(); i++) {
+                        cantDenunciasRadar++;
                         Denuncia unaDenuncia = listaDenuncias.get(i);
                         try {
                             PonerMarcador(unaDenuncia);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
+                    }
+                    if(cantDenunciasRadar>100){
+                        MostrarMensaje("ZONA PELIGROSA");
                     }
                 }
                 else{
@@ -273,6 +279,8 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
 
         @Override
         protected ArrayList<Denuncia> doInBackground(String... parametros) {
+
+            cantDenunciasRadar = 0;
 
             String miURL = parametros[0];
 

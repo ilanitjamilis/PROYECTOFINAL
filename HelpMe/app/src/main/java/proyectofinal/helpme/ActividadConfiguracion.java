@@ -59,7 +59,12 @@ public class ActividadConfiguracion extends Fragment implements View.OnClickList
                                     .setSmallIcon(R.drawable.logo)
                                     .setAutoCancel(false)
                                     .setOngoing(true)
-                                    .setStyle(new NotificationCompat.BigTextStyle().bigText("Hola " + miAdministrador.tomarDatosUsuarioNombre() + " " + miAdministrador.tomarDatosUsuarioApellido() + " (DNI " + miAdministrador.tomarDatosUsuarioDni() + ") , tus números de emergencia son: " + miAdministrador.tomarDatosUsuarioContactoEmergencia1() + " y " + miAdministrador.tomarDatosUsuarioContactoEmergencia2()))
+                                    .setStyle(new NotificationCompat.BigTextStyle().bigText("Hola " +
+                                            miAdministrador.tomarDatosUsuarioNombre().toUpperCase() + " " +
+                                            miAdministrador.tomarDatosUsuarioApellido().toUpperCase() +
+                                            " (DNI " + miAdministrador.tomarDatosUsuarioDni() + ") , tus números de emergencia son: " +
+                                            miAdministrador.tomarDatosUsuarioContactoEmergencia1() + " y " +
+                                            miAdministrador.tomarDatosUsuarioContactoEmergencia2()))
                                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
                     PendingIntent resultPendingIntent =

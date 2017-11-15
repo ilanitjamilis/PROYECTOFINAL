@@ -17,7 +17,7 @@
 
     <service
         android:name=".GPSTracker"
-        android:enabled="true"></service>
+        android:enabled="true" />
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -47,9 +47,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActividadRegistro" />
-        <activity android:name=".ActividadRegistroDos" />
-        <activity android:name=".ActividadRegistroTres" />
+        <activity
+            android:name=".ActividadRegistroCero"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ActividadRegistro"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ActividadRegistroDos"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ActividadRegistroTres"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MyIntro"
             android:configChanges="orientation"
@@ -69,11 +82,14 @@
 
         <activity
             android:name=".ActividadMapaDenunciar"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_actividad_mapa_denunciar" />
         <activity
             android:name=".ActividadMapaVerDenuncias"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_actividad_mapa_ver_denuncias" />
-        <activity android:name=".ActividadRegistroCero"></activity>
     </application>
 
 </manifest>

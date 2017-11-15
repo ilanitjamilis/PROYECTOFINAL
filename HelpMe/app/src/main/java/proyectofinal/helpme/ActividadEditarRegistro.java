@@ -320,7 +320,12 @@ public class ActividadEditarRegistro extends Fragment implements View.OnClickLis
                                     .setSmallIcon(R.drawable.logo)
                                     .setAutoCancel(false)
                                     .setOngoing(true)
-                                    .setStyle(new NotificationCompat.BigTextStyle().bigText("Hola " + ActividadNavigationDrawer.tomarDatosUsuarioNombre() + " " + ActividadNavigationDrawer.tomarDatosUsuarioApellido() + " (DNI " + ActividadNavigationDrawer.tomarDatosUsuarioDni() + ") , tus números de emergencia son: " + ActividadNavigationDrawer.tomarDatosUsuarioContactoEmergencia1() + " y " + ActividadNavigationDrawer.tomarDatosUsuarioContactoEmergencia2()))
+                                    .setStyle(new NotificationCompat.BigTextStyle().bigText("Hola " +
+                                            ActividadNavigationDrawer.tomarDatosUsuarioNombre().toUpperCase() + " " +
+                                            ActividadNavigationDrawer.tomarDatosUsuarioApellido().toUpperCase() +
+                                            " (DNI " + ActividadNavigationDrawer.tomarDatosUsuarioDni() + ") , tus números de emergencia son: " +
+                                            ActividadNavigationDrawer.tomarDatosUsuarioContactoEmergencia1() + " y " +
+                                            ActividadNavigationDrawer.tomarDatosUsuarioContactoEmergencia2()))
                                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
                     PendingIntent resultPendingIntent =

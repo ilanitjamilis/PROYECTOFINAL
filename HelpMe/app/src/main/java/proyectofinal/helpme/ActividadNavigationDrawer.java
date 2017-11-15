@@ -196,7 +196,7 @@ public class ActividadNavigationDrawer extends AppCompatActivity
 
     }
 
-    private void PedirPermisos() {
+    private void PedirPermisosCompleto() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
         }
@@ -228,6 +228,19 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.ACCESS_NETWORK_STATE}, 123);
         }
     }
+
+    private void PedirPermisos() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.SEND_SMS}, 123);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ActividadNavigationDrawer.this, new String[]{Manifest.permission.CALL_PHONE}, 123);
+        }
+    }
+
 
     private void AgregarRegistros() {
         AgregarRegistro("AR", 101, 107, 100);
@@ -487,10 +500,24 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
             TransaccionDeFragment.commit();
 
-        } else if (id == R.id.nav_menu6) {
+        } /*else if (id == R.id.nav_menu6) {
 
             Fragment frgMostrar;
             frgMostrar = new ActividadCerrarSesion();
+            TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+            TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
+            TransaccionDeFragment.commit();
+        }*/
+        else if (id == R.id.nav_menu7) {
+
+            Intent intent = new Intent(ActividadNavigationDrawer.this, MyIntro.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_menu8) {
+
+            Log.d("mapa", "declaro el cambio de fragment");
+            Fragment frgMostrar;
+            frgMostrar = new ActividadMapa();
             TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
             TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
             TransaccionDeFragment.commit();

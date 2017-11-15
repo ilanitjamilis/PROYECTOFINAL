@@ -122,7 +122,7 @@ public class ActividadMisDatos extends Fragment implements View.OnClickListener 
         TextView TextViewPeso = (TextView)vistaADevolver.findViewById(R.id.pesoMisDatos);
         if(peso.compareTo("-")!=0) {
             TextViewPeso.setText(peso + " kg");
-            TextViewFechaNacimiento.setTextColor(Color.BLUE);
+            TextViewPeso.setTextColor(Color.BLUE);
         }
         else{
             TextViewPeso.setText(peso);
