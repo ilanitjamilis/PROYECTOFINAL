@@ -190,10 +190,12 @@ public class ActividadDenunciar extends FragmentActivity implements OnMapReadyCa
     public void ubicarmeEnMapa(){
         GPSTracker miGPSTracker = new GPSTracker(getApplicationContext());
         Location location = miGPSTracker.getLocation();
-        Double lat = location.getLatitude();
-        Double lng = location.getLongitude();
-        LatLng latLng = new LatLng(lat, lng);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
+        if(location!=null) {
+            Double lat = location.getLatitude();
+            Double lng = location.getLongitude();
+            LatLng latLng = new LatLng(lat, lng);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+        }
     }
 
     public void hacerDenuncia (View vista){

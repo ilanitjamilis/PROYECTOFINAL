@@ -894,10 +894,20 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         Double[] misCoordenadas = new Double[2];
         GPSTracker miGPSTracker = new GPSTracker(getApplicationContext());
         Location location = miGPSTracker.getLocation();
-        Double lat = location.getLatitude();
-        Double lng = location.getLongitude();
-        misCoordenadas[0]=lat;
-        misCoordenadas[1]=lng;
+
+        Double lat = null;
+        Double lng = null;
+
+        if(location!=null) {
+            lat = location.getLatitude();
+            lng = location.getLongitude();
+            misCoordenadas[0] = lat;
+            misCoordenadas[1] = lng;
+        }
+        else{
+            misCoordenadas[0] = lat;
+            misCoordenadas[1] = lng;
+        }
         return misCoordenadas;
     }
 
