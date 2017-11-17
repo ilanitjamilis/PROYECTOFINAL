@@ -1,0 +1,73 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#68CFFA"
+    tools:context="proyectofinal.helpme.ActividadACV">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <ImageButton
+            android:id="@+id/btnVolver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#68CFFA"
+            android:onClick="onClick"
+            app:srcCompat="@drawable/ic_arrow_back_white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="157dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingLeft="32dp"
+            android:paddingRight="29dp"
+            android:text="¿Piensa que esta sufriendo un ACV?"
+            android:textColor="#000000"
+            android:textSize="27sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="91dp" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="match_parent"
+            android:layout_height="216dp"
+            app:srcCompat="@drawable/cerebro" />
+
+        <Button
+            android:id="@+id/btnSi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/fondo_redondeado"
+            android:backgroundTint="#ffffff"
+            android:fontFamily="sans-serif"
+            android:paddingLeft="5dp"
+            android:text="SI"
+            android:textSize="30dp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="212dp" />
+
+        <Button
+            android:id="@+id/btnNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/fondo_redondeado"
+            android:backgroundTint="#ffffff"
+            android:fontFamily="sans-serif"
+            android:paddingLeft="5dp"
+            android:text="NO"
+            android:textSize="30dp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="288dp" />
+
+
+    </LinearLayout>
+
+
+</ScrollView>

@@ -20,6 +20,8 @@ public class MyIntro extends AppIntro {
         addSlide(AppIntroSampleSlider.newInstance(R.layout.app_intro1));
         addSlide(AppIntroSampleSlider.newInstance(R.layout.app_intro2));
         addSlide(AppIntroSampleSlider.newInstance(R.layout.app_intro3));
+        addSlide(AppIntroSampleSlider.newInstance(R.layout.app_intro4));
+        addSlide(AppIntroSampleSlider.newInstance(R.layout.app_intro5));
 
         // Show and Hide Skip and Done buttons
         showStatusBar(false);

@@ -19,9 +19,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -56,7 +59,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ActividadMapaDenunciar extends FragmentActivity implements OnMapReadyCallback {
+public class ActividadMapaDenunciar extends Fragment implements View.OnClickListener, OnMapReadyCallback {
 
     private GoogleMap mMap;
     Marker marcador;
@@ -75,51 +78,66 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
     DatePickerDialog.OnDateSetListener date;
     String fechaString;
     String fechaParaSQL;
+    Button btnDenunciar;
 
+    ActividadNavigationDrawer miAdministrador;
+
+    public ActividadMapaDenunciar(){
+
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.actividad_mapa_denunciar);
 
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        miAdministrador = (ActividadNavigationDrawer) getActivity();
+
+        View vistaADevolver = inflater.inflate(R.layout.actividad_mapa_denunciar, container, false);
+
+        btnDenunciar = (Button)vistaADevolver.findViewById(R.id.btnDenunciar);
+
+        etFecha = (EditText) vistaADevolver.findViewById(R.id.fechaDenuncia);
+        etFecha.setOnClickListener(this);
+        Log.d("fecha", "declaro fecha");
 
         detectoMarcador = false;
         fechaString = "";
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        SupportMapFragment mapFragment = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map));
+        mapFragment.getMapAsync(ActividadMapaDenunciar.this);
 
-        denuncia = (EditText) findViewById(R.id.textoDenuncia);
-        radioGroupTipoDenuncia = (RadioGroup) findViewById(R.id.tipoDenuncia);
+        radioGroupTipoDenuncia = (RadioGroup) vistaADevolver.findViewById(R.id.tipoDenuncia);
 
         myCalendar = Calendar.getInstance();
+        Log.d("fecha", "agarro instancia del calendario");
 
-        etFecha = (EditText) findViewById(R.id.fechaDenuncia);
-
-        date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                updateLabel();
-            }
-
-        };
-
-
+        Log.d("fecha", "antes de tocar fecha");
         etFecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-                new DatePickerDialog(ActividadMapaDenunciar.this, date, myCalendar
+                new DatePickerDialog(miAdministrador.getApplicationContext(), date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
+        date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Log.d("fecha", "adentro de onDateSet");
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                Log.d("fecha", "antes de actualizar label");
+                updateLabel();
+                Log.d("fecha", "actualizo label");
+            }
+
+        };
+
+        return vistaADevolver;
     }
 
     private void updateLabel() {
@@ -152,18 +170,18 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(miAdministrador, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(miAdministrador, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
             mMap.setMyLocationEnabled(true);
 
             ubicarmeEnMapa();
 
         }else{
-            ActivityCompat.requestPermissions(ActividadMapaDenunciar.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
-            ActivityCompat.requestPermissions(ActividadMapaDenunciar.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 123);
+            ActivityCompat.requestPermissions(miAdministrador, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
+            ActivityCompat.requestPermissions(miAdministrador, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 123);
 
-            AlertDialog.Builder adb = new AlertDialog.Builder(this);
+            AlertDialog.Builder adb = new AlertDialog.Builder(miAdministrador);
 
             adb.setTitle("Su ubicación no ha podido ser detectada");
 
@@ -192,7 +210,7 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
     }
 
     public void ubicarmeEnMapa(){
-        GPSTracker miGPSTracker = new GPSTracker(getApplicationContext());
+        GPSTracker miGPSTracker = new GPSTracker(miAdministrador.getApplicationContext());
         Location location = miGPSTracker.getLocation();
         Double lat = location.getLatitude();
         Double lng = location.getLongitude();
@@ -200,7 +218,7 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
     }
 
-    public void hacerDenuncia (View vista){
+    public void hacerDenuncia (){
         if(radioGroupTipoDenuncia.getCheckedRadioButtonId()!=-1){
             int id = radioGroupTipoDenuncia.getCheckedRadioButtonId();
             View radioButton = radioGroupTipoDenuncia.findViewById(id);
@@ -244,11 +262,11 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
     }
 
     public void MostrarMensaje(String mensaje){
-        Toast.makeText(this,mensaje,Toast.LENGTH_SHORT).show();
+        Toast.makeText(miAdministrador,mensaje,Toast.LENGTH_SHORT).show();
     }
 
     public void MostrarMensajeLargo(String mensaje){
-        Toast.makeText(this,mensaje,Toast.LENGTH_LONG).show();
+        Toast.makeText(miAdministrador,mensaje,Toast.LENGTH_LONG).show();
     }
 
     public class InsertarDenuncia extends AsyncTask<Denuncia, Void, String> {
@@ -264,7 +282,7 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
                 etFecha.setText("");
                 ubicarmeEnMapa();
 
-                AlertDialog.Builder adb = new AlertDialog.Builder(ActividadMapaDenunciar.this);
+                AlertDialog.Builder adb = new AlertDialog.Builder(miAdministrador);
 
                 adb.setTitle("Denuncia realizada correctamente");
 
@@ -272,7 +290,7 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
 
                 adb.setPositiveButton("VER DENUNCIAS", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent irVerDenuncias = new Intent (ActividadMapaDenunciar.this, ActividadMapaVerDenuncias.class);
+                        Intent irVerDenuncias = new Intent (miAdministrador, ActividadMapaVerDenuncias.class);
                         startActivity(irVerDenuncias);
                     } });
                 adb.setNegativeButton("REALIZAR OTRA DENUNCIA", new DialogInterface.OnClickListener() {
@@ -332,6 +350,14 @@ public class ActividadMapaDenunciar extends FragmentActivity implements OnMapRea
                 resultado = "error";
                 return resultado;
             }
+        }
+    }
+
+    public void onClick(View vista) {
+        switch(vista.getId()) {
+            case R.id.btnDenunciar:
+                hacerDenuncia();
+                break;
         }
     }
 

@@ -486,11 +486,18 @@ public class ActividadNavigationDrawer extends AppCompatActivity
             TransaccionDeFragment.commit();
 
         } else if (id == R.id.nav_menu4) {
-            Fragment frgMostrar;
+
+            /*Fragment frgMostrar;
             frgMostrar = new ActividadDenunciar();
             TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
             TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
-            TransaccionDeFragment.commit();
+            TransaccionDeFragment.commit();*/
+
+            Intent intent = new Intent(ActividadNavigationDrawer.this, ActividadDenunciar.class);
+            startActivity(intent);
+
+            /*Intent intent = new Intent(ActividadNavigationDrawer.this, ActividadDenunciar.class);
+            startActivity(intent);*/
 
         } else if (id == R.id.nav_menu5) {
 
@@ -992,6 +999,103 @@ public class ActividadNavigationDrawer extends AppCompatActivity
         Fragment miFragmentIngreso = new ActividadPinParaRegistro();
         TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
         TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragmentIngreso);
+        TransaccionDeFragment.commit();
+    }
+
+    public void irActividadRCP() {
+        Fragment miFragment = new ActividadRCP();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragment);
+        TransaccionDeFragment.commit();
+    }
+    public void irActividadRCP2() {
+        Fragment frgMostrar;
+        frgMostrar = new ActividadRCP2();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
+        TransaccionDeFragment.commit();
+    }
+    public void irActividadRCP3() {
+        Fragment frgMostrar;
+        frgMostrar = new ActividadRCP3();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
+        TransaccionDeFragment.commit();
+    }
+    public void irActividadAlergia() {
+        Fragment miFragment = new ActividadAlergia();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragment);
+        TransaccionDeFragment.commit();
+    }
+    public void irActividadAlergia1() {
+        Fragment miFragment = new ActividadAlergia1();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragment);
+        TransaccionDeFragment.commit();
+    }
+    public void irActividadAlergia2() {
+        Fragment miFragment = new ActividadAlergia2();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragment);
+        TransaccionDeFragment.commit();
+    }
+    public void irActividadSangrado() {
+        Fragment miFragment = new ActividadSangrado();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragment);
+        TransaccionDeFragment.commit();
+
+    }
+    public void irActividadSangrado1() {
+        Fragment miFragment = new ActividadSangrado1();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragment);
+        TransaccionDeFragment.commit();
+
+    }
+    public void irActividadSangrado2() {
+        Fragment miFragment = new ActividadSangrado2();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, miFragment);
+        TransaccionDeFragment.commit();
+
+    }
+
+    public void irActividadACV() {
+        Fragment frgMostrar;
+        frgMostrar = new ActividadACV();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
+        TransaccionDeFragment.commit();
+    }
+
+    public void irActividadACV1() {
+        Fragment frgMostrar;
+        frgMostrar = new ActividadACV1();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
+        TransaccionDeFragment.commit();
+    }
+    public void irActividadACV2() {
+        Fragment frgMostrar;
+        frgMostrar = new ActivityACV2();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
+        TransaccionDeFragment.commit();
+    }
+    public void irActividadAcompañe() {
+        Fragment frgMostrar;
+        frgMostrar = new ActivityAcompañe();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
+        TransaccionDeFragment.commit();
+    }
+    public void irAyudaAlOtro(View vista) {
+        Fragment frgMostrar;
+        frgMostrar = new ActividadAyudaAlOtro();
+        TransaccionDeFragment = AdministradorDeFragments.beginTransaction();
+        TransaccionDeFragment.replace(R.id.AlojadorFragment, frgMostrar);
         TransaccionDeFragment.commit();
     }
 

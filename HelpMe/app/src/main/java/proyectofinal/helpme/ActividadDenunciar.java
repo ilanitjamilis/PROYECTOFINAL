@@ -1,27 +1,29 @@
 package proyectofinal.helpme;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.webkit.MimeTypeMap;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -35,21 +37,26 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ActividadDenunciar extends Fragment implements OnMapReadyCallback, View.OnClickListener {
+public class ActividadDenunciar extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     Marker marcador;
@@ -69,29 +76,28 @@ public class ActividadDenunciar extends Fragment implements OnMapReadyCallback, 
     String fechaString;
     String fechaParaSQL;
 
-    public ActividadDenunciar() {
-        // Required empty public constructor
-    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.actividad_denunciar);
 
-        View vistaADevolver = inflater.inflate(R.layout.actividad_denunciar, container, false);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         detectoMarcador = false;
         fechaString = "";
 
-        SupportMapFragment mapFragment = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map));
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
-        mapFragment.getMapAsync(ActividadDenunciar.this);
-
-        denuncia = (EditText) vistaADevolver.findViewById(R.id.textoDenuncia);
-        radioGroupTipoDenuncia = (RadioGroup) vistaADevolver.findViewById(R.id.tipoDenuncia);
+        denuncia = (EditText) findViewById(R.id.textoDenuncia);
+        radioGroupTipoDenuncia = (RadioGroup) findViewById(R.id.tipoDenuncia);
 
         myCalendar = Calendar.getInstance();
 
-        etFecha = (EditText) vistaADevolver.findViewById(R.id.fechaDenuncia);
+        etFecha = (EditText) findViewById(R.id.fechaDenuncia);
 
         date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -109,13 +115,11 @@ public class ActividadDenunciar extends Fragment implements OnMapReadyCallback, 
         etFecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
-                new DatePickerDialog((Activity) getActivity().getApplicationContext(), date, myCalendar
+                new DatePickerDialog(ActividadDenunciar.this, date, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-
-        return vistaADevolver;
     }
 
     private void updateLabel() {
@@ -148,18 +152,15 @@ public class ActividadDenunciar extends Fragment implements OnMapReadyCallback, 
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
-        if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
             mMap.setMyLocationEnabled(true);
 
             ubicarmeEnMapa();
 
         }else{
-            ActivityCompat.requestPermissions((Activity) getActivity().getApplicationContext(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
-            ActivityCompat.requestPermissions((Activity) getActivity().getApplicationContext(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 123);
-
-            AlertDialog.Builder adb = new AlertDialog.Builder((Activity) getActivity().getApplicationContext());
+            AlertDialog.Builder adb = new AlertDialog.Builder(this);
 
             adb.setTitle("Su ubicación no ha podido ser detectada");
 
@@ -168,7 +169,6 @@ public class ActividadDenunciar extends Fragment implements OnMapReadyCallback, 
             adb.setNeutralButton("Aceptar", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
-                    MostrarMensaje("Intente nuevamente");
                 } });
             adb.show();
         }
@@ -188,7 +188,7 @@ public class ActividadDenunciar extends Fragment implements OnMapReadyCallback, 
     }
 
     public void ubicarmeEnMapa(){
-        GPSTracker miGPSTracker = new GPSTracker(getActivity());
+        GPSTracker miGPSTracker = new GPSTracker(getApplicationContext());
         Location location = miGPSTracker.getLocation();
         Double lat = location.getLatitude();
         Double lng = location.getLongitude();
@@ -196,7 +196,7 @@ public class ActividadDenunciar extends Fragment implements OnMapReadyCallback, 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
     }
 
-    public void hacerDenuncia (){
+    public void hacerDenuncia (View vista){
         if(radioGroupTipoDenuncia.getCheckedRadioButtonId()!=-1){
             int id = radioGroupTipoDenuncia.getCheckedRadioButtonId();
             View radioButton = radioGroupTipoDenuncia.findViewById(id);
@@ -240,23 +240,11 @@ public class ActividadDenunciar extends Fragment implements OnMapReadyCallback, 
     }
 
     public void MostrarMensaje(String mensaje){
-        Toast.makeText((Activity) getActivity().getApplicationContext(),mensaje,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,mensaje,Toast.LENGTH_SHORT).show();
     }
 
     public void MostrarMensajeLargo(String mensaje){
-        Toast.makeText((Activity) getActivity().getApplicationContext(),mensaje,Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onClick(View v) {
-        ActividadNavigationDrawer ActividadNavigationDrawer;
-        ActividadNavigationDrawer = (ActividadNavigationDrawer) getActivity();
-
-        switch(v.getId()) {
-            case R.id.btnDenunciar :
-                hacerDenuncia();
-                break;
-        }
+        Toast.makeText(this,mensaje,Toast.LENGTH_LONG).show();
     }
 
     public class InsertarDenuncia extends AsyncTask<Denuncia, Void, String> {
@@ -272,15 +260,15 @@ public class ActividadDenunciar extends Fragment implements OnMapReadyCallback, 
                 etFecha.setText("");
                 ubicarmeEnMapa();
 
-                AlertDialog.Builder adb = new AlertDialog.Builder((Activity) getActivity().getApplicationContext());
+                AlertDialog.Builder adb = new AlertDialog.Builder(ActividadDenunciar.this);
 
                 adb.setTitle("Denuncia realizada correctamente");
 
                 adb.setIcon(android.R.drawable.ic_dialog_alert);
 
-                adb.setPositiveButton("VER DENUNCIAS", new DialogInterface.OnClickListener() {
+                adb.setPositiveButton("VOLVER ATRAS", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent irVerDenuncias = new Intent ((Activity) getActivity().getApplicationContext(), ActividadMapaVerDenuncias.class);
+                        Intent irVerDenuncias = new Intent (ActividadDenunciar.this, ActividadNavigationDrawer.class);
                         startActivity(irVerDenuncias);
                     } });
                 adb.setNegativeButton("REALIZAR OTRA DENUNCIA", new DialogInterface.OnClickListener() {

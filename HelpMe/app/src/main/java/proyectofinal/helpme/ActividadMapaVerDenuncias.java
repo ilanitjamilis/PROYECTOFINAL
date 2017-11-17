@@ -18,10 +18,14 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -47,7 +51,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMapReadyCallback,
+public class ActividadMapaVerDenuncias extends Fragment implements OnMapReadyCallback,
         GoogleMap.OnCameraMoveStartedListener,
         GoogleMap.OnCameraMoveListener,
         GoogleMap.OnCameraMoveCanceledListener,
@@ -61,19 +65,26 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
     Double latitudCentral;
     Double longitudCentral;
     Integer cantDenunciasRadar;
+    ActividadNavigationDrawer ActividadNavigationDrawer;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         detectoUbicacion = false;
+        ActividadNavigationDrawer = (ActividadNavigationDrawer) getActivity();
+        View vistaADevolver = inflater.inflate(R.layout.actividad_mis_datos, container, false);
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.actividad_mapa_ver_denuncias);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        SupportMapFragment mapFragment = (SupportMapFragment) ActividadNavigationDrawer.getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        String url = "http://helpmeayudame.azurewebsites.net/traerDenuncias2.php"; //url traer mis denuncias
-        //new BuscarDatosDenuncias().execute(url);
+        return vistaADevolver;
+
+    }
+
+    public ActividadMapaVerDenuncias() {
+        // Required empty public constructor
     }
 
     @Override
@@ -88,12 +99,12 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
 
         mMap.getUiSettings().setZoomControlsEnabled(false);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(ActividadNavigationDrawer, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(ActividadNavigationDrawer, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
             mMap.setMyLocationEnabled(true);
 
-            GPSTracker miGPSTracker = new GPSTracker(getApplicationContext());
+            GPSTracker miGPSTracker = new GPSTracker(ActividadNavigationDrawer.getApplicationContext());
             Location location = miGPSTracker.getLocation();
             Double lat = location.getLatitude();
             Double lng = location.getLongitude();
@@ -101,10 +112,10 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
 
         }else{
-            ActivityCompat.requestPermissions(ActividadMapaVerDenuncias.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
-            ActivityCompat.requestPermissions(ActividadMapaVerDenuncias.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 123);
+            ActivityCompat.requestPermissions(ActividadNavigationDrawer, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
+            ActivityCompat.requestPermissions(ActividadNavigationDrawer, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 123);
 
-            AlertDialog.Builder adb = new AlertDialog.Builder(this);
+            AlertDialog.Builder adb = new AlertDialog.Builder(ActividadNavigationDrawer);
 
             adb.setTitle("Su ubicación no ha podido ser detectada");
 
@@ -372,6 +383,6 @@ public class ActividadMapaVerDenuncias extends FragmentActivity implements OnMap
     }
 
     public void MostrarMensaje(String mensaje){
-        Toast.makeText(this,mensaje,Toast.LENGTH_SHORT).show();
+        Toast.makeText(ActividadNavigationDrawer,mensaje,Toast.LENGTH_SHORT).show();
     }
 }

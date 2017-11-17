@@ -234,7 +234,6 @@ public class ActividadMapa extends Fragment implements OnMapReadyCallback,
                 break;
         }
         marcador = mMap.addMarker(unMarcador);
-        marcador.showInfoWindow();
     }
 
     private class BuscarDatosDenuncias extends AsyncTask<String, Void, ArrayList<Denuncia>> {
@@ -363,6 +362,6 @@ public class ActividadMapa extends Fragment implements OnMapReadyCallback,
     }
 
     public void MostrarMensaje(String mensaje){
-        Toast.makeText((Activity) getActivity().getApplicationContext(),mensaje,Toast.LENGTH_SHORT).show();
+        Toast.makeText(miAdministrador ,mensaje,Toast.LENGTH_SHORT).show();
     }
 }

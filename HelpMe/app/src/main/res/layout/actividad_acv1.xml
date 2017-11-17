@@ -1,0 +1,120 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#68CFFA"
+    android:layout_height="match_parent"
+    tools:context="proyectofinal.helpme.ActividadACV1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="8.27">
+                <ImageButton
+                    android:id="@+id/btnVolver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#68CFFA"
+                    app:srcCompat="@drawable/ic_arrow_back_white"
+                    tools:layout_editor_absoluteY="24dp"
+                    tools:layout_editor_absoluteX="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:paddingLeft="32dp"
+                    android:paddingRight="29dp"
+                    android:text="¿Siente alguna debilidad en la cara, brazo o dificultad al hablar?"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="84dp" />
+
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="209dp"
+                    android:layout_gravity="center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="10dp"
+                    android:src="@drawable/sintomasacv"
+                    tools:layout_editor_absoluteX="44dp"
+                    tools:layout_editor_absoluteY="180dp" />
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="76dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:paddingLeft="64dp"
+                    android:paddingRight="64dp"
+                    android:text="Si esto sucede llame de inmediato al 1-0-7 ambulancia o pida que alguien lo haga."
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="424dp" />
+
+                <Button
+                    android:id="@+id/btnLlamarAmbulancia"
+                    android:layout_width="370dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/fondo_redondeado"
+                    android:backgroundTint="@color/common_google_signin_btn_text_light_focused"
+                    android:fontFamily="sans-serif"
+                    android:text="LLAME"
+                    android:textColor="@color/common_google_signin_btn_text_dark_default"
+                    android:textSize="20dp"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="517dp" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:paddingLeft="64dp"
+                    android:paddingRight="64dp"
+                    android:text="¿La persona se encuentra inconsiente?"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="584dp" />
+
+                <Button
+                    android:id="@+id/btnSiIncon"
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:background="@drawable/fondo_redondeado"
+                    android:backgroundTint="#ffffff"
+                    android:fontFamily="sans-serif"
+                    android:text="SI"
+                    android:textSize="20dp"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="644dp" />
+
+                <Button
+                    android:id="@+id/btnNoIncon"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/fondo_redondeado"
+                    android:backgroundTint="@color/common_google_signin_btn_text_dark_disabled"
+                    android:fontFamily="sans-serif"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="0dp"
+                    android:text="NO"
+                    android:textSize="20dp"
+                    tools:layout_editor_absoluteX="245dp"
+                    tools:layout_editor_absoluteY="640dp" />
+            </LinearLayout>
+</ScrollView>
+

@@ -1,28 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ScrollView01"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="0.42">
 
-    <android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="proyectofinal.helpme.ActividadMisDatos">
 
-        <TextView
-            android:layout_width="344dp"
-            android:layout_height="495dp"
-            android:text="Ayuda al otro"
-            android:textAlignment="center"
-            android:textSize="50dp"
-            android:paddingTop="200dp"
-            tools:layout_editor_absoluteY="8dp"
-            tools:layout_editor_absoluteX="8dp" />
 
-    </android.support.constraint.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.42"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                tools:layout_editor_absoluteX="-3dp"
+                tools:layout_editor_absoluteY="30dp">
+
+                <ImageButton
+                    android:id="@+id/btnACV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.58"
+                    android:background="#ffffff"
+                    android:paddingTop="30dp"
+                    app:srcCompat="@drawable/btnacv"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="111dp" />
+
+                <ImageButton
+                    android:id="@+id/btnAtaqueCardiaco"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.57"
+                    android:background="#ffffff"
+                    android:paddingRight="10dp"
+                    android:paddingTop="30dp"
+                    app:srcCompat="@drawable/btnataque"
+                    tools:layout_editor_absoluteX="208dp"
+                    tools:layout_editor_absoluteY="30dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.42"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="229dp">
+
+                <ImageButton
+                    android:id="@+id/btnSangrado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#ffffff"
+                    android:paddingTop="30dp"
+                    app:srcCompat="@drawable/btnsangrado"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="111dp" />
+
+                <ImageButton
+                    android:id="@+id/btnAlergia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#ffffff"
+                    android:paddingTop="30dp"
+                    app:srcCompat="@drawable/btnalergia"
+                    tools:layout_editor_absoluteX="208dp"
+                    tools:layout_editor_absoluteY="30dp" />
+            </LinearLayout>
+        </LinearLayout>
 
 </ScrollView>
+

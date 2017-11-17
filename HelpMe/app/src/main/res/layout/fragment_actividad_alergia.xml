@@ -1,0 +1,66 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#68CFFA"
+    tools:context="proyectofinal.helpme.ActividadAlergia">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageButton
+            android:id="@+id/btnVolver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#68CFFA"
+            app:srcCompat="@drawable/ic_arrow_back_white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="143dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingLeft="32dp"
+            android:paddingRight="29dp"
+            android:text="¿Alguien esta sufriendo un ataque alergico?"
+            android:textColor="#000000"
+            android:textSize="27sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="91dp" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="match_parent"
+            android:layout_height="194dp"
+            app:srcCompat="@drawable/alergia" />
+
+        <Button
+            android:id="@+id/btnSi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SI"
+            android:background="@drawable/fondo_redondeado"
+            android:backgroundTint="#ffffff"
+            android:fontFamily="sans-serif"
+            android:textSize="30dp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="212dp" />
+
+        <Button
+            android:id="@+id/btnNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/fondo_redondeado"
+            android:backgroundTint="#ffffff"
+            android:fontFamily="sans-serif"
+            android:text="NO"
+            android:textSize="30dp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="288dp" />
+    </LinearLayout>
+
+
+</FrameLayout>

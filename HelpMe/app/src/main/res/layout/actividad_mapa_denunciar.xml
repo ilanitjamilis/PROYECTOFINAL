@@ -14,7 +14,8 @@
     android:layout_margin="10dp"
     tools:context="proyectofinal.helpme.ActividadPrincipal">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/map"
@@ -132,7 +133,6 @@
         android:background="@drawable/fondo_redondeado"
         android:backgroundTint="@android:color/holo_red_dark"
         android:textColor="#FFFFFF"
-        android:onClick="hacerDenuncia"
         android:text="DENUNCIAR"/>
 </LinearLayout>
 </ScrollView>

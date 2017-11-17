@@ -1,0 +1,118 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#68CFFA"
+    android:layout_height="match_parent"
+    tools:context="proyectofinal.helpme.ActividadRCP2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageButton
+            android:id="@+id/btnVolver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#68CFFA"
+            app:srcCompat="@drawable/ic_arrow_back_white"
+            tools:layout_editor_absoluteY="16dp"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingLeft="32dp"
+            android:paddingRight="29dp"
+            android:text="¿Tiene dolor en el pecho o brazo izquierdo?"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="68dp" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="323dp"
+            android:layout_height="125dp"
+            android:layout_gravity="center"
+            android:layout_weight="12.29"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:src="@drawable/dolorpecho"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="145dp" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="394dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingLeft="64dp"
+            android:paddingRight="64dp"
+            android:text="Si esto sucede llame de inmediato al 1-0-7 ambulancia o pida que alguien lo haga."
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="-5dp"
+            tools:layout_editor_absoluteY="331dp"
+            android:layout_weight="5.17" />
+
+        <Button
+            android:id="@+id/btnLlamarAmbulancia"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/fondo_redondeado"
+            android:backgroundTint="#ffffff"
+            android:fontFamily="sans-serif"
+            android:text="LLAME"
+            android:textSize="20dp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="413dp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="394dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="152.29"
+            android:gravity="center"
+            android:paddingLeft="64dp"
+            android:paddingRight="64dp"
+            android:text="¿La persona se encuentra inconsiente?"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="-5dp"
+            tools:layout_editor_absoluteY="476dp" />
+
+            <Button
+                android:id="@+id/btnSiIncon"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:text="SI"
+                android:background="@drawable/fondo_redondeado"
+                android:backgroundTint="#ffffff"
+                android:fontFamily="sans-serif"
+                android:textSize="20dp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="541dp"
+                android:layout_weight="0.07" />
+
+        <Button
+            android:id="@+id/btnNoIncon"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/fondo_redondeado"
+            android:backgroundTint="#ffffff"
+            android:fontFamily="sans-serif"
+            android:text="NO"
+            android:textSize="20dp"
+            tools:layout_editor_absoluteX="204dp"
+            tools:layout_editor_absoluteY="539dp" />
+    </LinearLayout>
+</ScrollView>
