@@ -106,10 +106,29 @@ public class ActividadMapa extends Fragment implements OnMapReadyCallback,
 
             GPSTracker miGPSTracker = new GPSTracker(getActivity());
             Location location = miGPSTracker.getLocation();
-            Double lat = location.getLatitude();
-            Double lng = location.getLongitude();
-            LatLng latLng = new LatLng(lat, lng);
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
+            if (location != null) {
+                Double lat = location.getLatitude();
+                Double lng = location.getLongitude();
+                LatLng latLng = new LatLng(lat, lng);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+            }
+            else{
+                AlertDialog.Builder adb = new AlertDialog.Builder(miAdministrador);
+
+                adb.setTitle("Su ubicación no ha podido ser detectada");
+
+                adb.setIcon(android.R.drawable.ic_dialog_alert);
+
+                adb.setNeutralButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        Double lat = -34.6037345;
+                        Double lng = -58.3837591;
+                        LatLng latLng = new LatLng(lat, lng);
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+                    } });
+                adb.show();
+            }
 
         }else{
             ActivityCompat.requestPermissions((Activity) getActivity().getApplicationContext(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);

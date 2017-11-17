@@ -8,8 +8,6 @@
     android:layout_height="match_parent"
     android:layout_weight="0.42">
 
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -79,6 +77,70 @@
                     tools:layout_editor_absoluteX="208dp"
                     tools:layout_editor_absoluteY="30dp" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.42"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="229dp">
+
+                <ImageButton
+                    android:id="@+id/btnAsma"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#ffffff"
+                    android:paddingTop="30dp"
+                    app:srcCompat="@drawable/btnasma"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="111dp" />
+
+                <ImageButton
+                    android:id="@+id/btnHipotermia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#ffffff"
+                    android:paddingTop="30dp"
+                    app:srcCompat="@drawable/btnhipotermia"
+                    tools:layout_editor_absoluteX="208dp"
+                    tools:layout_editor_absoluteY="30dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.42"
+                android:layout_marginBottom="30dp"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="229dp">
+
+                <ImageButton
+                    android:id="@+id/btnEnvenenamiento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#ffffff"
+                    android:paddingTop="30dp"
+                    app:srcCompat="@drawable/btnenvenenamiento"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="111dp" />
+
+                <ImageButton
+                    android:id="@+id/btnPicaduras"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#ffffff"
+                    android:paddingTop="30dp"
+                    app:srcCompat="@drawable/btnpicaduras"
+                    tools:layout_editor_absoluteX="208dp"
+                    tools:layout_editor_absoluteY="30dp" />
+            </LinearLayout>
+
         </LinearLayout>
 
 </ScrollView>
